@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<rect width="100" height="100" rx="14" fill="#0a0a0f"/>
+<ellipse cx="50" cy="48" rx="26" ry="26" fill="rgba(124,92,252,0.12)"/>
+
+<!-- SWORD LEFT -45deg -->
+<g transform="rotate(-45,50,48)">
+  <polygon points="50,12 55,60 45,60" fill="#c8d8f0"/>
+  <polygon points="50,12 45,60 48,60" fill="#7a9ac0"/>
+  <polygon points="50,12 51.5,60 50,60" fill="#e8f0ff"/>
+  <rect x="49" y="30" width="2" height="25" fill="#a0b8d8" opacity="0.5"/>
+  <rect x="33" y="57" width="34" height="7" rx="2" fill="#f5c842"/>
+  <ellipse cx="33" cy="60" rx="4.5" ry="5.5" fill="#f5c842"/>
+  <ellipse cx="67" cy="60" rx="4.5" ry="5.5" fill="#f5c842"/>
+  <ellipse cx="33" cy="62" rx="3" ry="3" fill="#c09820"/>
+  <ellipse cx="67" cy="62" rx="3" ry="3" fill="#c09820"/>
+  <rect x="47" y="64" width="6" height="18" rx="2" fill="#7c5cfc"/>
+  <rect x="47" y="66" width="6" height="2" rx="1" fill="#5a3dcc"/>
+  <rect x="47" y="71" width="6" height="2" rx="1" fill="#5a3dcc"/>
+  <rect x="47" y="76" width="6" height="2" rx="1" fill="#5a3dcc"/>
+  <ellipse cx="50" cy="85" rx="5" ry="4" fill="#f5c842"/>
+  <ellipse cx="50" cy="83.5" rx="3.5" ry="2.5" fill="#e0a800"/>
+</g>
+
+<!-- SWORD RIGHT +45deg -->
+<g transform="rotate(45,50,48)">
+  <polygon points="50,12 55,60 45,60" fill="#c8d8f0"/>
+  <polygon points="50,12 45,60 48,60" fill="#7a9ac0"/>
+  <polygon points="50,12 51.5,60 50,60" fill="#e8f0ff"/>
+  <rect x="49" y="30" width="2" height="25" fill="#a0b8d8" opacity="0.5"/>
+  <rect x="33" y="57" width="34" height="7" rx="2" fill="#f5c842"/>
+  <ellipse cx="33" cy="60" rx="4.5" ry="5.5" fill="#f5c842"/>
+  <ellipse cx="67" cy="60" rx="4.5" ry="5.5" fill="#f5c842"/>
+  <ellipse cx="33" cy="62" rx="3" ry="3" fill="#c09820"/>
+  <ellipse cx="67" cy="62" rx="3" ry="3" fill="#c09820"/>
+  <rect x="47" y="64" width="6" height="18" rx="2" fill="#7c5cfc"/>
+  <rect x="47" y="66" width="6" height="2" rx="1" fill="#5a3dcc"/>
+  <rect x="47" y="71" width="6" height="2" rx="1" fill="#5a3dcc"/>
+  <rect x="47" y="76" width="6" height="2" rx="1" fill="#5a3dcc"/>
+  <ellipse cx="50" cy="85" rx="5" ry="4" fill="#f5c842"/>
+  <ellipse cx="50" cy="83.5" rx="3.5" ry="2.5" fill="#e0a800"/>
+</g>
+
+<!-- Stars -->
+<polygon points="50,8 51.8,13.5 57.5,13.5 53,16.8 54.8,22.3 50,19 45.2,22.3 47,16.8 42.5,13.5 48.2,13.5" fill="#f5c842" opacity="0.95"/>
+<polygon points="18,22 19.4,26.3 23.9,26.3 20.5,28.8 21.8,33.1 18,30.6 14.2,33.1 15.5,28.8 12.1,26.3 16.6,26.3" fill="#f5c842" opacity="0.85"/>
+<polygon points="82,20 83.4,24.3 87.9,24.3 84.5,26.8 85.8,31.1 82,28.6 78.2,31.1 79.5,26.8 76.1,24.3 80.6,24.3" fill="#f5c842" opacity="0.85"/>
+<circle cx="14" cy="52" r="2.5" fill="#5ce0c6" opacity="0.8"/>
+<circle cx="86" cy="50" r="2.5" fill="#5ce0c6" opacity="0.8"/>
+<circle cx="26" cy="15" r="1.8" fill="#5ce0c6" opacity="0.6"/>
+<circle cx="74" cy="13" r="1.8" fill="#5ce0c6" opacity="0.6"/>
+<circle cx="50" cy="95" r="2" fill="#f5c842" opacity="0.4"/>
+</svg>
