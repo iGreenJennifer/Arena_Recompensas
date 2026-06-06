@@ -19,19 +19,32 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .credits-bar strong{color:var(--text);font-weight:500;}
 .credits-footer{background:rgba(0,0,0,0.3);border-top:0.5px solid var(--border2);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--muted);position:relative;z-index:10;margin-top:3rem;}
 .credits-footer a{color:var(--accent);text-decoration:none;}
-#entry-screen{position:fixed;inset:0;background:var(--bg);z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem;}
-.entry-box{background:var(--surface);border:0.5px solid var(--border2);border-radius:20px;padding:2.5rem 2rem;width:100%;max-width:420px;position:relative;z-index:1;text-align:center;}
-.entry-logo .emoji{font-size:48px;display:block;margin-bottom:.75rem;}
-.entry-logo h1{font-size:22px;letter-spacing:-0.5px;}
-.entry-logo p{font-size:13px;color:var(--muted);margin-top:6px;}
-.entry-btns{display:flex;flex-direction:column;gap:10px;margin-top:1.5rem;}
-.btn-public{width:100%;background:rgba(92,224,198,.1);border:0.5px solid rgba(92,224,198,.3);border-radius:var(--r2);padding:14px;color:#5ce0c6;font-size:15px;font-weight:500;font-family:'Syne',sans-serif;cursor:pointer;transition:all .2s;}
-.btn-public:hover{background:rgba(92,224,198,.18);}
-.btn-admin{width:100%;background:rgba(124,92,252,.1);border:0.5px solid rgba(124,92,252,.3);border-radius:var(--r2);padding:14px;color:#a98fff;font-size:15px;font-weight:500;font-family:'Syne',sans-serif;cursor:pointer;transition:all .2s;}
-.btn-admin:hover{background:rgba(124,92,252,.18);}
-.entry-phrase{font-size:12px;color:var(--muted);margin-top:1.5rem;font-style:italic;}
-.entry-credits{font-size:11px;color:rgba(122,122,154,0.5);margin-top:.75rem;}
-.entry-credits a{color:rgba(124,92,252,0.5);text-decoration:none;}
+#entry-screen{position:fixed;inset:0;background:var(--bg);z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem;overflow:hidden;}
+.entry-floating{position:absolute;pointer-events:none;font-size:28px;animation:floatUp linear infinite;opacity:0;}
+@keyframes floatUp{0%{transform:translateY(0) rotate(0deg);opacity:0;}10%{opacity:.7;}90%{opacity:.5;}100%{transform:translateY(-110vh) rotate(360deg);opacity:0;}}
+.entry-box{background:linear-gradient(135deg,#1a1330 0%,#13131a 50%,#0f2a1e 100%);border:1.5px solid rgba(124,92,252,0.35);border-radius:28px;padding:2.5rem 2rem;width:100%;max-width:440px;position:relative;z-index:1;text-align:center;box-shadow:0 0 60px rgba(124,92,252,0.15),0 0 120px rgba(92,224,198,0.08);}
+.entry-box::before{content:'';position:absolute;inset:0;border-radius:28px;background:linear-gradient(135deg,rgba(124,92,252,.06),rgba(92,224,198,.04),rgba(232,140,48,.04));pointer-events:none;}
+.entry-trophy{font-size:64px;display:block;margin-bottom:.5rem;animation:trophyBounce 2s ease-in-out infinite;}
+@keyframes trophyBounce{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-8px) scale(1.05);}}
+.entry-title{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;letter-spacing:-1px;background:linear-gradient(135deg,#fff 0%,#a98fff 50%,#5ce0c6 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px;}
+.entry-subtitle{font-size:13px;color:var(--muted);margin-bottom:1.5rem;}
+.entry-icons-row{display:flex;justify-content:center;gap:12px;margin-bottom:1.5rem;}
+.entry-icon-badge{background:rgba(255,255,255,.05);border:0.5px solid rgba(255,255,255,.1);border-radius:12px;padding:8px 14px;font-size:20px;}
+.entry-btns{display:flex;flex-direction:column;gap:10px;}
+.btn-public{width:100%;background:linear-gradient(135deg,rgba(92,224,198,.15),rgba(92,224,198,.05));border:1px solid rgba(92,224,198,.4);border-radius:14px;padding:15px;color:#5ce0c6;font-size:15px;font-weight:600;font-family:'Syne',sans-serif;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-public:hover{background:linear-gradient(135deg,rgba(92,224,198,.25),rgba(92,224,198,.1));transform:translateY(-1px);box-shadow:0 4px 20px rgba(92,224,198,.2);}
+.btn-admin{width:100%;background:linear-gradient(135deg,rgba(124,92,252,.15),rgba(124,92,252,.05));border:1px solid rgba(124,92,252,.4);border-radius:14px;padding:15px;color:#a98fff;font-size:15px;font-weight:600;font-family:'Syne',sans-serif;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-admin:hover{background:linear-gradient(135deg,rgba(124,92,252,.25),rgba(124,92,252,.1));transform:translateY(-1px);box-shadow:0 4px 20px rgba(124,92,252,.2);}
+.entry-divider{display:flex;align-items:center;gap:10px;margin:.75rem 0;color:var(--muted);font-size:11px;}
+.entry-divider::before,.entry-divider::after{content:'';flex:1;height:0.5px;background:var(--border2);}
+.entry-phrase{font-size:12px;color:rgba(122,122,154,.7);margin-top:1.25rem;font-style:italic;line-height:1.5;}
+.entry-credits{font-size:11px;color:rgba(122,122,154,0.4);margin-top:.75rem;}
+.entry-credits a{color:rgba(124,92,252,0.45);text-decoration:none;}
+.entry-prizes{display:flex;justify-content:center;gap:8px;margin:1rem 0 .5rem;flex-wrap:wrap;}
+.entry-prize{background:rgba(255,255,255,.04);border:0.5px solid rgba(255,255,255,.08);border-radius:999px;padding:5px 12px;font-size:12px;color:var(--muted);display:flex;align-items:center;gap:5px;}
+.entry-prize.gold{border-color:rgba(245,200,66,.25);color:#f5c842;background:rgba(245,200,66,.07);}
+.entry-prize.teal{border-color:rgba(92,224,198,.25);color:#5ce0c6;background:rgba(92,224,198,.07);}
+.entry-prize.orange{border-color:rgba(232,140,48,.25);color:#e88c30;background:rgba(232,140,48,.07);}
 #login-panel{display:none;margin-top:1.5rem;text-align:left;}
 .field{margin-bottom:.875rem;}
 .field label{display:block;font-size:11px;color:var(--muted);margin-bottom:5px;letter-spacing:.5px;text-transform:uppercase;}
@@ -212,16 +225,45 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 <canvas id="confetti"></canvas>
 
 <div id="entry-screen">
+  <!-- Floating emojis background -->
+  <div class="entry-floating" style="left:5%;animation-duration:8s;animation-delay:0s;font-size:24px;">🍕</div>
+  <div class="entry-floating" style="left:15%;animation-duration:11s;animation-delay:2s;font-size:20px;">🍫</div>
+  <div class="entry-floating" style="left:25%;animation-duration:9s;animation-delay:4s;font-size:22px;">🏆</div>
+  <div class="entry-floating" style="left:40%;animation-duration:13s;animation-delay:1s;font-size:18px;">⭐</div>
+  <div class="entry-floating" style="left:55%;animation-duration:10s;animation-delay:3s;font-size:24px;">🍕</div>
+  <div class="entry-floating" style="left:68%;animation-duration:7s;animation-delay:0.5s;font-size:20px;">🎁</div>
+  <div class="entry-floating" style="left:78%;animation-duration:12s;animation-delay:2.5s;font-size:22px;">🍫</div>
+  <div class="entry-floating" style="left:88%;animation-duration:9s;animation-delay:5s;font-size:18px;">🏅</div>
+  <div class="entry-floating" style="left:35%;animation-duration:14s;animation-delay:6s;font-size:16px;">⚡</div>
+  <div class="entry-floating" style="left:60%;animation-duration:8s;animation-delay:7s;font-size:20px;">🛡️</div>
+  <div class="entry-floating" style="left:10%;animation-duration:15s;animation-delay:8s;font-size:16px;">🦹</div>
+  <div class="entry-floating" style="left:82%;animation-duration:11s;animation-delay:1.5s;font-size:18px;">🎯</div>
+
   <div class="entry-box">
-    <div class="entry-logo">
-      <span class="emoji">🏆</span>
-      <h1>Arena de Recompensas</h1>
-      <p>iGreen Energy · Bem-vindo ao jogo!</p>
+    <span class="entry-trophy">🏆</span>
+    <div class="entry-title">Arena de Recompensas</div>
+    <div class="entry-subtitle">iGreen Energy · Bem-vindo ao jogo!</div>
+
+    <div class="entry-prizes">
+      <span class="entry-prize gold">🍕 Pizza</span>
+      <span class="entry-prize teal">🍫 Chocolate</span>
+      <span class="entry-prize orange">🧂 Torcida</span>
+      <span class="entry-prize gold">🏅 TOP 3</span>
+      <span class="entry-prize teal">⚡ Poderes</span>
     </div>
+
     <div id="entry-buttons" class="entry-btns">
-      <button class="btn-public" onclick="enterPublic()">👁️ Visualizar placar — acesso livre</button>
-      <button class="btn-admin" onclick="showLoginPanel()">🔐 Entrar como admin</button>
+      <button class="btn-public" onclick="enterPublic()">
+        <span style="font-size:18px">👁️</span>
+        <span>Visualizar placar — acesso livre</span>
+      </button>
+      <div class="entry-divider">ou</div>
+      <button class="btn-admin" onclick="showLoginPanel()">
+        <span style="font-size:18px">🔐</span>
+        <span>Entrar como admin</span>
+      </button>
     </div>
+
     <div id="login-panel">
       <div class="field"><label>E-mail</label><input type="email" id="login-email" placeholder="seu@email.com"></div>
       <div class="field"><label>Senha</label><input type="password" id="login-pass" placeholder="••••••••"></div>
@@ -229,6 +271,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
       <button class="btn-back" onclick="hideLoginPanel()">← Voltar</button>
       <div class="login-error" id="login-error">E-mail ou senha incorretos.</div>
     </div>
+
     <p class="entry-phrase" id="entry-phrase"></p>
     <p class="entry-credits">Desenvolvido por <strong>Jennifer Silveira</strong> · <a href="mailto:jennifer.silveira@igreenenergy.com.br">jennifer.silveira@igreenenergy.com.br</a> · 2026</p>
   </div>
@@ -275,7 +318,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
         <div class="pizza-info"><h3>🍕 Próxima pizza</h3><p>A cada 10 dias quem acumular 100 pontos escolhe o sabor!</p></div>
         <div><div class="pizza-timer" id="pizza-timer"></div></div>
       </div>
-      <div class="section-title">
+      <div class="section-title" id="dash-players-title">
         Colaboradores <span class="badge" id="players-count-badge"></span>
         <button class="btn-sm admin-only" onclick="openAddPlayer()" style="display:none">+ Colaborador</button>
         <button class="btn-sm admin-only" onclick="openBulkModal()" style="display:none;margin-left:4px">+ Pontos em grupo</button>
@@ -290,7 +333,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
       <div class="rule-highlight"><h3>⚡ Como funciona</h3><p>Ciclos de <strong>10 dias</strong>. Acumule pontos e quem atingir <strong>100 pts</strong> ganha pizza — você escolhe o <strong>sabor</strong>! Monitorias descontam <strong>15 pts</strong> por ocorrência. Tire 100% nas 2 monitorias e ganhe um <strong>poder especial</strong>. Com <strong>90 pts</strong> você pode convidar alguém (≥50 pts) para uma dupla e dividir 1 pizza!</p></div>
       <div class="rules-grid">
         <div class="rule-card"><div class="rule-card-header"><span class="rule-icon">🍫</span><div><div class="rule-title">Chocolate semanal</div><div class="rule-subtitle">Seg a Qui · 2 vencedores/semana</div></div></div><div class="rule-pts-row"><span class="rule-pts-label">📞 Maior conversão (ligações)</span><span class="rule-pts-val plus">+15 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">💬 Mais atendimentos (chat)</span><span class="rule-pts-val plus">+15 pts</span></div><div style="font-size:12px;color:var(--muted);margin-top:10px;line-height:1.6;">1 chocolate por categoria. Cada vencedor acumula pontos para a pizza.</div></div>
-        <div class="rule-card"><div class="rule-card-header"><span class="rule-icon">🏅</span><div><div class="rule-title">TOP 3 Recebimentos</div><div class="rule-subtitle">Toda segunda · meta proporcional</div></div></div><div class="rule-pts-row"><span class="rule-pts-label">🥇 TOP 1 — Torcida à escolha</span><span class="rule-pts-val plus">+30 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">🥈 TOP 2 — Torcida à escolha</span><span class="rule-pts-val plus">+20 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">🥉 TOP 3 — Torcida à escolha</span><span class="rule-pts-val plus">+10 pts</span></div><div style="font-size:12px;color:var(--muted);margin-top:10px;line-height:1.6;">Sabores: <strong style="color:var(--text)">cebola, churrasco ou pimenta</strong>. Só pontua dentro da meta proporcional.</div></div>
+        <div class="rule-card"><div class="rule-card-header"><span class="rule-icon">🏅</span><div><div class="rule-title">TOP 3 Recebimentos</div><div class="rule-subtitle">Toda segunda · meta proporcional</div></div></div><div class="rule-pts-row"><span class="rule-pts-label">🥇 TOP 1 — Torcida à escolha</span><span class="rule-pts-val plus">+30 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">🥈 TOP 2 — Torcida à escolha</span><span class="rule-pts-val plus">+20 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">🥉 TOP 3 — Torcida à escolha</span><span class="rule-pts-val plus">+10 pts</span></div><div style="font-size:12px;color:var(--muted);margin-top:10px;line-height:1.7;">Sabores: <strong style="color:var(--text)">cebola, churrasco ou pimenta</strong>.<br><br>🎁 <strong style="color:var(--text)">A Torcida é garantida</strong> para quem estiver no TOP 3, independente da meta.<br><br>⚠️ <strong style="color:var(--danger)">Os pontos só são acumulados</strong> se a pessoa tiver atingido o valor proporcional esperado até aquele dia. Estar no TOP 3 sem bater o proporcional = Torcida, mas <strong style="color:var(--danger)">zero pontos</strong>.</div></div>
         <div class="rule-card"><div class="rule-card-header"><span class="rule-icon">🕘</span><div><div class="rule-title">Disciplina diária</div><div class="rule-subtitle">+5 ou -5 pts · todo dia</div></div></div><div class="rule-pts-row"><span class="rule-pts-label">✅ Chegar até as 9h</span><span class="rule-pts-val plus">+5 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">❌ Atraso</span><span class="rule-pts-val minus">-5 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">✅ Pausas no horário</span><span class="rule-pts-val plus">+5 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">❌ Pausas descumpridas</span><span class="rule-pts-val minus">-5 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">✅ Presença (sem falta)</span><span class="rule-pts-val plus">+5 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">❌ Falta ou atestado</span><span class="rule-pts-val minus">-5 pts</span></div><div style="font-size:12px;color:var(--muted);margin-top:10px;line-height:1.6;">☕ 15min antes do almoço · 🍽️ 1h almoço · ☕ 15min após.</div></div>
         <div class="rule-card"><div class="rule-card-header"><span class="rule-icon">🍕</span><div><div class="rule-title">Meta da pizza</div><div class="rule-subtitle">A cada 10 dias</div></div></div><div class="rule-pts-row"><span class="rule-pts-label">Meta para ganhar</span><span class="rule-pts-val plus">100 pts</span></div><div style="font-size:12px;color:var(--muted);margin-top:10px;line-height:1.6;">Você escolhe o <strong style="color:var(--text)">sabor</strong>! O contador zera a cada ciclo de 10 dias.</div></div>
         <div class="rule-card danger-card"><div class="rule-card-header"><span class="rule-icon">⚠️</span><div><div class="rule-title">Monitoria</div><div class="rule-subtitle">-15 pts · máx. 2/semana</div></div></div><div class="rule-pts-row"><span class="rule-pts-label">Por monitoria pontuada</span><span class="rule-pts-val minus">-15 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">Máximo semanal</span><span class="rule-pts-val minus">-30 pts</span></div><div class="rule-alert">🚨 São 2 monitorias por semana. Cada desconto retira 15 pts.</div></div>
@@ -399,7 +442,9 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 <script>
 const ADMIN_EMAIL='jennifer.silveira@igreenenergy.com.br';
 const STORAGE_KEY='igreen_arena_v5';
-const VOTACAO_DURACAO=90; // segundos
+const SESSION_KEY='igreen_session_v5';
+const VOTACAO_DURACAO=90;
+const SYNC_INTERVAL=3000;
 const phrases=['\"Cada ponto é um passo mais perto da pizza.\" 🍕','\"Quem arrisca, converte. Quem converte, chocolate!\" 🍫','\"A fome de vencer é o melhor tempero.\" 🏆','\"Sua dedicação de hoje é a pizza de amanhã.\" ⚡','\"TOP 1 não nasce — é construído ligação por ligação.\" 📞','\"Atendimento resolvido: +15 pts e um sorriso no rosto.\" 💬','\"Grandes resultados começam com uma segunda-feira poderosa.\" 💪','\"A diferença entre bom e incrível? Consistência.\" 🎯','\"Chocolates hoje, pizza amanhã — o time que celebra, cresce!\" 🌱','\"Cada meta batida é uma história que vale contar.\" ✨','\"Proteja seus pontos. Ou roube os do vizinho.\" 🦹','\"Quem mantém o escudo levanta o copo.\" 🛡️'];
 
 let state=loadState();
@@ -411,6 +456,7 @@ let lastAction=null;
 let feedFilter='all';
 let cycleTimerInterval=null;
 let votacaoTimerInterval=null;
+let syncInterval=null;
 let selectedVotoOpcao=null;
 const phraseIdx=Math.floor(Date.now()/86400000)%phrases.length;
 
@@ -424,6 +470,34 @@ function loadState(){
 function saveState(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}
 
 document.getElementById('entry-phrase').textContent=phrases[phraseIdx];
+
+function startSync(){
+  clearInterval(syncInterval);
+  syncInterval=setInterval(()=>{
+    const fresh=loadState();
+    const changed=JSON.stringify(fresh)!==JSON.stringify(state);
+    if(changed){
+      state=fresh;
+      renderAll();
+      if(state.votacaoAtiva&&state.votacaoAtiva.aberta&&!votacaoTimerInterval){
+        startVotacaoTimer();
+      }
+    }
+    renderDashVotacaoBanner();
+  },SYNC_INTERVAL);
+}
+
+// Auto-restore session on page refresh
+(function restoreSession(){
+  try{
+    const s=sessionStorage.getItem(SESSION_KEY);
+    if(s){
+      const sess=JSON.parse(s);
+      isAdmin=sess.isAdmin||false;
+      launchApp();
+    }
+  }catch(e){}
+})();
 
 function enterPublic(){isAdmin=false;launchApp();}
 function showLoginPanel(){document.getElementById('entry-buttons').style.display='none';document.getElementById('login-panel').style.display='block';setTimeout(()=>document.getElementById('login-email').focus(),50);}
@@ -445,12 +519,18 @@ function launchApp(){
   document.getElementById('header-user').textContent=isAdmin?'Jennifer S.':'Visitante';
   document.querySelectorAll('.admin-only').forEach(el=>el.style.display=isAdmin?'':'none');
   document.getElementById('public-notice').style.display=isAdmin?'none':'flex';
+  sessionStorage.setItem(SESSION_KEY,JSON.stringify({isAdmin}));
   renderAll();
   startCycleTimer();
   if(state.votacaoAtiva&&state.votacaoAtiva.aberta) startVotacaoTimer();
+  startSync();
 }
 function doLogout(){
-  isAdmin=false;clearInterval(cycleTimerInterval);clearInterval(votacaoTimerInterval);
+  isAdmin=false;
+  clearInterval(cycleTimerInterval);
+  clearInterval(votacaoTimerInterval);
+  clearInterval(syncInterval);
+  sessionStorage.removeItem(SESSION_KEY);
   document.getElementById('app').style.display='none';
   document.getElementById('entry-screen').style.display='flex';
   document.getElementById('entry-buttons').style.display='flex';
@@ -507,7 +587,15 @@ function renderStats(){
 
 function renderPlayers(){
   const grid=document.getElementById('players-grid');
+  const title=document.getElementById('dash-players-title');
   document.getElementById('players-count-badge').textContent=state.players.length+' pessoas';
+  if(!isAdmin){
+    if(grid)grid.style.display='none';
+    if(title)title.style.display='none';
+    return;
+  }
+  if(grid)grid.style.display='';
+  if(title)title.style.display='';
   if(!state.players.length){grid.innerHTML='<div class="empty">Nenhum colaborador ainda.'+(isAdmin?'<br>Clique em "+ Colaborador"!':'')+'</div>';return;}
   const sorted=[...state.players].sort((a,b)=>b.points-a.points);
   grid.innerHTML=sorted.map((p,i)=>{
@@ -620,12 +708,26 @@ function updateVotacaoTimerDisplay(seg){
   const m=Math.floor(seg/60),s=seg%60;
   const str=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
   const danger=seg<=15;
-  // update in votacao section
   const el=document.getElementById('vot-timer-display');
   if(el){el.textContent=str;el.className='vot-timer-big '+(danger?'danger':'ok');}
-  // update in dash banner
   const db=document.getElementById('dash-vot-timer');
   if(db){db.textContent=str;db.style.color=danger?'var(--danger)':'var(--gold)';}
+  // Update live vote count bars without re-rendering full section
+  if(state.votacaoAtiva&&state.votacaoAtiva.aberta){
+    const v=state.votacaoAtiva;
+    const c=getContagemVotos(v);
+    const total=Object.values(c).reduce((a,b)=>a+b,0);
+    const wrap=document.getElementById('vot-contagem-live');
+    if(wrap){
+      wrap.innerHTML=v.opcoes.map((o,i)=>{
+        const n=c[o]||0;const pct=total?Math.round((n/total)*100):0;
+        return`<div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;"><span style="color:var(--text)">${o}</span><span style="color:var(--muted);font-weight:500">${n} voto${n!==1?'s':''}</span></div><div style="background:rgba(255,255,255,.06);border-radius:999px;height:6px;overflow:hidden;"><div style="height:6px;border-radius:999px;background:${i===0?'#5ce0c6':'#7c5cfc'};width:${pct}%;transition:width .4s"></div></div></div>`;
+      }).join('');
+    }
+    // update total count display
+    const sub=document.querySelector('.vot-banner .vot-sub strong');
+    if(sub)sub.textContent=total;
+  }
 }
 
 function encerrarVotacaoAuto(){
@@ -678,6 +780,13 @@ function renderDashVotacaoBanner(){
   }
 }
 
+
+function getContagemVotos(v){
+  const c={};(v.opcoes||[]).forEach(o=>c[o]=0);
+  Object.values(v.votos||{}).forEach(voto=>{if(c[voto]!==undefined)c[voto]++;});
+  return c;
+}
+
 function renderVotacaoSection(){
   const content=document.getElementById('votacao-content');if(!content)return;
   const adminBar=document.getElementById('votacao-admin-bar');
@@ -688,16 +797,24 @@ function renderVotacaoSection(){
   if(!v){
     if(btnNova)btnNova.style.display='';
     if(btnEnc)btnEnc.style.display='none';
-    content.innerHTML='<div class="empty">Nenhuma votação ativa.<br>'+( isAdmin?'Clique em "+ Nova votação" para abrir uma quando houver empate.':'A admin abrirá uma votação quando houver empate!')+'</div>';
+    content.innerHTML='<div class="empty">Nenhuma votação ativa.<br>'+(isAdmin?'Clique em "+ Nova votação" para abrir quando houver empate.':'A admin abrirá uma votação quando houver empate!')+'</div>';
     return;
   }
   if(btnNova)btnNova.style.display=v.aberta?'none':'';
   if(btnEnc)btnEnc.style.display=isAdmin&&v.aberta?'':'none';
+  const contagem=getContagemVotos(v);
+  const totalV=Object.values(contagem).reduce((a,b)=>a+b,0);
   if(v.aberta){
     const restante=Math.max(0,Math.ceil((v.fimEm-Date.now())/1000));
     const m=Math.floor(restante/60),s=restante%60;
     const danger=restante<=15;
-    content.innerHTML=`<div class="vot-banner active" style="margin-bottom:1.5rem;"><div class="vot-titulo">${v.titulo}</div><div class="vot-sub" style="margin-bottom:1rem;">Tempo restante para votar</div><div class="vot-timer-big ${danger?'danger':'ok'}" id="vot-timer-display">${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}</div><div class="vot-sub" style="margin-top:.5rem;">${Object.keys(v.votos||{}).length} voto${Object.keys(v.votos||{}).length!==1?'s':''} registrado${Object.keys(v.votos||{}).length!==1?'s':''} · resultado só aparece ao encerrar</div></div><div class="vot-form"><p style="font-size:13px;color:var(--muted);margin-bottom:1.25rem;">Digite seu <strong style="color:var(--text)">primeiro nome</strong> exatamente como está no site, escolha seu candidato e vote. Cada pessoa vota uma única vez.</p><div class="field"><label>Seu primeiro nome</label><input type="text" id="voto-nome" placeholder="Ex: Eduarda" autocomplete="off" style="text-transform:capitalize"></div><div style="font-size:12px;color:var(--muted);margin-bottom:.75rem;">Escolha sua opção:</div><div class="vot-opcoes">${v.opcoes.map((o,i)=>`<button class="vot-opcao" id="vop-btn-${i}" onclick="selecionarOpcao(${i},'${o.replace(/'/g,"\\'")}')">${o}</button>`).join('')}</div><div id="voto-sel-display" style="font-size:12px;color:var(--accent);margin-bottom:1rem;min-height:18px;"></div><button class="btn-accent" onclick="registrarVoto()" style="width:100%">Votar 🗳️</button><div id="voto-msg" style="font-size:13px;margin-top:.75rem;"></div></div>`;
+    const barrasHTML=v.opcoes.map((o,i)=>{
+      const n=contagem[o]||0;
+      const pct=totalV?Math.round((n/totalV)*100):0;
+      const bar=`<div style="height:6px;border-radius:999px;background:${i===0?'#5ce0c6':'#7c5cfc'};width:${pct}%;transition:width .4s"></div>`;
+      return`<div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;"><span style="color:var(--text)">${o}</span><span style="color:var(--muted);font-weight:500">${n} voto${n!==1?'s':''}</span></div><div style="background:rgba(255,255,255,.06);border-radius:999px;height:6px;overflow:hidden;">${bar}</div></div>`;
+    }).join('');
+    content.innerHTML=`<div class="vot-banner active" style="margin-bottom:1.5rem;"><div class="vot-titulo">${v.titulo}</div><div class="vot-sub" style="margin-bottom:1rem;">Tempo restante para votar</div><div class="vot-timer-big ${danger?'danger':'ok'}" id="vot-timer-display">${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}</div><div class="vot-sub" style="margin-top:.75rem;margin-bottom:1rem;"><strong style="color:var(--text)">${totalV}</strong> voto${totalV!==1?'s':''} registrado${totalV!==1?'s':''}</div><div style="background:rgba(255,255,255,.04);border-radius:var(--r2);padding:1rem;text-align:left;max-width:420px;margin:0 auto;" id="vot-contagem-live">${barrasHTML}</div></div><div class="vot-form"><p style="font-size:13px;color:var(--muted);margin-bottom:1.25rem;">Digite seu <strong style="color:var(--text)">primeiro nome</strong> exatamente como está no site, escolha seu candidato e vote. Cada pessoa vota uma única vez.</p><div class="field"><label>Seu primeiro nome</label><input type="text" id="voto-nome" placeholder="Ex: Eduarda" autocomplete="off" style="text-transform:capitalize"></div><div style="font-size:12px;color:var(--muted);margin-bottom:.75rem;">Escolha sua opção:</div><div class="vot-opcoes">${v.opcoes.map((o,i)=>`<button class="vot-opcao" id="vop-btn-${i}" onclick="selecionarOpcao(${i},'${o.replace(/'/g,"\'")}')">${o}</button>`).join('')}</div><div id="voto-sel-display" style="font-size:12px;color:var(--accent);margin-bottom:1rem;min-height:18px;"></div><button class="btn-accent" onclick="registrarVoto()" style="width:100%">Votar 🗳️</button><div id="voto-msg" style="font-size:13px;margin-top:.75rem;"></div></div>`;
     selectedVotoOpcao=null;
   }else{
     const r=getResultado();
