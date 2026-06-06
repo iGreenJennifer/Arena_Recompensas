@@ -8,107 +8,110 @@
 <style>
 :root{--bg:#0a0a0f;--surface:#13131a;--surface2:#1c1c28;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);--accent:#7c5cfc;--accent2:#5ce0c6;--gold:#f5c842;--silver:#b0bec5;--bronze:#cd7c3a;--pizza:#e88c30;--text:#f0f0f8;--muted:#7a7a9a;--danger:#e05555;--success:#4cbb8a;--r:12px;--r2:8px;}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
-h1,h2,h3,h4{font-family:'Syne',sans-serif;}
-body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.4;}
+body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+h1,h2,h3,h4{font-family:"Syne",sans-serif;}
+body::before{content:"";position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.4;}
 .blob{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0;}
 .blob1{width:500px;height:500px;background:rgba(124,92,252,0.1);top:-150px;left:-150px;}
 .blob2{width:400px;height:400px;background:rgba(92,224,198,0.07);bottom:-100px;right:-100px;}
 .credits-bar{background:rgba(124,92,252,0.08);border-bottom:0.5px solid rgba(124,92,252,0.2);padding:8px 2rem;display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--muted);position:relative;z-index:10;flex-wrap:wrap;gap:4px;}
-.credits-bar a{color:var(--accent);text-decoration:none;}
+.credits-bar a,.credits-footer a{color:var(--accent);text-decoration:none;}
 .credits-bar strong{color:var(--text);font-weight:500;}
 .credits-footer{background:rgba(0,0,0,0.3);border-top:0.5px solid var(--border2);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--muted);position:relative;z-index:10;margin-top:3rem;}
-.credits-footer a{color:var(--accent);text-decoration:none;}
 #entry-screen{position:fixed;inset:0;background:var(--bg);z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem;overflow:hidden;}
 .entry-floating{position:absolute;pointer-events:none;font-size:28px;animation:floatUp linear infinite;opacity:0;}
 @keyframes floatUp{0%{transform:translateY(0) rotate(0deg);opacity:0;}10%{opacity:.7;}90%{opacity:.5;}100%{transform:translateY(-110vh) rotate(360deg);opacity:0;}}
-.entry-box{background:linear-gradient(135deg,#1a1330 0%,#13131a 50%,#0f2a1e 100%);border:1.5px solid rgba(124,92,252,0.35);border-radius:28px;padding:2.5rem 2rem;width:100%;max-width:440px;position:relative;z-index:1;text-align:center;box-shadow:0 0 60px rgba(124,92,252,0.15),0 0 120px rgba(92,224,198,0.08);}
-.entry-box::before{content:'';position:absolute;inset:0;border-radius:28px;background:linear-gradient(135deg,rgba(124,92,252,.06),rgba(92,224,198,.04),rgba(232,140,48,.04));pointer-events:none;}
+.entry-box{background:linear-gradient(135deg,#1a1330 0%,#13131a 50%,#0f2a1e 100%);border:1.5px solid rgba(124,92,252,0.35);border-radius:28px;padding:2.5rem 2rem;width:100%;max-width:460px;position:relative;z-index:1;text-align:center;box-shadow:0 0 60px rgba(124,92,252,0.15);}
 .entry-trophy{font-size:64px;display:block;margin-bottom:.5rem;animation:trophyBounce 2s ease-in-out infinite;}
 @keyframes trophyBounce{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-8px) scale(1.05);}}
-.entry-title{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;letter-spacing:-1px;background:linear-gradient(135deg,#fff 0%,#a98fff 50%,#5ce0c6 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px;}
-.entry-subtitle{font-size:13px;color:var(--muted);margin-bottom:1.5rem;}
-.entry-icons-row{display:flex;justify-content:center;gap:12px;margin-bottom:1.5rem;}
-.entry-icon-badge{background:rgba(255,255,255,.05);border:0.5px solid rgba(255,255,255,.1);border-radius:12px;padding:8px 14px;font-size:20px;}
-.entry-btns{display:flex;flex-direction:column;gap:10px;}
-.btn-public{width:100%;background:linear-gradient(135deg,rgba(92,224,198,.15),rgba(92,224,198,.05));border:1px solid rgba(92,224,198,.4);border-radius:14px;padding:15px;color:#5ce0c6;font-size:15px;font-weight:600;font-family:'Syne',sans-serif;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;}
-.btn-public:hover{background:linear-gradient(135deg,rgba(92,224,198,.25),rgba(92,224,198,.1));transform:translateY(-1px);box-shadow:0 4px 20px rgba(92,224,198,.2);}
-.btn-admin{width:100%;background:linear-gradient(135deg,rgba(124,92,252,.15),rgba(124,92,252,.05));border:1px solid rgba(124,92,252,.4);border-radius:14px;padding:15px;color:#a98fff;font-size:15px;font-weight:600;font-family:'Syne',sans-serif;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;}
-.btn-admin:hover{background:linear-gradient(135deg,rgba(124,92,252,.25),rgba(124,92,252,.1));transform:translateY(-1px);box-shadow:0 4px 20px rgba(124,92,252,.2);}
-.entry-divider{display:flex;align-items:center;gap:10px;margin:.75rem 0;color:var(--muted);font-size:11px;}
-.entry-divider::before,.entry-divider::after{content:'';flex:1;height:0.5px;background:var(--border2);}
-.entry-phrase{font-size:12px;color:rgba(122,122,154,.7);margin-top:1.25rem;font-style:italic;line-height:1.5;}
-.entry-credits{font-size:11px;color:rgba(122,122,154,0.4);margin-top:.75rem;}
-.entry-credits a{color:rgba(124,92,252,0.45);text-decoration:none;}
-.entry-prizes{display:flex;justify-content:center;gap:8px;margin:1rem 0 .5rem;flex-wrap:wrap;}
-.entry-prize{background:rgba(255,255,255,.04);border:0.5px solid rgba(255,255,255,.08);border-radius:999px;padding:5px 12px;font-size:12px;color:var(--muted);display:flex;align-items:center;gap:5px;}
+.entry-title{font-family:"Syne",sans-serif;font-size:26px;font-weight:800;letter-spacing:-1px;background:linear-gradient(135deg,#fff 0%,#a98fff 50%,#5ce0c6 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px;}
+.entry-subtitle{font-size:13px;color:var(--muted);margin-bottom:1.25rem;}
+.entry-prizes{display:flex;justify-content:center;gap:8px;margin-bottom:1.25rem;flex-wrap:wrap;}
+.entry-prize{border:0.5px solid rgba(255,255,255,.08);border-radius:999px;padding:5px 12px;font-size:12px;display:flex;align-items:center;gap:5px;}
 .entry-prize.gold{border-color:rgba(245,200,66,.25);color:#f5c842;background:rgba(245,200,66,.07);}
 .entry-prize.teal{border-color:rgba(92,224,198,.25);color:#5ce0c6;background:rgba(92,224,198,.07);}
 .entry-prize.orange{border-color:rgba(232,140,48,.25);color:#e88c30;background:rgba(232,140,48,.07);}
-#login-panel{display:none;margin-top:1.5rem;text-align:left;}
+.entry-btns{display:flex;flex-direction:column;gap:10px;}
+.btn-public{width:100%;background:linear-gradient(135deg,rgba(92,224,198,.15),rgba(92,224,198,.05));border:1px solid rgba(92,224,198,.4);border-radius:14px;padding:15px;color:#5ce0c6;font-size:15px;font-weight:600;font-family:"Syne",sans-serif;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-public:hover{background:linear-gradient(135deg,rgba(92,224,198,.25),rgba(92,224,198,.1));transform:translateY(-1px);}
+.btn-admin{width:100%;background:linear-gradient(135deg,rgba(124,92,252,.15),rgba(124,92,252,.05));border:1px solid rgba(124,92,252,.4);border-radius:14px;padding:15px;color:#a98fff;font-size:15px;font-weight:600;font-family:"Syne",sans-serif;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-admin:hover{background:linear-gradient(135deg,rgba(124,92,252,.25),rgba(124,92,252,.1));transform:translateY(-1px);}
+.entry-divider{display:flex;align-items:center;gap:10px;margin:.75rem 0;color:var(--muted);font-size:11px;}
+.entry-divider::before,.entry-divider::after{content:"";flex:1;height:0.5px;background:var(--border2);}
+.entry-phrase{font-size:12px;color:rgba(122,122,154,.7);margin-top:1.25rem;font-style:italic;}
+.entry-credits{font-size:11px;color:rgba(122,122,154,0.4);margin-top:.75rem;}
+.entry-credits a{color:rgba(124,92,252,0.45);text-decoration:none;}
 .field{margin-bottom:.875rem;}
 .field label{display:block;font-size:11px;color:var(--muted);margin-bottom:5px;letter-spacing:.5px;text-transform:uppercase;}
-.field input{width:100%;background:var(--surface2);border:0.5px solid var(--border2);border-radius:var(--r2);padding:10px 14px;color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border .2s;}
+.field input{width:100%;background:var(--surface2);border:0.5px solid var(--border2);border-radius:var(--r2);padding:10px 14px;color:var(--text);font-size:14px;font-family:"DM Sans",sans-serif;outline:none;transition:border .2s;}
 .field input:focus{border-color:var(--accent);}
-.btn-primary{width:100%;background:var(--accent);border:none;border-radius:var(--r2);padding:12px;color:#fff;font-size:14px;font-weight:500;font-family:'Syne',sans-serif;cursor:pointer;transition:opacity .2s,transform .1s;}
-.btn-primary:hover{opacity:.88;}
-.btn-primary:active{transform:scale(.98);}
-.btn-back{width:100%;background:transparent;border:0.5px solid var(--border2);border-radius:var(--r2);padding:10px;color:var(--muted);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:6px;}
+.btn-primary{width:100%;background:var(--accent);border:none;border-radius:var(--r2);padding:12px;color:#fff;font-size:14px;font-weight:500;font-family:"Syne",sans-serif;cursor:pointer;}
+.btn-back{width:100%;background:transparent;border:0.5px solid var(--border2);border-radius:var(--r2);padding:10px;color:var(--muted);font-size:13px;cursor:pointer;font-family:"DM Sans",sans-serif;margin-top:6px;}
 .login-error{background:rgba(224,85,85,.12);border:0.5px solid rgba(224,85,85,.3);border-radius:var(--r2);padding:10px 14px;font-size:13px;color:#e07777;margin-top:.75rem;display:none;}
+.group-select-screen{text-align:center;}
+.group-select-screen h2{font-family:"Syne",sans-serif;font-size:18px;margin-bottom:8px;}
+.group-select-screen p{font-size:13px;color:var(--muted);margin-bottom:1.25rem;}
+.group-btn-list{display:flex;flex-direction:column;gap:10px;}
+.group-btn{width:100%;background:var(--surface2);border:0.5px solid var(--border2);border-radius:var(--r);padding:14px 18px;color:var(--text);font-size:14px;font-weight:500;font-family:"Syne",sans-serif;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:12px;text-align:left;}
+.group-btn:hover{border-color:var(--accent);background:rgba(124,92,252,.08);}
+.group-btn .gb-icon{font-size:24px;flex-shrink:0;}
+.group-btn .gb-name{font-size:14px;font-weight:600;}
+.group-btn .gb-manager{font-size:12px;color:var(--muted);margin-top:2px;}
+.back-link{background:transparent;border:none;color:var(--muted);font-size:13px;cursor:pointer;margin-top:1rem;font-family:"DM Sans",sans-serif;text-decoration:underline;}
 #app{display:none;position:relative;z-index:1;min-height:100vh;}
-.header{background:var(--surface);border-bottom:0.5px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:50;gap:12px;}
-.header-brand{display:flex;align-items:center;gap:10px;flex-shrink:0;}
-.header-brand span{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;}
+.header{background:var(--surface);border-bottom:0.5px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:50;gap:10px;flex-wrap:wrap;}
+.header-brand{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.header-brand span{font-family:"Syne",sans-serif;font-size:15px;font-weight:700;}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--accent2);}
-.mode-badge{font-size:11px;padding:3px 10px;border-radius:999px;font-weight:500;flex-shrink:0;}
+.mode-badge{font-size:11px;padding:3px 10px;border-radius:999px;font-weight:500;}
 .mode-badge.public{background:rgba(92,224,198,.12);color:#5ce0c6;border:0.5px solid rgba(92,224,198,.25);}
 .mode-badge.admin{background:rgba(124,92,252,.12);color:#a98fff;border:0.5px solid rgba(124,92,252,.25);}
+.group-badge{font-size:11px;padding:3px 10px;border-radius:999px;background:rgba(245,200,66,.1);color:var(--gold);border:0.5px solid rgba(245,200,66,.25);}
 .nav-tabs{display:flex;gap:2px;flex-wrap:wrap;}
-.nav-tab{background:transparent;border:none;border-radius:var(--r2);padding:6px 11px;color:var(--muted);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;white-space:nowrap;}
+.nav-tab{background:transparent;border:none;border-radius:var(--r2);padding:6px 10px;color:var(--muted);font-size:12px;cursor:pointer;font-family:"DM Sans",sans-serif;transition:all .15s;white-space:nowrap;}
 .nav-tab.active{background:rgba(124,92,252,.15);color:var(--accent);}
 .nav-tab:hover:not(.active){color:var(--text);}
-.header-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
-.header-user{font-size:13px;color:var(--muted);}
-.btn-sm{background:transparent;border:0.5px solid var(--border2);border-radius:var(--r2);padding:6px 14px;color:var(--muted);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.header-right{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.header-user{font-size:12px;color:var(--muted);}
+.btn-sm{background:transparent;border:0.5px solid var(--border2);border-radius:var(--r2);padding:5px 12px;color:var(--muted);font-size:12px;cursor:pointer;font-family:"DM Sans",sans-serif;transition:all .2s;}
 .btn-sm:hover{border-color:var(--accent);color:var(--accent);}
 .main{padding:2rem;max-width:1100px;margin:0 auto;}
 .public-banner{background:rgba(92,224,198,.06);border:0.5px solid rgba(92,224,198,.2);border-radius:var(--r);padding:1rem 1.25rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:10px;}
 .public-banner span{font-size:13px;color:#5ce0c6;}
 .phrase-banner{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:1.25rem 1.5rem;margin-bottom:2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
-.phrase-text{font-family:'Syne',sans-serif;font-size:15px;color:var(--accent2);font-style:italic;}
+.phrase-text{font-family:"Syne",sans-serif;font-size:15px;color:var(--accent2);font-style:italic;}
 .phrase-sub{font-size:12px;color:var(--muted);margin-top:3px;}
-.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:2rem;}
-.stat-card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:1rem 1.25rem;transition:border-color .2s;}
-.stat-card:hover{border-color:var(--border2);}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:2rem;}
+.stat-card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:1rem 1.25rem;}
 .stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
-.stat-val{font-family:'Syne',sans-serif;font-size:26px;font-weight:700;}
+.stat-val{font-family:"Syne",sans-serif;font-size:26px;font-weight:700;}
 .stat-sub{font-size:12px;color:var(--muted);margin-top:4px;}
 .pizza-card{background:rgba(232,140,48,.07);border:0.5px solid rgba(232,140,48,.25);border-radius:var(--r);padding:1.5rem;margin-bottom:2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
-.pizza-info h3{font-family:'Syne',sans-serif;font-size:18px;color:#e8a060;}
+.pizza-info h3{font-family:"Syne",sans-serif;font-size:18px;color:#e8a060;}
 .pizza-info p{font-size:13px;color:var(--muted);margin-top:4px;}
 .pizza-timer{display:flex;gap:12px;align-items:flex-end;}
 .pizza-unit{text-align:center;}
-.pizza-num{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:var(--pizza);line-height:1;}
+.pizza-num{font-family:"Syne",sans-serif;font-size:32px;font-weight:800;color:var(--pizza);line-height:1;}
 .pizza-lbl{font-size:10px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.5px;}
-.pizza-sep{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:var(--pizza);padding-bottom:4px;}
+.pizza-sep{font-family:"Syne",sans-serif;font-size:24px;font-weight:800;color:var(--pizza);padding-bottom:4px;}
 .players-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-bottom:2rem;}
-.player-card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:1.5rem;position:relative;overflow:hidden;transition:border-color .2s,transform .2s;animation:fadeSlideIn .4s ease both;}
+.player-card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:1.5rem;position:relative;overflow:hidden;transition:all .2s;animation:fadeSlideIn .4s ease both;}
 .player-card:hover{border-color:var(--border2);transform:translateY(-2px);}
 .player-card.leader{border-color:rgba(245,200,66,.3);}
-.player-card.leader::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);}
-.player-card.near-goal::after{content:'🔥 Quase lá!';position:absolute;top:12px;right:12px;font-size:11px;background:rgba(245,200,66,.15);color:var(--gold);padding:3px 8px;border-radius:999px;border:0.5px solid rgba(245,200,66,.3);}
+.player-card.leader::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);}
+.player-card.near-goal::after{content:"Quase la!";position:absolute;top:12px;right:12px;font-size:11px;background:rgba(245,200,66,.15);color:var(--gold);padding:3px 8px;border-radius:999px;}
 .player-card.shielded{border-color:rgba(92,224,198,.3);}
 @keyframes fadeSlideIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
 .player-top{display:flex;align-items:center;gap:12px;margin-bottom:1rem;}
-.avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:16px;font-weight:700;flex-shrink:0;}
+.avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:"Syne",sans-serif;font-size:16px;font-weight:700;flex-shrink:0;}
 .player-info{flex:1;}
-.player-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:600;}
+.player-name{font-family:"Syne",sans-serif;font-size:15px;font-weight:600;}
 .player-role{font-size:12px;color:var(--muted);margin-top:2px;}
 .player-streak{font-size:11px;color:var(--gold);margin-top:2px;}
-.player-pts-big{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;line-height:1;text-align:right;}
+.player-pts-big{font-family:"Syne",sans-serif;font-size:30px;font-weight:800;line-height:1;text-align:right;}
 .player-pts-label{font-size:11px;color:var(--muted);text-align:right;margin-top:2px;}
 .prog-wrap{background:rgba(255,255,255,.06);border-radius:999px;height:7px;margin:8px 0 6px;overflow:hidden;}
-.prog-bar{height:7px;border-radius:999px;transition:width .6s cubic-bezier(.4,0,.2,1);}
+.prog-bar{height:7px;border-radius:999px;transition:width .6s;}
 .prog-bar.pulse{animation:pulsebar 1.2s ease-in-out infinite;}
 @keyframes pulsebar{0%,100%{opacity:1;}50%{opacity:.6;}}
 .prog-info{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);}
@@ -118,285 +121,230 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .reward-badge.choc{background:rgba(192,113,74,.12);border-color:rgba(192,113,74,.3);color:#d4956e;}
 .reward-badge.pizza{background:rgba(232,140,48,.12);border-color:rgba(232,140,48,.3);color:#e8a060;}
 .reward-badge.shield{background:rgba(92,224,198,.12);border-color:rgba(92,224,198,.3);color:#5ce0c6;}
-.reward-badge.dupla{background:rgba(92,224,198,.1);border-color:rgba(92,224,198,.25);color:#5ce0c6;}
 .admin-btns{display:flex;gap:5px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:0.5px solid var(--border);}
-.btn-add{background:transparent;border:0.5px solid var(--border2);border-radius:var(--r2);padding:5px 10px;color:var(--muted);font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;}
+.btn-add{background:transparent;border:0.5px solid var(--border2);border-radius:var(--r2);padding:5px 10px;color:var(--muted);font-size:11px;cursor:pointer;font-family:"DM Sans",sans-serif;transition:all .15s;}
 .btn-add:hover{border-color:var(--accent);color:var(--accent);}
 .btn-add.danger:hover{border-color:var(--danger);color:var(--danger);}
-.section{display:none;}
-.section.active{display:block;}
-.section-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;margin-bottom:1.25rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-.section-title .badge{font-size:11px;background:rgba(124,92,252,.15);color:var(--accent);padding:3px 10px;border-radius:999px;font-family:'DM Sans',sans-serif;font-weight:400;}
+.section{display:none;}.section.active{display:block;}
+.section-title{font-family:"Syne",sans-serif;font-size:20px;font-weight:700;margin-bottom:1.25rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.section-title .badge{font-size:11px;background:rgba(124,92,252,.15);color:var(--accent);padding:3px 10px;border-radius:999px;font-family:"DM Sans",sans-serif;font-weight:400;}
 .empty{text-align:center;padding:3rem 1rem;color:var(--muted);font-size:14px;}
 .feed-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem;}
-.feed-filter{background:transparent;border:0.5px solid var(--border2);border-radius:999px;padding:5px 14px;color:var(--muted);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;}
+.feed-filter{background:transparent;border:0.5px solid var(--border2);border-radius:999px;padding:5px 14px;color:var(--muted);font-size:12px;cursor:pointer;font-family:"DM Sans",sans-serif;transition:all .15s;}
 .feed-filter.active{background:rgba(124,92,252,.15);color:var(--accent);border-color:var(--accent);}
 .feed-list{display:flex;flex-direction:column;gap:8px;}
-.feed-item{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r2);padding:12px 16px;display:flex;align-items:center;gap:12px;animation:fadeSlideIn .3s ease both;}
+.feed-item{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r2);padding:12px 16px;display:flex;align-items:center;gap:12px;}
 .feed-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
 .feed-body{flex:1;}
 .feed-title{font-size:13px;color:var(--text);}
 .feed-time{font-size:11px;color:var(--muted);margin-top:2px;}
-.feed-pts{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;}
-.rank-item{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r2);padding:14px 16px;display:flex;align-items:center;gap:14px;margin-bottom:8px;transition:border-color .15s,transform .15s;animation:fadeSlideIn .3s ease both;}
-.rank-item:hover{border-color:var(--border2);transform:translateX(3px);}
-.rank-num{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;width:36px;text-align:center;flex-shrink:0;}
-.rank-1{color:var(--gold);}
-.rank-2{color:var(--silver);}
-.rank-3{color:var(--bronze);}
+.feed-pts{font-family:"Syne",sans-serif;font-size:14px;font-weight:700;}
+.rank-item{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r2);padding:14px 16px;display:flex;align-items:center;gap:14px;margin-bottom:8px;transition:all .15s;}
+.rank-item:hover{border-color:var(--border2);}
+.rank-num{font-family:"Syne",sans-serif;font-size:20px;font-weight:800;width:36px;text-align:center;flex-shrink:0;}
+.rank-1{color:var(--gold);}.rank-2{color:var(--silver);}.rank-3{color:var(--bronze);}
 .rank-info{flex:1;}
 .rank-name{font-size:14px;font-weight:500;}
 .rank-detail{font-size:12px;color:var(--muted);margin-top:2px;}
-.rank-streak{font-size:11px;color:var(--gold);margin-top:2px;}
 .rank-right{text-align:right;}
-.rank-pts{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;}
+.rank-pts{font-family:"Syne",sans-serif;font-size:18px;font-weight:700;}
 .rank-prog-wrap{background:rgba(255,255,255,.06);border-radius:999px;height:4px;width:80px;margin-top:4px;overflow:hidden;}
 .rank-prog-bar{height:4px;border-radius:999px;}
 .rules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-bottom:2rem;}
 .rule-card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:1.25rem;}
 .rule-card-header{display:flex;align-items:center;gap:10px;margin-bottom:.875rem;}
 .rule-icon{font-size:24px;flex-shrink:0;}
-.rule-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:600;}
+.rule-title{font-family:"Syne",sans-serif;font-size:15px;font-weight:600;}
 .rule-subtitle{font-size:12px;color:var(--muted);margin-top:2px;}
 .rule-pts-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:0.5px solid var(--border);}
 .rule-pts-row:last-child{border-bottom:none;}
 .rule-pts-label{font-size:13px;color:var(--text);}
-.rule-pts-val{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;}
-.rule-pts-val.plus{color:#5ce0c6;}
-.rule-pts-val.minus{color:var(--danger);}
+.rule-pts-val{font-family:"Syne",sans-serif;font-size:13px;font-weight:700;}
+.rule-pts-val.plus{color:#5ce0c6;}.rule-pts-val.minus{color:var(--danger);}
 .rule-card.danger-card{border-color:rgba(224,85,85,.2);}
 .rule-alert{background:rgba(224,85,85,.08);border:0.5px solid rgba(224,85,85,.2);border-radius:var(--r2);padding:10px 14px;font-size:13px;color:#e07777;margin-top:10px;line-height:1.6;}
 .rule-highlight{background:rgba(124,92,252,.08);border:0.5px solid rgba(124,92,252,.2);border-radius:var(--r2);padding:1.25rem;margin-bottom:1.5rem;}
-.rule-highlight h3{font-family:'Syne',sans-serif;font-size:16px;color:var(--accent2);margin-bottom:.5rem;}
+.rule-highlight h3{font-family:"Syne",sans-serif;font-size:16px;color:var(--accent2);margin-bottom:.5rem;}
 .rule-highlight p{font-size:13px;color:var(--muted);line-height:1.7;}
 .rule-highlight p strong{color:var(--text);}
-.settings-card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:1.5rem;margin-bottom:1rem;max-width:520px;}
-.settings-card h3{font-family:'Syne',sans-serif;font-size:16px;margin-bottom:1rem;}
-.select-field{width:100%;background:var(--surface2);border:0.5px solid var(--border2);border-radius:var(--r2);padding:10px 14px;color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;margin-bottom:.75rem;}
+.settings-card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:1.5rem;margin-bottom:1rem;max-width:560px;}
+.settings-card h3{font-family:"Syne",sans-serif;font-size:16px;margin-bottom:1rem;}
+.select-field{width:100%;background:var(--surface2);border:0.5px solid var(--border2);border-radius:var(--r2);padding:10px 14px;color:var(--text);font-size:14px;font-family:"DM Sans",sans-serif;outline:none;margin-bottom:.75rem;}
 .bulk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;max-height:260px;overflow-y:auto;margin-bottom:1rem;}
-.bulk-item{background:var(--surface2);border:0.5px solid var(--border2);border-radius:var(--r2);padding:8px 12px;display:flex;align-items:center;gap:8px;cursor:pointer;transition:all .15s;}
+.bulk-item{background:var(--surface2);border:0.5px solid var(--border2);border-radius:var(--r2);padding:8px 12px;cursor:pointer;transition:all .15s;font-size:13px;}
 .bulk-item.selected{border-color:var(--accent);background:rgba(124,92,252,.1);}
-.bulk-item span{font-size:13px;}
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:none;align-items:center;justify-content:center;padding:1rem;}
 .modal-overlay.open{display:flex;}
 .modal{background:var(--surface);border:0.5px solid var(--border2);border-radius:20px;padding:2rem;width:100%;max-width:460px;position:relative;max-height:90vh;overflow-y:auto;}
-.modal h3{font-family:'Syne',sans-serif;font-size:18px;margin-bottom:1.25rem;}
+.modal h3{font-family:"Syne",sans-serif;font-size:18px;margin-bottom:1.25rem;}
 .modal-close{position:absolute;top:1rem;right:1rem;background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:20px;}
-.btn-accent{background:var(--accent);border:none;border-radius:var(--r2);padding:10px 20px;color:#fff;font-size:14px;font-weight:500;font-family:'Syne',sans-serif;cursor:pointer;transition:opacity .15s;}
+.btn-accent{background:var(--accent);border:none;border-radius:var(--r2);padding:10px 20px;color:#fff;font-size:14px;font-weight:500;font-family:"Syne",sans-serif;cursor:pointer;transition:opacity .15s;}
 .btn-accent:hover{opacity:.85;}
-.btn-ghost{background:transparent;border:0.5px solid var(--border2);border-radius:var(--r2);padding:10px 20px;color:var(--muted);font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif;}
-
-/* VOTAÇÃO */
+.btn-ghost{background:transparent;border:0.5px solid var(--border2);border-radius:var(--r2);padding:10px 20px;color:var(--muted);font-size:14px;cursor:pointer;font-family:"DM Sans",sans-serif;}
 .vot-banner{border-radius:var(--r);padding:1.5rem;margin-bottom:1.5rem;text-align:center;}
 .vot-banner.active{background:rgba(224,85,85,.08);border:0.5px solid rgba(224,85,85,.3);}
-.vot-timer-big{font-family:'Syne',sans-serif;font-size:56px;font-weight:800;line-height:1;}
+.vot-timer-big{font-family:"Syne",sans-serif;font-size:56px;font-weight:800;line-height:1;}
 .vot-timer-big.danger{color:var(--danger);animation:blink 1s infinite;}
 .vot-timer-big.ok{color:var(--gold);}
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:.4;}}
-.vot-titulo{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;margin-bottom:.5rem;}
-.vot-sub{font-size:13px;color:var(--muted);}
-.vot-opcoes{display:grid;grid-template-columns:1fr;gap:10px;margin:1.25rem 0;}
-.vot-opcao{background:var(--surface2);border:0.5px solid var(--border2);border-radius:var(--r);padding:1rem 1.25rem;cursor:pointer;transition:all .2s;text-align:left;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text);}
-.vot-opcao:hover{border-color:var(--accent);background:rgba(124,92,252,.08);}
-.vot-opcao.selected{border-color:var(--accent);background:rgba(124,92,252,.15);color:#a98fff;}
+.vot-titulo{font-family:"Syne",sans-serif;font-size:20px;font-weight:700;margin-bottom:.5rem;}
 .vot-form{background:var(--surface);border:0.5px solid var(--border2);border-radius:var(--r);padding:1.5rem;max-width:460px;margin:0 auto;}
-.resultado-card{background:var(--surface);border:0.5px solid var(--gold);border-radius:var(--r);padding:1.5rem;margin-bottom:1rem;animation:fadeSlideIn .5s ease both;}
+.vot-opcoes{display:grid;gap:10px;margin:1rem 0;}
+.vot-opcao{background:var(--surface2);border:0.5px solid var(--border2);border-radius:var(--r);padding:1rem;cursor:pointer;transition:all .2s;text-align:left;font-size:14px;font-family:"DM Sans",sans-serif;color:var(--text);}
+.vot-opcao:hover{border-color:var(--accent);}
+.vot-opcao.selected{border-color:var(--accent);background:rgba(124,92,252,.15);color:#a98fff;}
 .resultado-bar-wrap{background:rgba(255,255,255,.06);border-radius:999px;height:8px;overflow:hidden;margin-top:6px;}
-.resultado-bar{height:8px;border-radius:999px;transition:width 1s cubic-bezier(.4,0,.2,1);}
-
+.resultado-bar{height:8px;border-radius:999px;transition:width 1s;}
+.group-visibility-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:0.5px solid var(--border);}
+.group-visibility-row:last-child{border-bottom:none;}
+.toggle{width:40px;height:22px;background:var(--border2);border-radius:999px;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;}
+.toggle.on{background:var(--accent);}
+.toggle::after{content:"";position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:3px;transition:left .2s;}
+.toggle.on::after{left:21px;}
+.admin-user-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:0.5px solid var(--border);}
+.admin-user-row:last-child{border-bottom:none;}
+.admin-user-info{flex:1;}
+.admin-user-name{font-size:14px;font-weight:500;}
+.admin-user-email{font-size:12px;color:var(--muted);margin-top:2px;}
+.admin-user-badge{font-size:11px;padding:2px 8px;border-radius:999px;}
+.badge-super{background:rgba(245,200,66,.12);color:var(--gold);border:0.5px solid rgba(245,200,66,.3);}
+.badge-admin{background:rgba(124,92,252,.12);color:#a98fff;border:0.5px solid rgba(124,92,252,.3);}
 #toast{position:fixed;bottom:2rem;right:2rem;background:var(--surface2);border:0.5px solid var(--border2);border-radius:var(--r);padding:12px 20px;font-size:13px;color:var(--text);z-index:999;transform:translateY(20px);opacity:0;transition:all .3s;pointer-events:none;}
 #toast.show{transform:translateY(0);opacity:1;}
 #confetti{position:fixed;inset:0;pointer-events:none;z-index:300;}
-
-@media(max-width:640px){
-  .main{padding:1rem;}
-  .header{padding:0 1rem;height:auto;padding-top:10px;padding-bottom:10px;}
-  .nav-tabs{gap:1px;}
-  .nav-tab{padding:5px 7px;font-size:11px;}
-  .players-grid{grid-template-columns:1fr;}
-  .credits-bar{padding:8px 1rem;}
-  .vot-timer-big{font-size:40px;}
-}
+@media(max-width:640px){.main{padding:1rem;}.header{padding:0 1rem;height:auto;padding-top:10px;padding-bottom:10px;}.nav-tab{padding:5px 7px;font-size:11px;}.players-grid{grid-template-columns:1fr;}.vot-timer-big{font-size:40px;}}
 </style>
 </head>
 <body>
-<div class="blob blob1"></div>
-<div class="blob blob2"></div>
+<div class="blob blob1"></div><div class="blob blob2"></div>
 <canvas id="confetti"></canvas>
-
 <div id="entry-screen">
-  <!-- Floating emojis background -->
-  <div class="entry-floating" style="left:5%;animation-duration:8s;animation-delay:0s;font-size:24px;">🍕</div>
-  <div class="entry-floating" style="left:15%;animation-duration:11s;animation-delay:2s;font-size:20px;">🍫</div>
-  <div class="entry-floating" style="left:25%;animation-duration:9s;animation-delay:4s;font-size:22px;">🏆</div>
-  <div class="entry-floating" style="left:40%;animation-duration:13s;animation-delay:1s;font-size:18px;">⭐</div>
-  <div class="entry-floating" style="left:55%;animation-duration:10s;animation-delay:3s;font-size:24px;">🍕</div>
-  <div class="entry-floating" style="left:68%;animation-duration:7s;animation-delay:0.5s;font-size:20px;">🎁</div>
-  <div class="entry-floating" style="left:78%;animation-duration:12s;animation-delay:2.5s;font-size:22px;">🍫</div>
-  <div class="entry-floating" style="left:88%;animation-duration:9s;animation-delay:5s;font-size:18px;">🏅</div>
-  <div class="entry-floating" style="left:35%;animation-duration:14s;animation-delay:6s;font-size:16px;">⚡</div>
-  <div class="entry-floating" style="left:60%;animation-duration:8s;animation-delay:7s;font-size:20px;">🛡️</div>
-  <div class="entry-floating" style="left:10%;animation-duration:15s;animation-delay:8s;font-size:16px;">🦹</div>
-  <div class="entry-floating" style="left:82%;animation-duration:11s;animation-delay:1.5s;font-size:18px;">🎯</div>
-
+  <div class="entry-floating" style="left:5%;animation-duration:8s;animation-delay:0s">🍕</div>
+  <div class="entry-floating" style="left:15%;animation-duration:11s;animation-delay:2s;font-size:20px">🍫</div>
+  <div class="entry-floating" style="left:25%;animation-duration:9s;animation-delay:4s">🏆</div>
+  <div class="entry-floating" style="left:42%;animation-duration:13s;animation-delay:1s;font-size:18px">⭐</div>
+  <div class="entry-floating" style="left:58%;animation-duration:10s;animation-delay:3s">🍕</div>
+  <div class="entry-floating" style="left:70%;animation-duration:7s;animation-delay:0.5s;font-size:20px">🎁</div>
+  <div class="entry-floating" style="left:80%;animation-duration:12s;animation-delay:2.5s">🍫</div>
+  <div class="entry-floating" style="left:90%;animation-duration:9s;animation-delay:5s;font-size:18px">🏅</div>
+  <div class="entry-floating" style="left:33%;animation-duration:14s;animation-delay:6s;font-size:16px">⚡</div>
+  <div class="entry-floating" style="left:62%;animation-duration:8s;animation-delay:7s;font-size:20px">🛡️</div>
   <div class="entry-box">
-    <span class="entry-trophy">🏆</span>
-    <div class="entry-title">Arena de Recompensas</div>
-    <div class="entry-subtitle">iGreen Energy · Bem-vindo ao jogo!</div>
-
-    <div class="entry-prizes">
-      <span class="entry-prize gold">🍕 Pizza</span>
-      <span class="entry-prize teal">🍫 Chocolate</span>
-      <span class="entry-prize orange">🧂 Torcida</span>
-      <span class="entry-prize gold">🏅 TOP 3</span>
-      <span class="entry-prize teal">⚡ Poderes</span>
+    <div id="step-mode">
+      <span class="entry-trophy">🏆</span>
+      <div class="entry-title">Arena de Recompensas</div>
+      <div class="entry-subtitle">iGreen Energy · Bem-vindo ao jogo!</div>
+      <div class="entry-prizes">
+        <span class="entry-prize gold">🍕 Pizza</span>
+        <span class="entry-prize teal">🍫 Chocolate</span>
+        <span class="entry-prize orange">🧂 Torcida</span>
+        <span class="entry-prize gold">🏅 TOP 3</span>
+        <span class="entry-prize teal">⚡ Poderes</span>
+      </div>
+      <div class="entry-btns">
+        <button class="btn-public" onclick="goStep('step-pub-group')"><span style="font-size:18px">👁️</span><span>Visualizar placar — acesso livre</span></button>
+        <div class="entry-divider">ou</div>
+        <button class="btn-admin" onclick="goStep('step-login')"><span style="font-size:18px">🔐</span><span>Entrar como admin</span></button>
+      </div>
+      <p class="entry-phrase" id="entry-phrase"></p>
+      <p class="entry-credits">Desenvolvido por <strong>Jennifer Silveira</strong> · <a href="mailto:jennifer.silveira@igreenenergy.com.br">jennifer.silveira@igreenenergy.com.br</a> · 2026</p>
     </div>
-
-    <div id="entry-buttons" class="entry-btns">
-      <button class="btn-public" onclick="enterPublic()">
-        <span style="font-size:18px">👁️</span>
-        <span>Visualizar placar — acesso livre</span>
-      </button>
-      <div class="entry-divider">ou</div>
-      <button class="btn-admin" onclick="showLoginPanel()">
-        <span style="font-size:18px">🔐</span>
-        <span>Entrar como admin</span>
-      </button>
+    <div id="step-pub-group" style="display:none" class="group-select-screen">
+      <div style="font-size:36px;margin-bottom:.5rem">👁️</div>
+      <h2>Selecione o grupo</h2>
+      <p>Escolha qual placar você quer visualizar</p>
+      <div class="group-btn-list" id="pub-group-list"></div>
+      <button class="back-link" onclick="goStep('step-mode')">← Voltar</button>
     </div>
-
-    <div id="login-panel">
+    <div id="step-login" style="display:none">
+      <div style="font-size:36px;margin-bottom:.5rem">🔐</div>
+      <h2 style="font-family:'Syne',sans-serif;font-size:18px;margin-bottom:.25rem">Acesso admin</h2>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:1.25rem">Entre com suas credenciais</p>
       <div class="field"><label>E-mail</label><input type="email" id="login-email" placeholder="seu@email.com"></div>
       <div class="field"><label>Senha</label><input type="password" id="login-pass" placeholder="••••••••"></div>
-      <button class="btn-primary" onclick="doLogin()">Entrar como admin →</button>
-      <button class="btn-back" onclick="hideLoginPanel()">← Voltar</button>
+      <button class="btn-primary" onclick="doLogin()">Entrar →</button>
+      <button class="btn-back" onclick="goStep('step-mode')">← Voltar</button>
       <div class="login-error" id="login-error">E-mail ou senha incorretos.</div>
     </div>
-
-    <p class="entry-phrase" id="entry-phrase"></p>
-    <p class="entry-credits">Desenvolvido por <strong>Jennifer Silveira</strong> · <a href="mailto:jennifer.silveira@igreenenergy.com.br">jennifer.silveira@igreenenergy.com.br</a> · 2026</p>
+    <div id="step-adm-group" style="display:none" class="group-select-screen">
+      <div style="font-size:36px;margin-bottom:.5rem">⚙️</div>
+      <h2>Selecione o grupo</h2>
+      <p>Qual grupo você quer gerenciar?</p>
+      <div class="group-btn-list" id="adm-group-list"></div>
+      <button class="back-link" onclick="doLogout()">← Sair</button>
+    </div>
   </div>
 </div>
-
 <div id="app">
   <div class="credits-bar">
     <span>⚡ <strong>Arena de Recompensas</strong> · iGreen Energy</span>
     <span>Jennifer Silveira · <a href="mailto:jennifer.silveira@igreenenergy.com.br">jennifer.silveira@igreenenergy.com.br</a> · 2026</span>
   </div>
   <div class="header">
-    <div class="header-brand"><div class="dot"></div><span>Arena de Recompensas</span><span class="mode-badge" id="mode-badge"></span></div>
+    <div class="header-brand"><div class="dot"></div><span>Arena</span><span class="mode-badge" id="mode-badge"></span><span class="group-badge" id="group-badge"></span></div>
     <div class="nav-tabs">
       <button class="nav-tab active" onclick="showSection('dashboard')">Dashboard</button>
       <button class="nav-tab" onclick="showSection('regras')">Regras</button>
       <button class="nav-tab" onclick="showSection('ranking')">Ranking</button>
       <button class="nav-tab" onclick="showSection('duplas')">🤝 Duplas</button>
-      <button class="nav-tab" id="tab-votacao" onclick="showSection('votacao')">🗳️ Votação</button>
+      <button class="nav-tab" onclick="showSection('votacao')">🗳️ Votação</button>
       <button class="nav-tab" onclick="showSection('poderes')">⚡ Poderes</button>
       <button class="nav-tab" onclick="showSection('historico')">Histórico</button>
       <button class="nav-tab admin-only" onclick="showSection('settings')" style="display:none">Config</button>
     </div>
     <div class="header-right">
       <span class="header-user" id="header-user"></span>
+      <button class="btn-sm" onclick="switchGroup()">↩ Grupos</button>
       <button class="btn-sm" onclick="doLogout()">Sair</button>
     </div>
   </div>
-
   <div class="main">
-
-    <!-- DASHBOARD -->
     <div class="section active" id="section-dashboard">
-      <div class="public-banner" id="public-notice" style="display:none"><span>👁️ Você está em modo de visualização — apenas a Jennifer pode editar.</span></div>
-
-      <!-- VOTAÇÃO ATIVA NO DASHBOARD -->
+      <div class="public-banner" id="public-notice" style="display:none"><span>👁️ Modo visualização — apenas admins podem editar.</span></div>
       <div id="dash-votacao-banner" style="display:none;margin-bottom:1.5rem;"></div>
-
-      <div class="phrase-banner">
-        <div><div class="phrase-text" id="daily-phrase"></div><div class="phrase-sub">💡 Frase do dia — iGreen Energy</div></div>
-        <div style="font-size:32px">⚡</div>
-      </div>
+      <div class="phrase-banner"><div><div class="phrase-text" id="daily-phrase"></div><div class="phrase-sub">💡 Frase do dia · iGreen Energy</div></div><div style="font-size:32px">⚡</div></div>
       <div class="stats-row" id="stats-row"></div>
       <div class="pizza-card">
-        <div class="pizza-info">
-          <h3>🍕 Próxima pizza</h3>
-          <p>A cada 10 dias quem acumular 100 pontos escolhe o sabor!</p>
-          <div id="pizza-dates-display" style="margin-top:8px;font-size:12px;color:var(--muted);line-height:1.9;"></div>
-        </div>
-        <div>
-          <div class="pizza-timer" id="pizza-timer"></div>
-          <div id="pizza-not-started" style="display:none;text-align:center;"><div style="font-family:'Syne',sans-serif;font-size:13px;color:var(--muted)">Ciclo não iniciado</div><div style="font-size:11px;color:rgba(122,122,154,.5);margin-top:4px">Aguardando admin definir datas</div></div>
-        </div>
+        <div class="pizza-info"><h3>🍕 Próxima pizza</h3><p>A cada 10 dias quem acumular 100 pontos escolhe o sabor!</p><div id="pizza-dates-display" style="margin-top:8px;font-size:12px;color:var(--muted);line-height:1.9;"></div></div>
+        <div><div class="pizza-timer" id="pizza-timer"></div><div id="pizza-not-started" style="display:none;text-align:center;"><div style="font-family:'Syne',sans-serif;font-size:13px;color:var(--muted)">Ciclo não iniciado</div><div style="font-size:11px;color:rgba(122,122,154,.5);margin-top:4px">Aguardando admin definir datas</div></div></div>
       </div>
-      <div class="section-title" id="dash-players-title">
-        Colaboradores <span class="badge" id="players-count-badge"></span>
+      <div class="section-title" id="dash-players-title">Colaboradores <span class="badge" id="players-count-badge"></span>
         <button class="btn-sm admin-only" onclick="openAddPlayer()" style="display:none">+ Colaborador</button>
-        <button class="btn-sm admin-only" onclick="openBulkModal()" style="display:none;margin-left:4px">+ Pontos em grupo</button>
+        <button class="btn-sm admin-only" onclick="openBulkModal()" style="display:none;margin-left:4px">+ Grupo</button>
         <button class="btn-sm" onclick="undoLast()" id="undo-btn" style="display:none;border-color:rgba(245,200,66,.3);color:var(--gold)">↩ Desfazer</button>
       </div>
       <div class="players-grid" id="players-grid"></div>
     </div>
-
-    <!-- REGRAS -->
     <div class="section" id="section-regras">
       <div class="section-title">Regras do jogo 🎮</div>
-      <div class="rule-highlight"><h3>⚡ Como funciona</h3><p>Ciclos de <strong>10 dias</strong>. Acumule pontos e quem atingir <strong>100 pts</strong> ganha pizza — você escolhe o <strong>sabor</strong>! Monitorias descontam <strong>15 pts</strong> por ocorrência. Tire 100% nas 2 monitorias e ganhe um <strong>poder especial</strong>. Com <strong>90 pts</strong> você pode convidar alguém (≥50 pts) para uma dupla e dividir 1 pizza!</p></div>
+      <div class="rule-highlight"><h3>⚡ Como funciona</h3><p>Ciclos de <strong>10 dias</strong>. Acumule pontos e quem atingir <strong>100 pts</strong> ganha pizza — você escolhe o <strong>sabor</strong>! Monitorias descontam <strong>15 pts</strong>. Tire 100% nas 2 monitorias e ganhe um <strong>poder especial</strong>. Com <strong>90 pts</strong> você pode convidar alguém (≥50 pts) para uma dupla!</p></div>
       <div class="rules-grid">
-        <div class="rule-card"><div class="rule-card-header"><span class="rule-icon">🍫</span><div><div class="rule-title">Chocolate semanal</div><div class="rule-subtitle">Seg a Qui · 2 vencedores/semana</div></div></div><div class="rule-pts-row"><span class="rule-pts-label">📞 Maior conversão (ligações)</span><span class="rule-pts-val plus">+15 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">💬 Mais atendimentos (chat)</span><span class="rule-pts-val plus">+15 pts</span></div><div style="font-size:12px;color:var(--muted);margin-top:10px;line-height:1.6;">1 chocolate por categoria. Cada vencedor acumula pontos para a pizza.</div></div>
-        <div class="rule-card"><div class="rule-card-header"><span class="rule-icon">🏅</span><div><div class="rule-title">TOP 3 Recebimentos</div><div class="rule-subtitle">Toda segunda · meta proporcional</div></div></div><div class="rule-pts-row"><span class="rule-pts-label">🥇 TOP 1 — Torcida à escolha</span><span class="rule-pts-val plus">+30 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">🥈 TOP 2 — Torcida à escolha</span><span class="rule-pts-val plus">+20 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">🥉 TOP 3 — Torcida à escolha</span><span class="rule-pts-val plus">+10 pts</span></div><div style="font-size:12px;color:var(--muted);margin-top:10px;line-height:1.7;">Sabores: <strong style="color:var(--text)">cebola, churrasco ou pimenta</strong>.<br><br>🎁 <strong style="color:var(--text)">A Torcida é garantida</strong> para quem estiver no TOP 3, independente da meta.<br><br>⚠️ <strong style="color:var(--danger)">Os pontos só são acumulados</strong> se a pessoa tiver atingido o valor proporcional esperado até aquele dia. Estar no TOP 3 sem bater o proporcional = Torcida, mas <strong style="color:var(--danger)">zero pontos</strong>.</div></div>
-        <div class="rule-card"><div class="rule-card-header"><span class="rule-icon">🕘</span><div><div class="rule-title">Disciplina diária</div><div class="rule-subtitle">+5 ou -5 pts · todo dia</div></div></div><div class="rule-pts-row"><span class="rule-pts-label">✅ Chegar até as 9h</span><span class="rule-pts-val plus">+5 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">❌ Atraso</span><span class="rule-pts-val minus">-5 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">✅ Pausas no horário</span><span class="rule-pts-val plus">+5 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">❌ Pausas descumpridas</span><span class="rule-pts-val minus">-5 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">✅ Presença (sem falta)</span><span class="rule-pts-val plus">+5 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">❌ Falta ou atestado</span><span class="rule-pts-val minus">-5 pts</span></div><div style="font-size:12px;color:var(--muted);margin-top:10px;line-height:1.6;">☕ 15min antes do almoço · 🍽️ 1h almoço · ☕ 15min após.</div></div>
-        <div class="rule-card"><div class="rule-card-header"><span class="rule-icon">🍕</span><div><div class="rule-title">Meta da pizza</div><div class="rule-subtitle">A cada 10 dias</div></div></div><div class="rule-pts-row"><span class="rule-pts-label">Meta para ganhar</span><span class="rule-pts-val plus">100 pts</span></div><div style="font-size:12px;color:var(--muted);margin-top:10px;line-height:1.6;">Você escolhe o <strong style="color:var(--text)">sabor</strong>! O contador zera a cada ciclo de 10 dias.</div></div>
-        <div class="rule-card danger-card"><div class="rule-card-header"><span class="rule-icon">⚠️</span><div><div class="rule-title">Monitoria</div><div class="rule-subtitle">-15 pts · máx. 2/semana</div></div></div><div class="rule-pts-row"><span class="rule-pts-label">Por monitoria pontuada</span><span class="rule-pts-val minus">-15 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">Máximo semanal</span><span class="rule-pts-val minus">-30 pts</span></div><div class="rule-alert">🚨 São 2 monitorias por semana. Cada desconto retira 15 pts.</div></div>
-        <div class="rule-card" style="border-color:rgba(124,92,252,.2)"><div class="rule-card-header"><span class="rule-icon">⚡</span><div><div class="rule-title">Poder especial</div><div class="rule-subtitle">100% nas 2 monitorias</div></div></div><div class="rule-pts-row"><span class="rule-pts-label">🦹 Roubar 10 pts de alguém</span><span class="rule-pts-val" style="color:#a98fff">ou</span></div><div class="rule-pts-row"><span class="rule-pts-label">🛡️ Escudo — imune 1 semana</span><span class="rule-pts-val" style="color:#5ce0c6">proteção</span></div><div style="font-size:12px;color:var(--muted);margin-top:10px;line-height:1.6;">Escolha ao vivo. Escudo bloqueia roubo e some após uso.</div></div>
-        <div class="rule-card" style="border-color:rgba(92,224,198,.2)"><div class="rule-card-header"><span class="rule-icon">🤝</span><div><div class="rule-title">Dupla</div><div class="rule-subtitle">≥90 pts convida · convidado ≥50 pts</div></div></div><div class="rule-pts-row"><span class="rule-pts-label">Meta da dupla</span><span class="rule-pts-val plus">100 pts juntos</span></div><div class="rule-pts-row"><span class="rule-pts-label">Prêmio</span><span class="rule-pts-val" style="color:#e8a060">1 pizza dividida</span></div><div style="font-size:12px;color:var(--muted);margin-top:10px;line-height:1.6;">Convidado pode recusar. Em empate → votação anônima de 1min30seg.</div></div>
-        <div class="rule-card"><div class="rule-card-header"><span class="rule-icon">🗳️</span><div><div class="rule-title">Votação anônima</div><div class="rule-subtitle">Em caso de empate</div></div></div><div style="font-size:13px;color:var(--muted);line-height:1.8;">Admin abre a votação · timer de <strong style="color:var(--text)">1min30seg</strong> automático<br>Cada pessoa digita o <strong style="color:var(--text)">primeiro nome</strong> + vota<br>Ninguém vê votos durante a votação<br>Resultado aparece no <strong style="color:var(--text)">Dashboard</strong> para todos ao encerrar</div></div>
+        <div class="rule-card"><div class="rule-card-header"><span class="rule-icon">🍫</span><div><div class="rule-title">Chocolate semanal</div><div class="rule-subtitle">Seg a Qui · 2 vencedores/semana</div></div></div><div class="rule-pts-row"><span class="rule-pts-label">📞 Maior conversão (ligações)</span><span class="rule-pts-val plus">+15 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">💬 Mais atendimentos (chat)</span><span class="rule-pts-val plus">+15 pts</span></div></div>
+        <div class="rule-card"><div class="rule-card-header"><span class="rule-icon">🏅</span><div><div class="rule-title">TOP 3 Recebimentos</div><div class="rule-subtitle">Toda segunda · meta proporcional</div></div></div><div class="rule-pts-row"><span class="rule-pts-label">🥇 TOP 1 — Torcida à escolha</span><span class="rule-pts-val plus">+30 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">🥈 TOP 2 — Torcida à escolha</span><span class="rule-pts-val plus">+20 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">🥉 TOP 3 — Torcida à escolha</span><span class="rule-pts-val plus">+10 pts</span></div><div style="font-size:12px;color:var(--muted);margin-top:10px;line-height:1.7;">Sabores: <strong style="color:var(--text)">cebola, churrasco ou pimenta</strong>.<br><br>🎁 <strong style="color:var(--text)">Torcida garantida</strong> para o TOP 3.<br>⚠️ <strong style="color:var(--danger)">Pontos só acumulam</strong> se atingiu a meta proporcional.</div></div>
+        <div class="rule-card"><div class="rule-card-header"><span class="rule-icon">🕘</span><div><div class="rule-title">Disciplina diária</div><div class="rule-subtitle">+5 ou -5 pts · todo dia</div></div></div><div class="rule-pts-row"><span class="rule-pts-label">✅ Chegar até as 9h</span><span class="rule-pts-val plus">+5 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">❌ Atraso</span><span class="rule-pts-val minus">-5 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">✅ Pausas no horário</span><span class="rule-pts-val plus">+5 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">❌ Pausas descumpridas</span><span class="rule-pts-val minus">-5 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">✅ Presença</span><span class="rule-pts-val plus">+5 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">❌ Falta ou atestado</span><span class="rule-pts-val minus">-5 pts</span></div><div style="font-size:12px;color:var(--muted);margin-top:10px">☕ 15min antes almoço · 🍽️ 1h almoço · ☕ 15min após.</div></div>
+        <div class="rule-card"><div class="rule-card-header"><span class="rule-icon">🍕</span><div><div class="rule-title">Meta da pizza</div><div class="rule-subtitle">A cada 10 dias</div></div></div><div class="rule-pts-row"><span class="rule-pts-label">Meta para ganhar</span><span class="rule-pts-val plus">100 pts</span></div></div>
+        <div class="rule-card danger-card"><div class="rule-card-header"><span class="rule-icon">⚠️</span><div><div class="rule-title">Monitoria</div><div class="rule-subtitle">-15 pts · máx. 2/semana</div></div></div><div class="rule-pts-row"><span class="rule-pts-label">Por monitoria pontuada</span><span class="rule-pts-val minus">-15 pts</span></div><div class="rule-pts-row"><span class="rule-pts-label">Máximo semanal</span><span class="rule-pts-val minus">-30 pts</span></div><div class="rule-alert">🚨 São 2 monitorias/semana. Cada desconto retira 15 pts.</div></div>
+        <div class="rule-card" style="border-color:rgba(124,92,252,.2)"><div class="rule-card-header"><span class="rule-icon">⚡</span><div><div class="rule-title">Poder especial</div><div class="rule-subtitle">100% nas 2 monitorias</div></div></div><div class="rule-pts-row"><span class="rule-pts-label">🦹 Roubar 10 pts de alguém</span><span class="rule-pts-val" style="color:#a98fff">ou</span></div><div class="rule-pts-row"><span class="rule-pts-label">🛡️ Escudo — imune 1 semana</span><span class="rule-pts-val" style="color:#5ce0c6">proteção</span></div></div>
+        <div class="rule-card" style="border-color:rgba(92,224,198,.2)"><div class="rule-card-header"><span class="rule-icon">🤝</span><div><div class="rule-title">Dupla</div><div class="rule-subtitle">≥90 pts convida · convidado ≥50 pts</div></div></div><div class="rule-pts-row"><span class="rule-pts-label">Meta da dupla</span><span class="rule-pts-val plus">100 pts juntos</span></div><div class="rule-pts-row"><span class="rule-pts-label">Prêmio</span><span class="rule-pts-val" style="color:#e8a060">1 pizza dividida</span></div></div>
+        <div class="rule-card"><div class="rule-card-header"><span class="rule-icon">🗳️</span><div><div class="rule-title">Votação anônima</div><div class="rule-subtitle">Em caso de empate</div></div></div><div style="font-size:13px;color:var(--muted);line-height:1.8">Timer de <strong style="color:var(--text)">1min30seg</strong> · cada pessoa digita o <strong style="color:var(--text)">primeiro nome</strong> e vota · resultado no Dashboard ao encerrar</div></div>
       </div>
     </div>
-
-    <!-- RANKING -->
-    <div class="section" id="section-ranking">
-      <div class="section-title">Ranking do ciclo</div>
-      <div id="ranking-list"></div>
-    </div>
-
-    <!-- DUPLAS -->
+    <div class="section" id="section-ranking"><div class="section-title">Ranking do ciclo</div><div id="ranking-list"></div></div>
     <div class="section" id="section-duplas">
       <div class="section-title">🤝 Duplas</div>
-      <div class="rule-highlight"><h3>Como funciona</h3><p>Ao atingir <strong>90 pontos</strong>, você pode convidar alguém com <strong>mínimo 50 pontos</strong>. Os pontos se somam — chegando a 100 juntos ganham <strong>1 pizza dividida</strong>. A pessoa convidada pode recusar. Em empate vai para votação anônima. Após receberem, ambos voltam a zero no próximo ciclo.</p></div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:2rem;">
-        <div class="rule-card" style="border-color:rgba(92,224,198,.2)"><div class="rule-card-header"><span class="rule-icon">🤝</span><div><div class="rule-title">Requisitos</div></div></div><div style="font-size:13px;color:var(--muted);line-height:1.9;">Você: <strong style="color:var(--text)">≥ 90 pts</strong><br>Convidado: <strong style="color:var(--text)">≥ 50 pts</strong><br>Meta: <strong style="color:#5ce0c6">100 pts somados</strong><br>Prêmio: <strong style="color:#e8a060">1 pizza dividida</strong></div></div>
-        <div class="rule-card" style="border-color:rgba(245,200,66,.2)"><div class="rule-card-header"><span class="rule-icon">⚖️</span><div><div class="rule-title">Empate</div></div></div><div style="font-size:13px;color:var(--muted);line-height:1.9;">Votação anônima na aba <strong style="color:var(--text)">🗳️ Votação</strong><br>Timer: <strong style="color:var(--text)">1min 30seg</strong><br>Resultado no Dashboard<br>Só admin vê resultado</div></div>
-      </div>
-      <div class="section-title" style="font-size:17px">Duplas ativas e histórico <span class="badge" id="duplas-count-badge">0</span>
-        <button class="btn-sm admin-only" onclick="openDuplaModal()" style="margin-left:auto;display:none">🤝 Registrar dupla</button>
-      </div>
-      <div id="duplas-list"><div class="empty">Nenhuma dupla registrada ainda.</div></div>
+      <div class="rule-highlight"><h3>Como funciona</h3><p>Ao atingir <strong>90 pontos</strong>, você pode convidar alguém com <strong>mínimo 50 pontos</strong>. Pontos se somam — chegando a 100 ganham <strong>1 pizza dividida</strong>. O convidado pode recusar. Em empate vai para votação anônima.</p></div>
+      <div class="section-title" style="font-size:17px">Registro <span class="badge" id="duplas-count-badge">0</span><button class="btn-sm admin-only" onclick="openDuplaModal()" style="margin-left:auto;display:none">🤝 Registrar</button></div>
+      <div id="duplas-list"><div class="empty">Nenhuma dupla registrada.</div></div>
     </div>
-
-    <!-- VOTAÇÃO -->
     <div class="section" id="section-votacao">
       <div class="section-title">🗳️ Votação anônima</div>
-      <div id="votacao-admin-bar" style="display:none;margin-bottom:1.5rem;">
-        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
-          <button class="btn-accent" onclick="openNovaVotacao()" id="btn-nova-votacao">+ Nova votação</button>
-          <button class="btn-sm" onclick="encerrarVotacaoManual()" id="btn-encerrar" style="display:none;border-color:rgba(224,85,85,.3);color:var(--danger)">Encerrar agora</button>
-        </div>
-      </div>
+      <div id="votacao-admin-bar" style="display:none;margin-bottom:1.5rem;"><div style="display:flex;gap:10px;flex-wrap:wrap;"><button class="btn-accent" onclick="openNovaVotacao()" id="btn-nova-votacao">+ Nova votação</button><button class="btn-sm" onclick="encerrarVotacaoManual()" id="btn-encerrar" style="display:none;border-color:rgba(224,85,85,.3);color:var(--danger)">Encerrar agora</button></div></div>
       <div id="votacao-content"></div>
     </div>
-
-    <!-- PODERES -->
     <div class="section" id="section-poderes">
-      <div class="section-title">⚡ Poderes especiais</div>
-      <div class="rule-highlight"><h3>🎯 Como ganhar</h3><p>Tire <strong>100% nas 2 monitorias da semana</strong> e escolha ao vivo: <strong>🦹 Roubar 10 pts</strong> ou <strong>🛡️ Escudo</strong> por 1 semana. Tentar roubar quem tem escudo bloqueia o roubo e consome o escudo.</p></div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-bottom:2rem;">
-        <div class="rule-card" style="border-color:rgba(224,85,85,.2)"><div class="rule-card-header"><span class="rule-icon">🦹</span><div><div class="rule-title">Roubo</div><div class="rule-subtitle">-10 pts da vítima · +10 pts pra você</div></div></div><div style="font-size:13px;color:var(--muted);line-height:1.6;">Não funciona contra escudo. Anunciado ao vivo e registrado — a vítima vê quem roubou!</div></div>
-        <div class="rule-card" style="border-color:rgba(92,224,198,.2)"><div class="rule-card-header"><span class="rule-icon">🛡️</span><div><div class="rule-title">Escudo</div><div class="rule-subtitle">Proteção por 1 semana</div></div></div><div style="font-size:13px;color:var(--muted);line-height:1.6;">Roubo bloqueado → escudo some automaticamente.</div></div>
-      </div>
-      <div class="section-title" style="font-size:17px">Registro <span class="badge" id="poderes-count-badge">0 eventos</span>
-        <button class="btn-sm admin-only" onclick="openPoderModal()" style="margin-left:auto;display:none">⚡ Registrar poder</button>
-      </div>
-      <div id="poderes-list"><div class="empty">Nenhum poder registrado ainda.</div></div>
+      <div class="section-title">⚡ Poderes <span class="badge" id="poderes-count-badge">0</span><button class="btn-sm admin-only" onclick="openPoderModal()" style="margin-left:auto;display:none">⚡ Registrar</button></div>
+      <div id="poderes-list"><div class="empty">Nenhum poder registrado.</div></div>
     </div>
-
-    <!-- HISTÓRICO -->
     <div class="section" id="section-historico">
       <div class="section-title">Histórico <span class="badge" id="hist-count"></span></div>
       <div class="feed-filters">
@@ -406,676 +354,492 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
         <button class="feed-filter" onclick="filterFeed('award',this)">🎁 Recompensas</button>
         <button class="feed-filter" onclick="filterFeed('dupla',this)">🤝 Duplas</button>
         <button class="feed-filter" onclick="filterFeed('poder',this)">⚡ Poderes</button>
-        <button class="feed-filter" onclick="filterFeed('new',this)">👤 Entradas</button>
       </div>
-      <div style="margin-bottom:1rem;"><select class="select-field" style="max-width:220px;margin-bottom:0;" id="hist-player-filter" onchange="renderHistory()"><option value="all">Todos os colaboradores</option></select></div>
+      <div style="margin-bottom:1rem;"><select class="select-field" style="max-width:220px;margin-bottom:0;" id="hist-player-filter" onchange="renderHistory()"><option value="all">Todos</option></select></div>
       <div class="feed-list" id="feed-list"></div>
     </div>
-
-    <!-- SETTINGS -->
     <div class="section" id="section-settings">
-      <div class="section-title">Configurações</div>
-      <div class="settings-card"><h3>🔑 Alterar senha</h3><div class="field"><label>Senha atual</label><input type="password" id="pw-old"></div><div class="field"><label>Nova senha</label><input type="password" id="pw-new"></div><div class="field"><label>Confirmar</label><input type="password" id="pw-confirm"></div><button class="btn-accent" onclick="changePassword()">Salvar senha</button><div id="pw-msg" style="font-size:13px;margin-top:.75rem;"></div></div>
-      <div class="settings-card"><h3>📅 Ciclo de 10 dias</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1rem;"><div class="field" style="margin-bottom:0"><label>Data de início</label><input type="date" id="cycle-start"></div><div class="field" style="margin-bottom:0"><label>Data de anúncio</label><input type="date" id="cycle-announce"></div></div><p style="font-size:12px;color:var(--muted);margin-bottom:1rem;">Encerramento = início + 10 dias (automático). A data de anúncio aparece para o time no dashboard.</p><div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn-accent" onclick="saveCycle()">▶ Iniciar ciclo</button><button class="btn-sm" onclick="pauseCycle()" id="btn-pause-cycle" style="display:none;border-color:rgba(245,200,66,.3);color:var(--gold)">⏸ Pausar ciclo</button></div><div id="cycle-status-display" style="margin-top:1rem;font-size:13px;color:var(--muted);"></div></div>
-      <div class="settings-card"><h3>🗑️ Resetar ciclo</h3><p style="font-size:13px;color:var(--muted);margin-bottom:1rem;">Zera pontos, escudos, duplas e votação.</p><button class="btn-sm" style="color:var(--danger);border-color:rgba(224,85,85,.3);" onclick="confirmReset()">Resetar ciclo</button></div>
-      <div class="settings-card"><h3>📊 Exportar CSV</h3><p style="font-size:13px;color:var(--muted);margin-bottom:1rem;">Baixe um resumo do ciclo atual.</p><button class="btn-sm" onclick="exportCSV()">⬇ Exportar CSV</button></div>
+      <div class="section-title">Config — <span id="settings-group-label" style="color:var(--gold)"></span></div>
+      <div class="settings-card"><h3>📅 Ciclo de 10 dias</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1rem;"><div class="field" style="margin-bottom:0"><label>Data de início</label><input type="date" id="cycle-start"></div><div class="field" style="margin-bottom:0"><label>Data de anúncio</label><input type="date" id="cycle-announce"></div></div><p style="font-size:12px;color:var(--muted);margin-bottom:1rem;">Encerramento = início + 10 dias. Data de anúncio aparece para o time.</p><div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn-accent" onclick="saveCycle()">▶ Iniciar ciclo</button><button class="btn-sm" onclick="pauseCycle()" id="btn-pause-cycle" style="display:none;border-color:rgba(245,200,66,.3);color:var(--gold)">⏸ Pausar</button></div><div id="cycle-status-display" style="margin-top:1rem;font-size:13px;color:var(--muted);"></div></div>
+      <div class="settings-card"><h3>🗑️ Resetar ciclo</h3><p style="font-size:13px;color:var(--muted);margin-bottom:1rem;">Zera pontos, escudos, duplas e votação deste grupo.</p><button class="btn-sm" style="color:var(--danger);border-color:rgba(224,85,85,.3);" onclick="confirmReset()">Resetar ciclo</button></div>
+      <div class="settings-card"><h3>📊 Exportar Excel</h3><p style="font-size:13px;color:var(--muted);margin-bottom:1rem;">Planilha completa do ciclo deste grupo.</p><button class="btn-accent" onclick="exportExcel()">📥 Exportar .xlsx</button></div>
+      <div id="super-admin-section" style="display:none">
+        <div class="settings-card"><h3>👁️ Visibilidade dos grupos</h3><p style="font-size:13px;color:var(--muted);margin-bottom:1rem;">Grupos visíveis aparecem na tela de seleção pública.</p><div id="group-visibility-list"></div></div>
+        <div class="settings-card"><h3>👤 Gerenciar admins</h3><p style="font-size:13px;color:var(--muted);margin-bottom:1rem;">Somente Jennifer pode excluir admins.</p><div id="admin-users-list"></div><button class="btn-sm" onclick="openAddAdminModal()" style="margin-top:1rem">+ Novo admin</button></div>
+        <div class="settings-card"><h3>🔑 Alterar senha (Jennifer)</h3><div class="field"><label>Senha atual</label><input type="password" id="pw-old"></div><div class="field"><label>Nova senha</label><input type="password" id="pw-new"></div><div class="field"><label>Confirmar</label><input type="password" id="pw-confirm"></div><button class="btn-accent" onclick="changePassword()">Salvar</button><div id="pw-msg" style="font-size:13px;margin-top:.75rem;"></div></div>
+      </div>
     </div>
-
   </div>
-
-  <div class="credits-footer">
-    <div>Desenvolvido por <strong>Jennifer Silveira</strong> · <a href="mailto:jennifer.silveira@igreenenergy.com.br">jennifer.silveira@igreenenergy.com.br</a> · © 2026 iGreen Energy</div>
-    <div style="margin-top:6px;color:rgba(122,122,154,0.4);font-size:11px;">Arena de Recompensas · Todos os direitos reservados</div>
-  </div>
+  <div class="credits-footer"><div>Desenvolvido por <strong>Jennifer Silveira</strong> · <a href="mailto:jennifer.silveira@igreenenergy.com.br">jennifer.silveira@igreenenergy.com.br</a> · © 2026 iGreen Energy</div></div>
 </div>
 
+
 <!-- MODALS -->
-<div class="modal-overlay" id="modal-player"><div class="modal"><button class="modal-close" onclick="closeModal('modal-player')">✕</button><h3 id="modal-player-title">Novo colaborador</h3><div class="field"><label>Nome completo</label><input type="text" id="p-name" placeholder="Ex: Eduarda Sanqueta"></div><div class="field"><label>Categoria</label><select class="select-field" id="p-cat"><option value="ligacao">📞 Ligações</option><option value="chat">💬 Chat</option><option value="ambos">📞💬 Ambos</option></select></div><div class="field"><label>Cor do avatar</label><select class="select-field" id="p-color"><option value="#7c5cfc,#2a1f5c">Roxo</option><option value="#5ce0c6,#0f3d35">Verde-água</option><option value="#f5c842,#3d2e00">Dourado</option><option value="#e05555,#3d1010">Vermelho</option><option value="#e88c30,#3d2000">Laranja</option><option value="#4cbb8a,#0f3d25">Verde</option><option value="#d4537e,#3d1030">Rosa</option></select></div><div style="display:flex;gap:8px;margin-top:1rem;"><button class="btn-accent" onclick="savePlayer()">Salvar</button><button class="btn-ghost" onclick="closeModal('modal-player')">Cancelar</button></div></div></div>
+<div class="modal-overlay" id="modal-player"><div class="modal"><button class="modal-close" onclick="closeModal('modal-player')">✕</button><h3 id="modal-player-title">Novo colaborador</h3><div class="field"><label>Nome</label><input type="text" id="p-name"></div><div class="field"><label>Categoria</label><select class="select-field" id="p-cat"><option value="ligacao">📞 Ligações</option><option value="chat">💬 Chat</option><option value="ambos">📞💬 Ambos</option></select></div><div class="field"><label>Cor</label><select class="select-field" id="p-color"><option value="#7c5cfc,#2a1f5c">Roxo</option><option value="#5ce0c6,#0f3d35">Verde-água</option><option value="#f5c842,#3d2e00">Dourado</option><option value="#e05555,#3d1010">Vermelho</option><option value="#e88c30,#3d2000">Laranja</option><option value="#4cbb8a,#0f3d25">Verde</option><option value="#d4537e,#3d1030">Rosa</option></select></div><div style="display:flex;gap:8px;margin-top:1rem"><button class="btn-accent" onclick="savePlayer()">Salvar</button><button class="btn-ghost" onclick="closeModal('modal-player')">Cancelar</button></div></div></div>
 
-<div class="modal-overlay" id="modal-pts"><div class="modal"><button class="modal-close" onclick="closeModal('modal-pts')">✕</button><h3>Registrar pontuação</h3><p style="font-size:13px;color:var(--muted);margin-bottom:1rem;" id="modal-pts-name"></p><div class="field"><label>Motivo</label><select class="select-field" id="pts-reason" onchange="toggleCustomPts()"><option value="top1,30">🏅 TOP 1 — +30 pts</option><option value="top2,20">🥈 TOP 2 — +20 pts</option><option value="top3,10">🥉 TOP 3 — +10 pts</option><option value="choc_lig,15">🍫 Chocolate Ligação — +15 pts</option><option value="choc_chat,15">🍫 Chocolate Chat — +15 pts</option><option disabled style="color:#444">── Disciplina diária ──</option><option value="pont,5">🕘 Pontualidade — +5 pts</option><option value="pausa,5">☕ Pausas cumpridas — +5 pts</option><option value="presenca,5">✅ Presença — +5 pts</option><option value="pont_neg,-5">🕘 Atraso — -5 pts</option><option value="pausa_neg,-5">☕ Pausas descumpridas — -5 pts</option><option value="falta,-5">❌ Falta/Atestado — -5 pts</option><option disabled style="color:#444">── Penalidades ──</option><option value="monitoria,-15">⚠️ Monitoria — -15 pts</option><option value="custom,0">✏️ Personalizado</option></select></div><div class="field" id="custom-pts-field" style="display:none"><label>Pontos (use - para descontar)</label><input type="number" id="pts-custom" placeholder="Ex: 5 ou -5"></div><div class="field" id="custom-desc-field" style="display:none"><label>Descrição</label><input type="text" id="pts-desc" placeholder="Motivo..."></div><div style="display:flex;gap:8px;margin-top:1rem;"><button class="btn-accent" onclick="savePoints()">Registrar</button><button class="btn-ghost" onclick="closeModal('modal-pts')">Cancelar</button></div></div></div>
+<div class="modal-overlay" id="modal-pts"><div class="modal"><button class="modal-close" onclick="closeModal('modal-pts')">✕</button><h3>Registrar pontuação</h3><p style="font-size:13px;color:var(--muted);margin-bottom:1rem" id="modal-pts-name"></p><div class="field"><label>Motivo</label><select class="select-field" id="pts-reason" onchange="toggleCustomPts()"><option value="top1,30">🏅 TOP 1 — +30 pts</option><option value="top2,20">🥈 TOP 2 — +20 pts</option><option value="top3,10">🥉 TOP 3 — +10 pts</option><option value="choc_lig,15">🍫 Chocolate Ligação — +15 pts</option><option value="choc_chat,15">🍫 Chocolate Chat — +15 pts</option><option disabled>── Disciplina ──</option><option value="pont,5">🕘 Pontualidade — +5 pts</option><option value="pausa,5">☕ Pausas — +5 pts</option><option value="presenca,5">✅ Presença — +5 pts</option><option value="pont_neg,-5">🕘 Atraso — -5 pts</option><option value="pausa_neg,-5">☕ Pausas desc. — -5 pts</option><option value="falta,-5">❌ Falta — -5 pts</option><option disabled>── Penalidades ──</option><option value="monitoria,-15">⚠️ Monitoria — -15 pts</option><option value="custom,0">✏️ Personalizado</option></select></div><div class="field" id="custom-pts-field" style="display:none"><label>Pontos</label><input type="number" id="pts-custom"></div><div class="field" id="custom-desc-field" style="display:none"><label>Descrição</label><input type="text" id="pts-desc"></div><div style="display:flex;gap:8px;margin-top:1rem"><button class="btn-accent" onclick="savePoints()">Registrar</button><button class="btn-ghost" onclick="closeModal('modal-pts')">Cancelar</button></div></div></div>
 
-<div class="modal-overlay" id="modal-award"><div class="modal"><button class="modal-close" onclick="closeModal('modal-award')">✕</button><h3>Sinalizar recompensa</h3><p style="font-size:13px;color:var(--muted);margin-bottom:1rem;" id="modal-award-name"></p><div class="field"><label>Recompensa entregue</label><select class="select-field" id="award-type"><option value="🍫 Chocolate">🍫 Chocolate</option><option value="🍕 Pizza (sabor escolhido)">🍕 Pizza (sabor escolhido)</option><option value="🧂 Torcida Cebola">🧂 Torcida Cebola</option><option value="🥩 Torcida Churrasco">🥩 Torcida Churrasco</option><option value="🌶️ Torcida Pimenta">🌶️ Torcida Pimenta</option><option value="🏅 Medalha TOP 1">🏅 Medalha TOP 1</option><option value="🥈 Medalha TOP 2">🥈 Medalha TOP 2</option><option value="🥉 Medalha TOP 3">🥉 Medalha TOP 3</option></select></div><div style="display:flex;gap:8px;margin-top:1rem;"><button class="btn-accent" onclick="saveAward()">Confirmar</button><button class="btn-ghost" onclick="closeModal('modal-award')">Cancelar</button></div></div></div>
+<div class="modal-overlay" id="modal-award"><div class="modal"><button class="modal-close" onclick="closeModal('modal-award')">✕</button><h3>Sinalizar recompensa</h3><p style="font-size:13px;color:var(--muted);margin-bottom:1rem" id="modal-award-name"></p><div class="field"><label>Recompensa</label><select class="select-field" id="award-type"><option value="🍫 Chocolate">🍫 Chocolate</option><option value="🍕 Pizza">🍕 Pizza</option><option value="🧂 Torcida Cebola">🧂 Torcida Cebola</option><option value="🥩 Torcida Churrasco">🥩 Torcida Churrasco</option><option value="🌶️ Torcida Pimenta">🌶️ Torcida Pimenta</option><option value="🏅 TOP 1">🏅 TOP 1</option><option value="🥈 TOP 2">🥈 TOP 2</option><option value="🥉 TOP 3">🥉 TOP 3</option></select></div><div style="display:flex;gap:8px;margin-top:1rem"><button class="btn-accent" onclick="saveAward()">Confirmar</button><button class="btn-ghost" onclick="closeModal('modal-award')">Cancelar</button></div></div></div>
 
-<div class="modal-overlay" id="modal-poder"><div class="modal"><button class="modal-close" onclick="closeModal('modal-poder')">✕</button><h3>⚡ Poder especial</h3><div class="field"><label>Quem ganhou o poder</label><select class="select-field" id="poder-dono"></select></div><div class="field"><label>Poder escolhido</label><select class="select-field" id="poder-tipo" onchange="togglePoderAlvo()"><option value="roubo">🦹 Roubar 10 pts</option><option value="escudo">🛡️ Ativar escudo</option></select></div><div class="field" id="poder-alvo-field"><label>Quem será roubado</label><select class="select-field" id="poder-alvo"></select></div><div id="poder-escudo-warn" style="display:none;font-size:13px;color:#5ce0c6;padding:8px 12px;background:rgba(92,224,198,.08);border-radius:var(--r2);margin-bottom:.75rem;">🛡️ Escudo ativado por 1 semana.</div><div style="display:flex;gap:8px;margin-top:1rem;"><button class="btn-accent" onclick="savePoder()">Confirmar</button><button class="btn-ghost" onclick="closeModal('modal-poder')">Cancelar</button></div></div></div>
+<div class="modal-overlay" id="modal-poder"><div class="modal"><button class="modal-close" onclick="closeModal('modal-poder')">✕</button><h3>⚡ Poder especial</h3><div class="field"><label>Quem ganhou o poder</label><select class="select-field" id="poder-dono"></select></div><div class="field"><label>Poder</label><select class="select-field" id="poder-tipo" onchange="togglePoderAlvo()"><option value="roubo">🦹 Roubar 10 pts</option><option value="escudo">🛡️ Escudo</option></select></div><div class="field" id="poder-alvo-field"><label>Quem será roubado</label><select class="select-field" id="poder-alvo"></select></div><div id="poder-escudo-warn" style="display:none;font-size:13px;color:#5ce0c6;padding:8px 12px;background:rgba(92,224,198,.08);border-radius:var(--r2);margin-bottom:.75rem">🛡️ Escudo ativado por 1 semana.</div><div style="display:flex;gap:8px;margin-top:1rem"><button class="btn-accent" onclick="savePoder()">Confirmar</button><button class="btn-ghost" onclick="closeModal('modal-poder')">Cancelar</button></div></div></div>
 
-<div class="modal-overlay" id="modal-dupla"><div class="modal"><button class="modal-close" onclick="closeModal('modal-dupla')">✕</button><h3>🤝 Registrar dupla</h3><div class="field"><label>Quem está convidando (≥ 90 pts)</label><select class="select-field" id="dupla-quem"></select></div><div class="field"><label>Quem foi convidado (≥ 50 pts)</label><select class="select-field" id="dupla-alvo"></select></div><div class="field"><label>Resultado</label><select class="select-field" id="dupla-resultado"><option value="aceito">✅ Convite aceito</option><option value="recusado">❌ Convite recusado</option></select></div><div style="display:flex;gap:8px;margin-top:1rem;"><button class="btn-accent" onclick="saveDupla()">Confirmar</button><button class="btn-ghost" onclick="closeModal('modal-dupla')">Cancelar</button></div></div></div>
+<div class="modal-overlay" id="modal-dupla"><div class="modal"><button class="modal-close" onclick="closeModal('modal-dupla')">✕</button><h3>🤝 Registrar dupla</h3><div class="field"><label>Quem convida (≥90 pts)</label><select class="select-field" id="dupla-quem"></select></div><div class="field"><label>Convidado (≥50 pts)</label><select class="select-field" id="dupla-alvo"></select></div><div class="field"><label>Resultado</label><select class="select-field" id="dupla-resultado"><option value="aceito">✅ Aceito</option><option value="recusado">❌ Recusado</option></select></div><div style="display:flex;gap:8px;margin-top:1rem"><button class="btn-accent" onclick="saveDupla()">Confirmar</button><button class="btn-ghost" onclick="closeModal('modal-dupla')">Cancelar</button></div></div></div>
 
-<div class="modal-overlay" id="modal-nova-votacao"><div class="modal"><button class="modal-close" onclick="closeModal('modal-nova-votacao')">✕</button><h3>🗳️ Nova votação</h3><p style="font-size:13px;color:var(--muted);margin-bottom:1rem;">Defina o título e as opções. Timer de 1min30seg inicia automaticamente.</p><div class="field"><label>Título</label><input type="text" id="votacao-titulo" placeholder="Ex: Empate na pizza — quem ganha?"></div><div class="field"><label>Opção 1</label><input type="text" id="vop1" placeholder="Ex: Eduarda Sanqueta"></div><div class="field"><label>Opção 2</label><input type="text" id="vop2" placeholder="Ex: Dupla Heverton + Michelle"></div><div class="field"><label>Opção 3 (opcional)</label><input type="text" id="vop3" placeholder=""></div><div style="display:flex;gap:8px;margin-top:1rem;"><button class="btn-accent" onclick="criarVotacao()">Abrir votação ▶</button><button class="btn-ghost" onclick="closeModal('modal-nova-votacao')">Cancelar</button></div></div></div>
+<div class="modal-overlay" id="modal-nova-votacao"><div class="modal"><button class="modal-close" onclick="closeModal('modal-nova-votacao')">✕</button><h3>🗳️ Nova votação</h3><p style="font-size:13px;color:var(--muted);margin-bottom:1rem">Timer de 1min30seg inicia automaticamente.</p><div class="field"><label>Título</label><input type="text" id="votacao-titulo" placeholder="Ex: Empate na pizza — quem ganha?"></div><div class="field"><label>Opção 1</label><input type="text" id="vop1"></div><div class="field"><label>Opção 2</label><input type="text" id="vop2"></div><div class="field"><label>Opção 3 (opcional)</label><input type="text" id="vop3"></div><div style="display:flex;gap:8px;margin-top:1rem"><button class="btn-accent" onclick="criarVotacao()">Abrir ▶</button><button class="btn-ghost" onclick="closeModal('modal-nova-votacao')">Cancelar</button></div></div></div>
 
-<div class="modal-overlay" id="modal-bulk"><div class="modal"><button class="modal-close" onclick="closeModal('modal-bulk')">✕</button><h3>+ Pontos em grupo</h3><p style="font-size:13px;color:var(--muted);margin-bottom:1rem;">Selecione os colaboradores.</p><div class="bulk-grid" id="bulk-grid"></div><div class="field"><label>Motivo</label><select class="select-field" id="bulk-reason" onchange="toggleBulkCustom()"><option value="pont,5">🕘 Pontualidade — +5 pts</option><option value="pausa,5">☕ Pausas — +5 pts</option><option value="presenca,5">✅ Presença — +5 pts</option><option value="pont_neg,-5">🕘 Atraso — -5 pts</option><option value="pausa_neg,-5">☕ Pausas desc. — -5 pts</option><option value="falta,-5">❌ Falta — -5 pts</option><option value="monitoria,-15">⚠️ Monitoria — -15 pts</option><option value="custom,0">✏️ Personalizado</option></select></div><div class="field" id="bulk-custom-field" style="display:none"><label>Pontos</label><input type="number" id="bulk-custom-pts"></div><div class="field" id="bulk-custom-desc-field" style="display:none"><label>Descrição</label><input type="text" id="bulk-custom-desc"></div><div style="display:flex;gap:8px;margin-top:1rem;"><button class="btn-accent" onclick="saveBulk()">Registrar</button><button class="btn-ghost" onclick="closeModal('modal-bulk')">Cancelar</button></div></div></div>
+<div class="modal-overlay" id="modal-bulk"><div class="modal"><button class="modal-close" onclick="closeModal('modal-bulk')">✕</button><h3>+ Pontos em grupo</h3><div class="bulk-grid" id="bulk-grid"></div><div class="field"><label>Motivo</label><select class="select-field" id="bulk-reason" onchange="toggleBulkCustom()"><option value="pont,5">🕘 Pontualidade +5</option><option value="pausa,5">☕ Pausas +5</option><option value="presenca,5">✅ Presença +5</option><option value="pont_neg,-5">🕘 Atraso -5</option><option value="pausa_neg,-5">☕ Pausas desc. -5</option><option value="falta,-5">❌ Falta -5</option><option value="monitoria,-15">⚠️ Monitoria -15</option><option value="custom,0">✏️ Personalizado</option></select></div><div class="field" id="bulk-custom-field" style="display:none"><label>Pontos</label><input type="number" id="bulk-custom-pts"></div><div class="field" id="bulk-custom-desc-field" style="display:none"><label>Descrição</label><input type="text" id="bulk-custom-desc"></div><div style="display:flex;gap:8px;margin-top:1rem"><button class="btn-accent" onclick="saveBulk()">Registrar</button><button class="btn-ghost" onclick="closeModal('modal-bulk')">Cancelar</button></div></div></div>
+
+<div class="modal-overlay" id="modal-add-admin"><div class="modal"><button class="modal-close" onclick="closeModal('modal-add-admin')">✕</button><h3>👤 Novo admin</h3><div class="field"><label>Nome</label><input type="text" id="new-admin-name"></div><div class="field"><label>E-mail</label><input type="email" id="new-admin-email"></div><div class="field"><label>Senha</label><input type="password" id="new-admin-pass"></div><div style="display:flex;gap:8px;margin-top:1rem"><button class="btn-accent" onclick="saveNewAdmin()">Criar</button><button class="btn-ghost" onclick="closeModal('modal-add-admin')">Cancelar</button></div><div id="admin-add-msg" style="font-size:13px;margin-top:.75rem"></div></div></div>
 
 <div id="toast"></div>
 
 <script>
-const ADMIN_EMAIL='jennifer.silveira@igreenenergy.com.br';
-const STORAGE_KEY='igreen_arena_v5';
-const SESSION_KEY='igreen_session_v5';
+// ─── CONSTANTS ───
+const SUPER_EMAIL='jennifer.silveira@igreenenergy.com.br';
+const STORAGE_KEY='igreen_arena_v7';
+const SESSION_KEY='igreen_session_v7';
 const VOTACAO_DURACAO=90;
-const SYNC_INTERVAL=3000;
-const phrases=['\"Cada ponto é um passo mais perto da pizza.\" 🍕','\"Quem arrisca, converte. Quem converte, chocolate!\" 🍫','\"A fome de vencer é o melhor tempero.\" 🏆','\"Sua dedicação de hoje é a pizza de amanhã.\" ⚡','\"TOP 1 não nasce — é construído ligação por ligação.\" 📞','\"Atendimento resolvido: +15 pts e um sorriso no rosto.\" 💬','\"Grandes resultados começam com uma segunda-feira poderosa.\" 💪','\"A diferença entre bom e incrível? Consistência.\" 🎯','\"Chocolates hoje, pizza amanhã — o time que celebra, cresce!\" 🌱','\"Cada meta batida é uma história que vale contar.\" ✨','\"Proteja seus pontos. Ou roube os do vizinho.\" 🦹','\"Quem mantém o escudo levanta o copo.\" 🛡️'];
+const SYNC_MS=3000;
+const GROUPS=[
+  {id:'eng1',name:'Energizados 1',manager:'Luciano Santiago',icon:'⚡'},
+  {id:'eng2',name:'Energizados 2',manager:'Jennifer Silveira',icon:'🔋'},
+  {id:'ivolt',name:'iVolt',manager:'Deborah Freitas',icon:'💡'},
+  {id:'aza',name:'AZA',manager:'Tamires Nascimento',icon:'🌟'},
+];
+const PHRASES=['Cada ponto é um passo mais perto da pizza. 🍕','Quem arrisca, converte. Quem converte, chocolate! 🍫','A fome de vencer é o melhor tempero. 🏆','Sua dedicação de hoje é a pizza de amanhã. ⚡','TOP 1 não nasce — é construído ligação por ligação. 📞','Atendimento resolvido: +15 pts e um sorriso no rosto. 💬','Grandes resultados começam com uma segunda-feira poderosa. 💪','A diferença entre bom e incrível? Consistência. 🎯','Proteja seus pontos. Ou roube os do vizinho. 🦹'];
+const COLORS=['#7c5cfc,#2a1f5c','#5ce0c6,#0f3d35','#f5c842,#3d2e00','#e05555,#3d1010','#e88c30,#3d2000','#4cbb8a,#0f3d25','#d4537e,#3d1030'];
 
-let state=loadState();
-let isAdmin=false;
-let editingPlayerId=null;
-let addingPtsPlayerId=null;
-let awardingPlayerId=null;
-let lastAction=null;
-let feedFilter='all';
-let cycleTimerInterval=null;
-let votacaoTimerInterval=null;
-let syncInterval=null;
-let selectedVotoOpcao=null;
-const phraseIdx=Math.floor(Date.now()/86400000)%phrases.length;
+// ─── STATE ───
+let GS=loadGS();
+let gid=null,isAdmin=false,isSuperAdmin=false,adminUser=null;
+let editPId=null,ptsPId=null,awardPId=null;
+let lastAction=null,feedFilter='all';
+let cycleTimer=null,votTimer=null,syncTimer=null,selVoto=null;
+const phraseIdx=Math.floor(Date.now()/86400000)%PHRASES.length;
 
-function defaultState(){
-  return{password:'igreen2024',players:[],history:[],poderes:[],duplas:[],votacaoAtiva:null,cycleStart:null,cycleEnd:null,announceDate:null,cycleActive:false,nextId:1};
-}
-function loadState(){
-  try{const r=localStorage.getItem(STORAGE_KEY);if(r)return JSON.parse(r);}catch(e){}
-  return defaultState();
-}
-function saveState(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}
-
-document.getElementById('entry-phrase').textContent=phrases[phraseIdx];
-
-function startSync(){
-  clearInterval(syncInterval);
-  syncInterval=setInterval(()=>{
-    const fresh=loadState();
-    const changed=JSON.stringify(fresh)!==JSON.stringify(state);
-    if(changed){
-      state=fresh;
-      renderAll();
-      if(state.votacaoAtiva&&state.votacaoAtiva.aberta&&!votacaoTimerInterval){
-        startVotacaoTimer();
-      }
+function defGroup(){return{players:[],history:[],poderes:[],duplas:[],votacaoAtiva:null,cycleStart:null,cycleEnd:null,announceDate:null,cycleActive:false,nextId:1};}
+function defGS(){
+  return{
+    admins:[{name:'Jennifer Silveira',email:SUPER_EMAIL,password:'igreen2024',isSuper:true}],
+    visibility:{eng1:true,eng2:false,ivolt:false,aza:false},
+    groups:{
+      eng1:Object.assign(defGroup(),{nextId:18,players:[
+        {id:'p1',name:'Eduarda Sanqueta',category:'ambos',color:COLORS[0],points:0,awards:[],streak:0},
+        {id:'p2',name:'Heverton Tavares',category:'ambos',color:COLORS[1],points:0,awards:[],streak:0},
+        {id:'p3',name:'Michelle Batista',category:'ambos',color:COLORS[2],points:0,awards:[],streak:0},
+        {id:'p4',name:'Cauã Alves',category:'ambos',color:COLORS[3],points:0,awards:[],streak:0},
+        {id:'p5',name:'Lorenzzo Pereira',category:'ambos',color:COLORS[4],points:0,awards:[],streak:0},
+        {id:'p6',name:'Paulo Roberto',category:'ambos',color:COLORS[5],points:0,awards:[],streak:0},
+        {id:'p7',name:'Camila Nara',category:'ambos',color:COLORS[0],points:0,awards:[],streak:0},
+        {id:'p8',name:'Diogo Oliveira',category:'ambos',color:COLORS[1],points:0,awards:[],streak:0},
+        {id:'p9',name:'Jheniffer Santos',category:'ambos',color:COLORS[2],points:0,awards:[],streak:0},
+        {id:'p10',name:'Grasielle Santos',category:'ambos',color:COLORS[3],points:0,awards:[],streak:0},
+        {id:'p11',name:'Ketle Silva',category:'ambos',color:COLORS[4],points:0,awards:[],streak:0},
+        {id:'p12',name:'Junior Otaides',category:'ambos',color:COLORS[5],points:0,awards:[],streak:0},
+        {id:'p13',name:'Victoria Silva',category:'ambos',color:COLORS[0],points:0,awards:[],streak:0},
+        {id:'p14',name:'Maria Clara',category:'ambos',color:COLORS[1],points:0,awards:[],streak:0},
+        {id:'p15',name:'Marcos Martins',category:'ambos',color:COLORS[2],points:0,awards:[],streak:0},
+        {id:'p16',name:'Emanuel Ferreira',category:'ambos',color:COLORS[4],points:0,awards:[],streak:0},
+        {id:'p17',name:'Gabrielle Martins',category:'ambos',color:COLORS[3],points:0,awards:[],streak:0},
+      ]}),
+      eng2:defGroup(),ivolt:defGroup(),aza:defGroup()
     }
-    renderDashVotacaoBanner();
-  },SYNC_INTERVAL);
+  };
 }
+function loadGS(){try{const r=localStorage.getItem(STORAGE_KEY);if(r){const d=JSON.parse(r);// migrate: ensure all groups exist
+GROUPS.forEach(g=>{if(!d.groups[g.id])d.groups[g.id]=defGroup();if(!d.visibility)d.visibility={eng1:true,eng2:false,ivolt:false,aza:false};if(d.visibility[g.id]===undefined)d.visibility[g.id]=false;});return d;}}catch(e){}return defGS();}
+function saveGS(){localStorage.setItem(STORAGE_KEY,JSON.stringify(GS));}
+function g(){return GS.groups[gid];}
 
-// Auto-restore session on page refresh
-(function restoreSession(){
-  try{
-    const s=sessionStorage.getItem(SESSION_KEY);
-    if(s){
-      const sess=JSON.parse(s);
-      isAdmin=sess.isAdmin||false;
-      launchApp();
-    }
-  }catch(e){}
-})();
-
-function enterPublic(){isAdmin=false;launchApp();}
-function showLoginPanel(){document.getElementById('entry-buttons').style.display='none';document.getElementById('login-panel').style.display='block';setTimeout(()=>document.getElementById('login-email').focus(),50);}
-function hideLoginPanel(){document.getElementById('entry-buttons').style.display='flex';document.getElementById('login-panel').style.display='none';document.getElementById('login-error').style.display='none';}
+// ─── ENTRY ───
+document.getElementById('entry-phrase').textContent=PHRASES[phraseIdx];
+function goStep(id){
+  ['step-mode','step-pub-group','step-login','step-adm-group'].forEach(s=>{const el=document.getElementById(s);if(el)el.style.display=s===id?'':'none';});
+  if(id==='step-pub-group')renderPubGroups();
+  if(id==='step-adm-group')renderAdmGroups();
+}
+function renderPubGroups(){
+  const list=document.getElementById('pub-group-list');
+  const vis=GROUPS.filter(x=>GS.visibility[x.id]);
+  if(!vis.length){list.innerHTML='<p style="font-size:13px;color:var(--muted);text-align:center;padding:1rem">Nenhum grupo disponível no momento.</p>';return;}
+  list.innerHTML=vis.map(x=>`<button class="group-btn" onclick="enterPub('${x.id}')"><span class="gb-icon">${x.icon}</span><div><div class="gb-name">${x.name}</div><div class="gb-manager">Gestão: ${x.manager}</div></div></button>`).join('');
+}
+function renderAdmGroups(){
+  const list=document.getElementById('adm-group-list');
+  list.innerHTML=GROUPS.map(x=>`<button class="group-btn" onclick="enterAdm('${x.id}')"><span class="gb-icon">${x.icon}</span><div><div class="gb-name">${x.name}</div><div class="gb-manager">Gestão: ${x.manager}</div></div><span style="font-size:11px;color:${GS.visibility[x.id]?'#5ce0c6':'var(--muted)'};margin-left:auto">${GS.visibility[x.id]?'👁️':'🔒'}</span></button>`).join('');
+}
+function enterPub(id){isAdmin=false;isSuperAdmin=false;gid=id;sessionStorage.setItem(SESSION_KEY,JSON.stringify({isAdmin:false,isSuperAdmin:false,gid,email:null}));launch();}
 function doLogin(){
   const email=document.getElementById('login-email').value.trim().toLowerCase();
   const pass=document.getElementById('login-pass').value;
-  if(email===ADMIN_EMAIL.toLowerCase()&&pass===state.password){isAdmin=true;document.getElementById('login-error').style.display='none';launchApp();}
-  else document.getElementById('login-error').style.display='block';
+  const adm=GS.admins.find(a=>a.email.toLowerCase()===email&&a.password===pass);
+  if(adm){isAdmin=true;isSuperAdmin=!!adm.isSuper;adminUser=adm;document.getElementById('login-error').style.display='none';goStep('step-adm-group');}
+  else{document.getElementById('login-error').style.display='block';}
 }
 document.getElementById('login-pass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
-
-function launchApp(){
+function enterAdm(id){gid=id;sessionStorage.setItem(SESSION_KEY,JSON.stringify({isAdmin,isSuperAdmin,gid,email:adminUser?.email}));launch();}
+function launch(){
   document.getElementById('entry-screen').style.display='none';
   document.getElementById('app').style.display='block';
-  const badge=document.getElementById('mode-badge');
-  badge.textContent=isAdmin?'⚙️ Admin':'👁️ Visualização';
-  badge.className='mode-badge '+(isAdmin?'admin':'public');
-  document.getElementById('header-user').textContent=isAdmin?'Jennifer S.':'Visitante';
+  const grp=GROUPS.find(x=>x.id===gid);
+  const mb=document.getElementById('mode-badge');mb.textContent=isAdmin?'⚙️ Admin':'👁️ Visualização';mb.className='mode-badge '+(isAdmin?'admin':'public');
+  document.getElementById('group-badge').textContent=grp?grp.icon+' '+grp.name:'';
+  document.getElementById('header-user').textContent=isAdmin?(adminUser?.name||'Admin'):'Visitante';
   document.querySelectorAll('.admin-only').forEach(el=>el.style.display=isAdmin?'':'none');
   document.getElementById('public-notice').style.display=isAdmin?'none':'flex';
-  sessionStorage.setItem(SESSION_KEY,JSON.stringify({isAdmin}));
-  renderAll();
-  startCycleTimer();
-  if(state.votacaoAtiva&&state.votacaoAtiva.aberta) startVotacaoTimer();
+  renderAll();startCycleTimer();
+  if(g().votacaoAtiva&&g().votacaoAtiva.aberta)startVotTimer();
   startSync();
 }
+function switchGroup(){
+  clearInterval(cycleTimer);clearInterval(votTimer);clearInterval(syncTimer);
+  document.getElementById('app').style.display='none';
+  document.getElementById('entry-screen').style.display='flex';
+  if(isAdmin)goStep('step-adm-group');else goStep('step-pub-group');
+}
 function doLogout(){
-  isAdmin=false;
-  clearInterval(cycleTimerInterval);
-  clearInterval(votacaoTimerInterval);
-  clearInterval(syncInterval);
+  isAdmin=false;isSuperAdmin=false;gid=null;adminUser=null;
+  clearInterval(cycleTimer);clearInterval(votTimer);clearInterval(syncTimer);
   sessionStorage.removeItem(SESSION_KEY);
   document.getElementById('app').style.display='none';
   document.getElementById('entry-screen').style.display='flex';
-  document.getElementById('entry-buttons').style.display='flex';
-  document.getElementById('login-panel').style.display='none';
-  document.getElementById('login-email').value='';document.getElementById('login-pass').value='';
-  showSectionSilent('dashboard');
+  goStep('step-mode');
 }
+// auto-restore
+(function(){try{const s=sessionStorage.getItem(SESSION_KEY);if(s){const sess=JSON.parse(s);isAdmin=sess.isAdmin||false;isSuperAdmin=sess.isSuperAdmin||false;gid=sess.gid;if(sess.email)adminUser=GS.admins.find(a=>a.email===sess.email)||null;if(gid)launch();}}catch(e){}})();
 
+function startSync(){clearInterval(syncTimer);syncTimer=setInterval(()=>{const fresh=loadGS();if(JSON.stringify(fresh)!==JSON.stringify(GS)){GS=fresh;renderAll();}renderDashVotBanner();},SYNC_MS);}
+
+// ─── SECTIONS ───
 function showSection(name){
   if(!isAdmin&&name==='settings')return;
-  showSectionSilent(name);
-  if(name==='settings'){document.getElementById('cycle-start').value=state.cycleStart||'';document.getElementById('cycle-announce').value=state.announceDate||'';}
-  if(name==='ranking')renderRanking();
-  if(name==='historico')renderHistory();
-  if(name==='poderes')renderPoderes();
-  if(name==='duplas')renderDuplas();
-  if(name==='votacao')renderVotacaoSection();
-}
-function showSectionSilent(name){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
   const el=document.getElementById('section-'+name);if(el)el.classList.add('active');
   const tabs=['dashboard','regras','ranking','duplas','votacao','poderes','historico','settings'];
-  const tabEls=document.querySelectorAll('.nav-tab');
-  const i=tabs.indexOf(name);if(tabEls[i])tabEls[i].classList.add('active');
-}
-
-function startCycleTimer(){
-  clearInterval(cycleTimerInterval);
-  updateCycleTimer();
-  cycleTimerInterval=setInterval(updateCycleTimer,1000);
-}
-function fmt(dt){return dt?new Date(dt).toLocaleDateString('pt-BR'):'—';}
-function updateCycleTimer(){
-  const el=document.getElementById('pizza-timer');
-  const ns=document.getElementById('pizza-not-started');
-  const dd=document.getElementById('pizza-dates-display');
-  const bp=document.getElementById('btn-pause-cycle');
-  const cs=document.getElementById('cycle-status-display');
-  if(!state.cycleActive||!state.cycleStart){
-    if(el)el.style.display='none';
-    if(ns)ns.style.display='block';
-    if(dd)dd.innerHTML='';
-    if(bp)bp.style.display='none';
-    if(cs)cs.textContent='Nenhum ciclo ativo. Defina as datas e clique em "Iniciar ciclo".';
-    return;
+  document.querySelectorAll('.nav-tab')[tabs.indexOf(name)]?.classList.add('active');
+  if(name==='settings'){
+    document.getElementById('cycle-start').value=g().cycleStart||'';
+    document.getElementById('cycle-announce').value=g().announceDate||'';
+    document.getElementById('settings-group-label').textContent=GROUPS.find(x=>x.id===gid)?.name||'';
+    const sup=document.getElementById('super-admin-section');if(sup)sup.style.display=isSuperAdmin?'block':'none';
+    renderGroupVis();renderAdmins();
   }
-  if(el)el.style.display='flex';
-  if(ns)ns.style.display='none';
-  if(bp)bp.style.display='';
-  const end=new Date(state.cycleEnd);
-  const diff=Math.max(0,end-new Date());
-  const d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
-  if(el)el.innerHTML=`<div class="pizza-unit"><div class="pizza-num">${String(d).padStart(2,'0')}</div><div class="pizza-lbl">dias</div></div><div class="pizza-sep">:</div><div class="pizza-unit"><div class="pizza-num">${String(h).padStart(2,'0')}</div><div class="pizza-lbl">horas</div></div><div class="pizza-sep">:</div><div class="pizza-unit"><div class="pizza-num">${String(m).padStart(2,'0')}</div><div class="pizza-lbl">min</div></div><div class="pizza-sep">:</div><div class="pizza-unit"><div class="pizza-num">${String(s).padStart(2,'0')}</div><div class="pizza-lbl">seg</div></div>`;
-  const ann=state.announceDate?` &nbsp;·&nbsp; 📢 Anúncio: <strong style="color:var(--gold)">${fmt(state.announceDate)}</strong>`:'';
-  if(dd)dd.innerHTML=`📅 Início: <strong style="color:var(--text)">${fmt(state.cycleStart)}</strong> &nbsp;·&nbsp; ⏱️ Encerramento: <strong style="color:var(--text)">${fmt(state.cycleEnd)}</strong>${ann}`;
-  if(cs)cs.innerHTML=`✅ Ciclo ativo · Início: <strong>${fmt(state.cycleStart)}</strong> · Encerramento: <strong>${fmt(state.cycleEnd)}</strong>${state.announceDate?' · Anúncio: <strong style="color:var(--gold)">'+fmt(state.announceDate)+'</strong>':''}`;
+  if(name==='ranking')renderRanking();
+  if(name==='historico')renderHistory();
+  if(name==='poderes')renderPoderes();
+  if(name==='duplas')renderDuplas();
+  if(name==='votacao')renderVotacao();
 }
-
 function renderAll(){
-  document.getElementById('daily-phrase').textContent=phrases[phraseIdx];
-  renderStats();renderPlayers();renderHistory();renderRanking();renderPoderes();renderDuplas();renderVotacaoSection();renderDashVotacaoBanner();updateHistPlayerFilter();
-  if(isAdmin)document.querySelectorAll('.admin-only').forEach(el=>el.style.display='');
-  const adminBar=document.getElementById('votacao-admin-bar');
-  if(adminBar)adminBar.style.display=isAdmin?'block':'none';
+  document.getElementById('daily-phrase').textContent=PHRASES[phraseIdx];
+  renderStats();renderPlayers();renderHistory();renderRanking();renderPoderes();renderDuplas();renderVotacao();renderDashVotBanner();updateHistFilter();
+  document.querySelectorAll('.admin-only').forEach(el=>el.style.display=isAdmin?'':'none');
+  document.getElementById('votacao-admin-bar').style.display=isAdmin?'block':'none';
 }
 
+// ─── RENDER ───
 function renderStats(){
-  const t=state.players.length,tp=state.players.reduce((a,p)=>a+p.points,0),pw=state.players.filter(p=>p.points>=100).length,sh=state.players.filter(p=>p.shield).length;
-  document.getElementById('stats-row').innerHTML=`<div class="stat-card"><div class="stat-label">Colaboradores</div><div class="stat-val">${t}</div><div class="stat-sub">no programa</div></div><div class="stat-card"><div class="stat-label">Pontos distribuídos</div><div class="stat-val">${tp}</div><div class="stat-sub">no ciclo</div></div><div class="stat-card"><div class="stat-label">Pizzas conquistadas</div><div class="stat-val">${pw}</div><div class="stat-sub">≥ 100 pts</div></div><div class="stat-card"><div class="stat-label">Escudos ativos</div><div class="stat-val">${sh}</div><div class="stat-sub">protegidos</div></div><div class="stat-card"><div class="stat-label">Atualizações</div><div class="stat-val">${state.history.length}</div><div class="stat-sub">registradas</div></div>`;
+  const gr=g();const t=gr.players.length,tp=gr.players.reduce((a,p)=>a+p.points,0),pw=gr.players.filter(p=>p.points>=100).length,sh=gr.players.filter(p=>p.shield).length;
+  document.getElementById('stats-row').innerHTML=`<div class="stat-card"><div class="stat-label">Colaboradores</div><div class="stat-val">${t}</div><div class="stat-sub">no grupo</div></div><div class="stat-card"><div class="stat-label">Pontos distribuídos</div><div class="stat-val">${tp}</div><div class="stat-sub">no ciclo</div></div><div class="stat-card"><div class="stat-label">Pizzas conquistadas</div><div class="stat-val">${pw}</div><div class="stat-sub">≥ 100 pts</div></div><div class="stat-card"><div class="stat-label">Escudos ativos</div><div class="stat-val">${sh}</div><div class="stat-sub">protegidos</div></div>`;
 }
-
 function renderPlayers(){
-  const grid=document.getElementById('players-grid');
-  const title=document.getElementById('dash-players-title');
-  document.getElementById('players-count-badge').textContent=state.players.length+' pessoas';
-  if(!isAdmin){
-    if(grid)grid.style.display='none';
-    if(title)title.style.display='none';
-    return;
-  }
-  if(grid)grid.style.display='';
-  if(title)title.style.display='';
-  if(!state.players.length){grid.innerHTML='<div class="empty">Nenhum colaborador ainda.'+(isAdmin?'<br>Clique em "+ Colaborador"!':'')+'</div>';return;}
-  const sorted=[...state.players].sort((a,b)=>b.points-a.points);
+  const gr=g();const grid=document.getElementById('players-grid');const title=document.getElementById('dash-players-title');
+  document.getElementById('players-count-badge').textContent=gr.players.length+' pessoas';
+  if(!isAdmin){if(grid)grid.style.display='none';if(title)title.style.display='none';return;}
+  if(grid)grid.style.display='';if(title)title.style.display='';
+  if(!gr.players.length){grid.innerHTML='<div class="empty">Nenhum colaborador.<br>Clique em "+ Colaborador"!</div>';return;}
+  const sorted=[...gr.players].sort((a,b)=>b.points-a.points);
   grid.innerHTML=sorted.map((p,i)=>{
     const pct=Math.min(100,Math.round((p.points/100)*100));
-    const colors=p.color?p.color.split(','):['#7c5cfc','#2a1f5c'];
-    const initials=p.name.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase();
-    const awards=p.awards||[];
-    const chocC=awards.filter(a=>a.includes('Chocolate')).length;
-    const pizzaC=awards.filter(a=>a.includes('Pizza')).length;
-    const catL={ligacao:'📞 Ligações',chat:'💬 Chat',ambos:'📞💬 Ambos'}[p.category]||'';
-    const near=p.points>=85&&p.points<100;
-    const adminBtns=isAdmin?`<div class="admin-btns"><button class="btn-add" onclick="openAddPts('${p.id}')">+ Pontos</button><button class="btn-add" onclick="openAward('${p.id}')">🎁 Recompensa</button><button class="btn-add" onclick="openPoderModal()">⚡ Poder</button><button class="btn-add" onclick="openDuplaModal()">🤝 Dupla</button><button class="btn-add" onclick="openEditPlayer('${p.id}')">✏️ Editar</button><button class="btn-add danger" onclick="removePlayer('${p.id}')">🗑️</button></div>`:'';
-    return`<div class="player-card ${i===0?'leader':''} ${p.shield?'shielded':''} ${near?'near-goal':''}" style="animation-delay:${i*0.05}s"><div class="player-top"><div class="avatar" style="background:${colors[1]}25;color:${colors[0]};border:1.5px solid ${colors[0]}40">${initials}</div><div class="player-info"><div class="player-name">${p.name}</div><div class="player-role">${catL}</div>${p.streak&&p.streak>1?`<div class="player-streak">🔥 ${p.streak} semanas seguidas</div>`:''}</div><div><div class="player-pts-big" style="color:${colors[0]}">${p.points}</div><div class="player-pts-label">pontos</div></div></div><div class="prog-wrap"><div class="prog-bar ${near?'pulse':''}" style="width:${pct}%;background:${colors[0]}"></div></div><div class="prog-info"><span>${p.points}/100 pts</span><span>${pct}%</span></div><div class="rewards-row">${chocC>0?`<span class="reward-badge choc">🍫 ×${chocC}</span>`:''} ${pizzaC>0?`<span class="reward-badge pizza">🍕 ×${pizzaC}</span>`:''} ${p.shield?'<span class="reward-badge shield">🛡️ Protegido</span>':''} ${p.dupla?'<span class="reward-badge dupla">🤝 Em dupla</span>':''} ${p.points>=100?'<span class="reward-badge earned">🏆 Pizza!</span>':''}</div>${adminBtns}</div>`;
+    const cols=p.color?p.color.split(','):['#7c5cfc','#2a1f5c'];
+    const ini=p.name.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase();
+    const awards=p.awards||[];const near=p.points>=85&&p.points<100;
+    return`<div class="player-card${i===0?' leader':''}${p.shield?' shielded':''}${near?' near-goal':''}" style="animation-delay:${i*0.05}s"><div class="player-top"><div class="avatar" style="background:${cols[1]}25;color:${cols[0]};border:1.5px solid ${cols[0]}40">${ini}</div><div class="player-info"><div class="player-name">${p.name}</div><div class="player-role">${{ligacao:'📞 Ligações',chat:'💬 Chat',ambos:'📞💬 Ambos'}[p.category]||''}</div>${p.streak>1?`<div class="player-streak">🔥 ${p.streak} semanas</div>`:''}</div><div><div class="player-pts-big" style="color:${cols[0]}">${p.points}</div><div class="player-pts-label">pontos</div></div></div><div class="prog-wrap"><div class="prog-bar${near?' pulse':''}" style="width:${pct}%;background:${cols[0]}"></div></div><div class="prog-info"><span>${p.points}/100 pts</span><span>${pct}%</span></div><div class="rewards-row">${awards.filter(a=>a.includes('Chocolate')).length?`<span class="reward-badge choc">🍫 ×${awards.filter(a=>a.includes('Chocolate')).length}</span>`:''} ${awards.filter(a=>a.includes('Pizza')).length?`<span class="reward-badge pizza">🍕 ×${awards.filter(a=>a.includes('Pizza')).length}</span>`:''} ${p.shield?'<span class="reward-badge shield">🛡️</span>':''} ${p.dupla?'<span class="reward-badge" style="background:rgba(92,224,198,.1);border-color:rgba(92,224,198,.25);color:#5ce0c6">🤝</span>':''} ${p.points>=100?'<span class="reward-badge earned">🏆</span>':''}</div><div class="admin-btns"><button class="btn-add" onclick="openPts('${p.id}')">+ Pontos</button><button class="btn-add" onclick="openAward('${p.id}')">🎁</button><button class="btn-add" onclick="openPoderModal()">⚡</button><button class="btn-add" onclick="openDuplaModal()">🤝</button><button class="btn-add" onclick="openEdit('${p.id}')">✏️</button><button class="btn-add danger" onclick="removePlayer('${p.id}')">🗑️</button></div></div>`;
   }).join('');
 }
-
 function renderRanking(){
-  const sorted=[...state.players].sort((a,b)=>b.points-a.points);
-  if(!sorted.length){document.getElementById('ranking-list').innerHTML='<div class="empty">Nenhum colaborador.</div>';return;}
-  document.getElementById('ranking-list').innerHTML=sorted.map((p,i)=>{
-    const colors=p.color?p.color.split(','):['#7c5cfc','#2a1f5c'];
-    const pct=Math.min(100,Math.round((p.points/100)*100));
+  const sorted=[...g().players].sort((a,b)=>b.points-a.points);const list=document.getElementById('ranking-list');
+  if(!sorted.length){list.innerHTML='<div class="empty">Nenhum colaborador.</div>';return;}
+  list.innerHTML=sorted.map((p,i)=>{
+    const cols=p.color?p.color.split(','):['#7c5cfc','#2a1f5c'];const pct=Math.min(100,Math.round((p.points/100)*100));
     const nums=['🥇','🥈','🥉'];const cls=['rank-1','rank-2','rank-3'];
-    return`<div class="rank-item" style="animation-delay:${i*0.04}s"><div class="rank-num ${cls[i]||''}">${i<3?nums[i]:i+1}</div><div class="rank-info"><div class="rank-name">${p.name}${p.shield?' 🛡️':''}</div><div class="rank-detail">${{ligacao:'Ligações',chat:'Chat',ambos:'Ambos'}[p.category]||''}</div>${p.streak&&p.streak>1?`<div class="rank-streak">🔥 ${p.streak} semanas</div>`:''}</div><div class="rank-right"><div class="rank-pts" style="color:${colors[0]}">${p.points} pts</div><div class="rank-prog-wrap"><div class="rank-prog-bar" style="width:${pct}%;background:${colors[0]}"></div></div></div></div>`;
+    return`<div class="rank-item"><div class="rank-num ${cls[i]||''}">${i<3?nums[i]:i+1}</div><div class="rank-info"><div class="rank-name">${p.name}${p.shield?' 🛡️':''}</div><div class="rank-detail">${{ligacao:'Ligações',chat:'Chat',ambos:'Ambos'}[p.category]||''}</div></div><div class="rank-right"><div class="rank-pts" style="color:${cols[0]}">${p.points} pts</div><div class="rank-prog-wrap"><div class="rank-prog-bar" style="width:${pct}%;background:${cols[0]}"></div></div></div></div>`;
   }).join('');
 }
-
-function updateHistPlayerFilter(){
-  const sel=document.getElementById('hist-player-filter');if(!sel)return;
-  const cur=sel.value;
-  sel.innerHTML='<option value="all">Todos os colaboradores</option>'+state.players.map(p=>`<option value="${p.name}" ${cur===p.name?'selected':''}>${p.name}</option>`).join('');
-}
-function filterFeed(type,btn){feedFilter=type;document.querySelectorAll('.feed-filter').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderHistory();}
+function updateHistFilter(){const sel=document.getElementById('hist-player-filter');if(!sel)return;const cur=sel.value;sel.innerHTML='<option value="all">Todos</option>'+g().players.map(p=>`<option value="${p.name}"${cur===p.name?' selected':''}>${p.name}</option>`).join('');}
+function filterFeed(t,btn){feedFilter=t;document.querySelectorAll('.feed-filter').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderHistory();}
 function renderHistory(){
-  const list=document.getElementById('feed-list');
-  const badge=document.getElementById('hist-count');
-  const pf=document.getElementById('hist-player-filter')?.value||'all';
-  let items=[...state.history].reverse();
+  const list=document.getElementById('feed-list');const badge=document.getElementById('hist-count');const pf=document.getElementById('hist-player-filter')?.value||'all';
+  let items=[...g().history].reverse();
   if(feedFilter!=='all')items=items.filter(h=>h.type===feedFilter);
   if(pf!=='all')items=items.filter(h=>h.text&&h.text.includes(pf));
-  if(badge)badge.textContent=state.history.length+' registros';
-  if(!items.length){list.innerHTML='<div class="empty">Nenhuma atualização.</div>';return;}
-  list.innerHTML=items.map((h,_i)=>{
-    const hidx=state.history.findIndex(x=>x.date===h.date&&x.text===h.text&&x.type===h.type);
-    const bg=h.type==='pts'?'rgba(124,92,252,.15)':h.type==='award'?'rgba(232,140,48,.15)':h.type==='danger'?'rgba(224,85,85,.15)':h.type==='poder'?'rgba(245,200,66,.15)':h.type==='dupla'?'rgba(92,224,198,.15)':h.type==='votacao'?'rgba(245,200,66,.12)':'rgba(92,224,198,.15)';
-    const ptsStr=h.pts!=null?String(h.pts):'';
-    return`<div class="feed-item"><div class="feed-icon" style="background:${bg}">${h.icon}</div><div class="feed-body"><div class="feed-title">${h.text}</div><div class="feed-time">${h.date}</div></div>${ptsStr?`<div class="feed-pts" style="color:${ptsStr.startsWith('-')?'var(--danger)':'var(--accent)'}">${ptsStr} pts</div>`:''}</div>`;
+  if(badge)badge.textContent=g().history.length+' registros';
+  if(!items.length){list.innerHTML='<div class="empty">Nenhum registro.</div>';return;}
+  list.innerHTML=items.map(h=>{
+    const bg=h.type==='pts'?'rgba(124,92,252,.15)':h.type==='award'?'rgba(232,140,48,.15)':h.type==='danger'?'rgba(224,85,85,.15)':h.type==='poder'?'rgba(245,200,66,.15)':h.type==='dupla'?'rgba(92,224,198,.15)':'rgba(92,224,198,.1)';
+    const pts=h.pts!=null?String(h.pts):'';
+    const del=isAdmin?`<button onclick="delHist(${JSON.stringify(h.date)},${JSON.stringify(h.text)},${JSON.stringify(h.type)})" style="background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:2px 6px">🗑️</button>`:'';
+    return`<div class="feed-item"><div class="feed-icon" style="background:${bg}">${h.icon||'📋'}</div><div class="feed-body"><div class="feed-title">${h.text}</div><div class="feed-time">${h.date}</div></div>${pts?`<div class="feed-pts" style="color:${pts.startsWith('-')?'var(--danger)':'var(--accent)'}">${pts} pts</div>`:''} ${del}</div>`;
   }).join('');
 }
-
 function renderPoderes(){
   const list=document.getElementById('poderes-list');if(!list)return;
-  const badge=document.getElementById('poderes-count-badge');
-  const p=state.poderes||[];if(badge)badge.textContent=p.length+' eventos';
+  const p=g().poderes||[];document.getElementById('poderes-count-badge').textContent=p.length;
   if(!p.length){list.innerHTML='<div class="empty">Nenhum poder registrado.</div>';return;}
-  list.innerHTML=[...p].reverse().map(e=>{
+  list.innerHTML=[...p].reverse().map((e,ri)=>{
+    const idx=p.length-1-ri;
     const bg=e.tipo==='roubo'?'rgba(224,85,85,.12)':e.tipo==='escudo'?'rgba(92,224,198,.12)':'rgba(245,200,66,.12)';
     const col=e.tipo==='roubo'?'#e07777':e.tipo==='escudo'?'#5ce0c6':'#f5c842';
     const icons={roubo:'🦹',escudo:'🛡️',bloqueio:'⚔️'};const labels={roubo:'Roubo',escudo:'Escudo',bloqueio:'Bloqueado'};
-    const pIdx=([...p].reverse()).indexOf(e);const realPIdx=p.length-1-pIdx;const pDelBtn=isAdmin?`<button onclick="deletePoder(${realPIdx})" style="background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:2px 6px;" title="Excluir">🗑️</button>`:'';return`<div class="feed-item" style="border-color:${bg}"><div class="feed-icon" style="background:${bg}">${icons[e.tipo]||'⚡'}</div><div class="feed-body"><div class="feed-title">${e.desc}</div><div style="display:flex;gap:8px;margin-top:4px;"><span style="font-size:11px;background:${bg};color:${col};padding:2px 8px;border-radius:999px;">${labels[e.tipo]||e.tipo}</span><span class="feed-time">${e.date}</span></div></div>${pDelBtn}</div>`;
+    const del=isAdmin?`<button onclick="delPoder(${idx})" style="background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:2px 6px">🗑️</button>`:'';
+    return`<div class="feed-item" style="border-color:${bg}"><div class="feed-icon" style="background:${bg}">${icons[e.tipo]||'⚡'}</div><div class="feed-body"><div class="feed-title">${e.desc}</div><div style="display:flex;gap:8px;margin-top:4px"><span style="font-size:11px;background:${bg};color:${col};padding:2px 8px;border-radius:999px">${labels[e.tipo]||e.tipo}</span><span style="font-size:11px;color:var(--muted)">${e.date}</span></div></div>${del}</div>`;
   }).join('');
 }
-
 function renderDuplas(){
   const list=document.getElementById('duplas-list');if(!list)return;
-  const badge=document.getElementById('duplas-count-badge');
-  const d=state.duplas||[];if(badge)badge.textContent=d.length;
+  const d=g().duplas||[];document.getElementById('duplas-count-badge').textContent=d.length;
   if(!d.length){list.innerHTML='<div class="empty">Nenhuma dupla registrada.</div>';return;}
-  list.innerHTML=[...d].reverse().map(dp=>{
+  list.innerHTML=[...d].reverse().map((dp,ri)=>{
+    const idx=d.length-1-ri;
     const ok=dp.status==='aceito';const pizza=dp.pizzaGanha;
     const bg=pizza?'rgba(232,140,48,.12)':ok?'rgba(92,224,198,.1)':'rgba(122,122,154,.1)';
     const border=pizza?'rgba(232,140,48,.3)':ok?'rgba(92,224,198,.25)':'rgba(122,122,154,.2)';
-    const dIdx2=state.duplas.indexOf(dp);const dDelBtn=isAdmin?`<button onclick="deleteDupla(${dIdx2})" style="background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:2px 6px;" title="Excluir">🗑️</button>`:'';return`<div style="background:${bg};border:0.5px solid ${border};border-radius:var(--r);padding:1.25rem;margin-bottom:10px;"><div style="display:flex;align-items:center;gap:10px;"><span style="font-size:22px">${pizza?'🍕':ok?'🤝':'❌'}</span><div style="flex:1"><div style="font-size:14px;font-weight:500;color:var(--text)">${dp.desc}</div><div style="font-size:11px;color:var(--muted);margin-top:3px">${dp.date}</div></div>${ok&&!pizza?`<span style="font-size:11px;background:rgba(92,224,198,.12);color:#5ce0c6;padding:3px 10px;border-radius:999px;">${dp.ptsCombinados} pts</span>`:''} ${dDelBtn}</div></div>`;
+    const del=isAdmin?`<button onclick="delDupla(${idx})" style="background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:2px 6px">🗑️</button>`:'';
+    return`<div style="background:${bg};border:0.5px solid ${border};border-radius:var(--r);padding:1.25rem;margin-bottom:10px"><div style="display:flex;align-items:center;gap:10px"><span style="font-size:22px">${pizza?'🍕':ok?'🤝':'❌'}</span><div style="flex:1"><div style="font-size:14px;font-weight:500;color:var(--text)">${dp.desc}</div><div style="font-size:11px;color:var(--muted);margin-top:3px">${dp.date}</div></div>${ok&&!pizza?`<span style="font-size:11px;background:rgba(92,224,198,.12);color:#5ce0c6;padding:3px 10px;border-radius:999px">${dp.ptsCombinados} pts</span>`:''} ${del}</div></div>`;
   }).join('');
 }
 
+// ─── CYCLE ───
+function startCycleTimer(){clearInterval(cycleTimer);updateCycleTimer();cycleTimer=setInterval(updateCycleTimer,1000);}
+function fmtDate(dt){return dt?new Date(dt).toLocaleDateString('pt-BR'):'—';}
+function updateCycleTimer(){
+  const el=document.getElementById('pizza-timer');const ns=document.getElementById('pizza-not-started');
+  const dd=document.getElementById('pizza-dates-display');const bp=document.getElementById('btn-pause-cycle');const cs=document.getElementById('cycle-status-display');
+  const gr=g();
+  if(!gr.cycleActive||!gr.cycleStart){
+    if(el)el.style.display='none';if(ns)ns.style.display='block';if(dd)dd.innerHTML='';if(bp)bp.style.display='none';
+    if(cs)cs.textContent='Nenhum ciclo ativo. Defina as datas e clique em Iniciar.';return;
+  }
+  if(el)el.style.display='flex';if(ns)ns.style.display='none';if(bp)bp.style.display='';
+  const end=new Date(gr.cycleEnd);const diff=Math.max(0,end-new Date());
+  const d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
+  if(el)el.innerHTML=`<div class="pizza-unit"><div class="pizza-num">${String(d).padStart(2,'0')}</div><div class="pizza-lbl">dias</div></div><div class="pizza-sep">:</div><div class="pizza-unit"><div class="pizza-num">${String(h).padStart(2,'0')}</div><div class="pizza-lbl">hrs</div></div><div class="pizza-sep">:</div><div class="pizza-unit"><div class="pizza-num">${String(m).padStart(2,'0')}</div><div class="pizza-lbl">min</div></div><div class="pizza-sep">:</div><div class="pizza-unit"><div class="pizza-num">${String(s).padStart(2,'0')}</div><div class="pizza-lbl">seg</div></div>`;
+  const ann=gr.announceDate?` · 📢 Anúncio: <strong style="color:var(--gold)">${fmtDate(gr.announceDate)}</strong>`:'';
+  if(dd)dd.innerHTML=`📅 Início: <strong style="color:var(--text)">${fmtDate(gr.cycleStart)}</strong> · ⏱️ Encerramento: <strong style="color:var(--text)">${fmtDate(gr.cycleEnd)}</strong>${ann}`;
+  if(cs)cs.innerHTML=`✅ Ativo · ${fmtDate(gr.cycleStart)} → ${fmtDate(gr.cycleEnd)}${gr.announceDate?' · Anúncio: <strong style="color:var(--gold)">'+fmtDate(gr.announceDate)+'</strong>':''}`;
+}
+function saveCycle(){
+  const start=document.getElementById('cycle-start').value;const announce=document.getElementById('cycle-announce').value;
+  if(!start){showToast('Defina a data de início.');return;}
+  const sd=new Date(start);const ed=new Date(sd);ed.setDate(ed.getDate()+10);
+  g().cycleStart=start;g().cycleEnd=ed.toISOString().split('T')[0];g().announceDate=announce||null;g().cycleActive=true;
+  addHist({type:'edit',icon:'📅',text:'Ciclo iniciado: '+start+' → '+g().cycleEnd+(announce?' · Anúncio: '+announce:''),date:now()});
+  saveGS();startCycleTimer();renderAll();showToast('▶ Ciclo iniciado!');
+}
+function pauseCycle(){if(!confirm('Pausar o ciclo?'))return;g().cycleActive=false;addHist({type:'edit',icon:'⏸',text:'Ciclo pausado',date:now()});saveGS();startCycleTimer();renderAll();showToast('⏸ Pausado.');}
+function confirmReset(){
+  if(!confirm('Resetar ciclo? Pontos, escudos, duplas e votação serão zerados.'))return;
+  const gr=g();gr.players.forEach(p=>{p.points=0;p.shield=false;p.streak=0;p.dupla=null;});
+  gr.duplas=[];gr.votacaoAtiva=null;gr.cycleStart=null;gr.cycleEnd=null;gr.announceDate=null;gr.cycleActive=false;
+  addHist({type:'edit',icon:'🔄',text:'Ciclo resetado',date:now()});
+  clearInterval(votTimer);saveGS();renderAll();startCycleTimer();showToast('Ciclo resetado!');
+}
+
 // ─── VOTAÇÃO ───
-function openNovaVotacao(){
-  ['votacao-titulo','vop1','vop2','vop3'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('modal-nova-votacao').classList.add('open');
+function startVotTimer(){clearInterval(votTimer);votTimer=setInterval(()=>{const v=g().votacaoAtiva;if(!v||!v.aberta){clearInterval(votTimer);return;}const rem=Math.max(0,Math.ceil((v.fimEm-Date.now())/1000));updateVotDisplay(rem);if(rem<=0)encerrarVotAuto();},500);}
+function getVotContagem(v){const c={};(v.opcoes||[]).forEach(o=>c[o]=0);Object.values(v.votos||{}).forEach(vt=>{if(c[vt]!==undefined)c[vt]++;});return c;}
+function getResultado(){const v=g().votacaoAtiva;if(!v)return null;const c=getVotContagem(v);const total=Object.values(c).reduce((a,b)=>a+b,0);const sorted=v.opcoes.map(o=>({op:o,n:c[o]})).sort((a,b)=>b.n-a.n);const empate=sorted.length>1&&sorted[0].n===sorted[1].n&&sorted[0].n>0;return{sorted,total,empate,winner:sorted[0]};}
+function updateVotDisplay(seg){
+  const m=Math.floor(seg/60),s=seg%60;const str=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');const danger=seg<=15;
+  const el=document.getElementById('vot-timer-display');if(el){el.textContent=str;el.className='vot-timer-big '+(danger?'danger':'ok');}
+  const db=document.getElementById('dash-vot-timer');if(db){db.textContent=str;db.style.color=danger?'var(--danger)':'var(--gold)';}
+  const v=g().votacaoAtiva;if(v&&v.aberta){const c=getVotContagem(v);const total=Object.values(c).reduce((a,b)=>a+b,0);const wrap=document.getElementById('vot-live');if(wrap)wrap.innerHTML=barrasHTML(v,c,total);}
 }
-
-function criarVotacao(){
-  const titulo=document.getElementById('votacao-titulo').value.trim();
-  const op1=document.getElementById('vop1').value.trim();
-  const op2=document.getElementById('vop2').value.trim();
-  const op3=document.getElementById('vop3').value.trim();
-  if(!titulo||!op1||!op2){showToast('Preencha o título e pelo menos 2 opções.');return;}
-  const opcoes=[op1,op2];if(op3)opcoes.push(op3);
-  const fim=Date.now()+(VOTACAO_DURACAO*1000);
-  state.votacaoAtiva={titulo,opcoes,votos:{},aberta:true,criadaEm:now(),fimEm:fim};
-  saveState();closeModal('modal-nova-votacao');
-  renderAll();startVotacaoTimer();
-  showToast('🗳️ Votação aberta! Timer de 1min30seg iniciado.');
-  // flash votacao tab
-  const tab=document.getElementById('tab-votacao');
-  if(tab){tab.style.background='rgba(245,200,66,.2)';setTimeout(()=>tab.style.background='',3000);}
-}
-
-function startVotacaoTimer(){
-  clearInterval(votacaoTimerInterval);
-  votacaoTimerInterval=setInterval(()=>{
-    if(!state.votacaoAtiva||!state.votacaoAtiva.aberta){clearInterval(votacaoTimerInterval);return;}
-    const restante=Math.max(0,Math.ceil((state.votacaoAtiva.fimEm-Date.now())/1000));
-    updateVotacaoTimerDisplay(restante);
-    if(restante<=0){encerrarVotacaoAuto();}
-  },500);
-}
-
-function updateVotacaoTimerDisplay(seg){
-  const m=Math.floor(seg/60),s=seg%60;
-  const str=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-  const danger=seg<=15;
-  const el=document.getElementById('vot-timer-display');
-  if(el){el.textContent=str;el.className='vot-timer-big '+(danger?'danger':'ok');}
-  const db=document.getElementById('dash-vot-timer');
-  if(db){db.textContent=str;db.style.color=danger?'var(--danger)':'var(--gold)';}
-  // Update live vote count bars without re-rendering full section
-  if(state.votacaoAtiva&&state.votacaoAtiva.aberta){
-    const v=state.votacaoAtiva;
-    const c=getContagemVotos(v);
-    const total=Object.values(c).reduce((a,b)=>a+b,0);
-    const wrap=document.getElementById('vot-contagem-live');
-    if(wrap){
-      wrap.innerHTML=v.opcoes.map((o,i)=>{
-        const n=c[o]||0;const pct=total?Math.round((n/total)*100):0;
-        return`<div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;"><span style="color:var(--text)">${o}</span><span style="color:var(--muted);font-weight:500">${n} voto${n!==1?'s':''}</span></div><div style="background:rgba(255,255,255,.06);border-radius:999px;height:6px;overflow:hidden;"><div style="height:6px;border-radius:999px;background:${i===0?'#5ce0c6':'#7c5cfc'};width:${pct}%;transition:width .4s"></div></div></div>`;
-      }).join('');
-    }
-    // update total count display
-    const sub=document.querySelector('.vot-banner .vot-sub strong');
-    if(sub)sub.textContent=total;
-  }
-}
-
-function encerrarVotacaoAuto(){
-  clearInterval(votacaoTimerInterval);
-  if(!state.votacaoAtiva||!state.votacaoAtiva.aberta)return;
-  state.votacaoAtiva.aberta=false;
-  state.votacaoAtiva.encerradaEm=now();
-  addHistory({type:'votacao',icon:'🗳️',text:`Votação encerrada: "${state.votacaoAtiva.titulo}"`,date:now()});
-  saveState();
-  renderAll();
-  launchConfetti();
-  showToast('⏱️ Tempo esgotado! Resultado disponível.');
-}
-
-function encerrarVotacaoManual(){
-  if(!confirm('Encerrar a votação agora?'))return;
-  state.votacaoAtiva.fimEm=Date.now();
-  encerrarVotacaoAuto();
-}
-
-function getResultado(){
-  if(!state.votacaoAtiva)return null;
-  const v=state.votacaoAtiva;
-  const contagem={};v.opcoes.forEach(o=>contagem[o]=0);
-  Object.values(v.votos).forEach(voto=>{if(contagem[voto]!==undefined)contagem[voto]++;});
-  const total=Object.values(contagem).reduce((a,b)=>a+b,0);
-  const sorted=v.opcoes.map(o=>({op:o,n:contagem[o]})).sort((a,b)=>b.n-a.n);
-  const empate=sorted.length>1&&sorted[0].n===sorted[1].n&&sorted[0].n>0;
-  return{sorted,total,empate,winner:sorted[0]};
-}
-
-function renderResultadoHTML(r){
-  if(!r)return'';
-  return`<div class="resultado-card"><div style="font-family:'Syne',sans-serif;font-size:18px;margin-bottom:1.25rem;color:var(--gold)">🏆 Resultado: ${state.votacaoAtiva.titulo}</div>${r.sorted.map((s,i)=>{const pct=r.total?Math.round((s.n/r.total)*100):0;return`<div style="margin-bottom:14px;"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;"><span style="color:var(--text);font-weight:${i===0&&!r.empate?'500':'400'}">${i===0&&!r.empate?'🥇 ':''}${s.op}</span><span style="color:var(--muted)">${s.n} voto${s.n!==1?'s':''} · ${pct}%</span></div><div class="resultado-bar-wrap"><div class="resultado-bar" style="width:${pct}%;background:${i===0?'var(--gold)':'var(--accent)'}"></div></div></div>`;}).join('')}<div style="font-size:12px;color:var(--muted);margin-top:12px;padding-top:12px;border-top:0.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;"><span>Total: <strong style="color:var(--text)">${r.total} voto${r.total!==1?'s':''}</strong></span><span>${r.empate?'<span style="color:var(--danger)">⚠️ Empate — nova rodada necessária</span>':'<span style="color:#5ce0c6">✅ Vencedor: <strong>'+r.winner.op+'</strong></span>'}</span></div></div>`;
-}
-
-function renderDashVotacaoBanner(){
-  const banner=document.getElementById('dash-votacao-banner');if(!banner)return;
-  const v=state.votacaoAtiva;
-  if(!v){banner.style.display='none';return;}
+function barrasHTML(v,c,total){return v.opcoes.map((o,i)=>{const n=c[o]||0;const pct=total?Math.round((n/total)*100):0;return`<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span style="color:var(--text)">${o}</span><span style="color:var(--muted)">${n} voto${n!==1?'s':''}</span></div><div style="background:rgba(255,255,255,.06);border-radius:999px;height:6px;overflow:hidden"><div style="height:6px;border-radius:999px;background:${i===0?'#5ce0c6':'#7c5cfc'};width:${pct}%;transition:width .4s"></div></div></div>`;}).join('');}
+function resultadoHTML(){const r=getResultado();if(!r)return'';const v=g().votacaoAtiva;return`<div style="background:var(--surface);border:0.5px solid var(--gold);border-radius:var(--r);padding:1.5rem;margin-bottom:1rem"><div style="font-family:'Syne',sans-serif;font-size:18px;margin-bottom:1.25rem;color:var(--gold)">🏆 Resultado: ${v.titulo}</div>${r.sorted.map((s,i)=>{const pct=r.total?Math.round((s.n/r.total)*100):0;return`<div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span style="color:var(--text)">${i===0&&!r.empate?'🥇 ':''}${s.op}</span><span style="color:var(--muted)">${s.n} votos · ${pct}%</span></div><div style="background:rgba(255,255,255,.06);border-radius:999px;height:8px;overflow:hidden"><div style="height:8px;border-radius:999px;background:${i===0?'var(--gold)':'var(--accent)'};width:${pct}%;transition:width 1s"></div></div></div>`;}).join('')}<div style="font-size:12px;color:var(--muted);margin-top:12px;padding-top:12px;border-top:0.5px solid var(--border)">${r.empate?'<span style="color:var(--danger)">⚠️ Empate — nova rodada necessária</span>':'<span style="color:#5ce0c6">✅ Vencedor: <strong>'+r.winner.op+'</strong></span>'}</div></div>`;}
+function renderDashVotBanner(){
+  const banner=document.getElementById('dash-votacao-banner');if(!banner||!gid)return;
+  const v=g().votacaoAtiva;if(!v){banner.style.display='none';return;}
   banner.style.display='block';
-  if(v.aberta){
-    const restante=Math.max(0,Math.ceil((v.fimEm-Date.now())/1000));
-    const m=Math.floor(restante/60),s=restante%60;
-    const danger=restante<=15;
-    banner.innerHTML=`<div style="background:rgba(224,85,85,.08);border:0.5px solid rgba(224,85,85,.3);border-radius:var(--r);padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;"><div><div style="font-family:'Syne',sans-serif;font-size:16px;color:#e07777">🗳️ Votação em andamento!</div><div style="font-size:13px;color:var(--muted);margin-top:4px">${v.titulo} · <strong style="color:var(--text)">${Object.keys(v.votos||{}).length} voto${Object.keys(v.votos||{}).length!==1?'s':''}</strong> registrados</div></div><div style="font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:${danger?'var(--danger)':'var(--gold)'};" id="dash-vot-timer">${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}</div></div>`;
-  }else{
-    const r=getResultado();
-    banner.innerHTML=renderResultadoHTML(r);
-  }
+  if(v.aberta){const rem=Math.max(0,Math.ceil((v.fimEm-Date.now())/1000));const m=Math.floor(rem/60),s=rem%60;const danger=rem<=15;banner.innerHTML=`<div style="background:rgba(224,85,85,.08);border:0.5px solid rgba(224,85,85,.3);border-radius:var(--r);padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap"><div><div style="font-family:'Syne',sans-serif;font-size:16px;color:#e07777">🗳️ Votação em andamento!</div><div style="font-size:13px;color:var(--muted);margin-top:4px">${v.titulo} · <strong style="color:var(--text)">${Object.keys(v.votos||{}).length} votos</strong></div></div><div style="font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:${danger?'var(--danger)':'var(--gold)'}" id="dash-vot-timer">${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}</div></div>`;}
+  else{banner.innerHTML=resultadoHTML();}
 }
-
-
-function getContagemVotos(v){
-  const c={};(v.opcoes||[]).forEach(o=>c[o]=0);
-  Object.values(v.votos||{}).forEach(voto=>{if(c[voto]!==undefined)c[voto]++;});
-  return c;
+function openNovaVotacao(){['votacao-titulo','vop1','vop2','vop3'].forEach(id=>document.getElementById(id).value='');openModal('modal-nova-votacao');}
+function criarVotacao(){
+  const titulo=document.getElementById('votacao-titulo').value.trim();const op1=document.getElementById('vop1').value.trim();const op2=document.getElementById('vop2').value.trim();const op3=document.getElementById('vop3').value.trim();
+  if(!titulo||!op1||!op2){showToast('Preencha título e 2 opções.');return;}
+  const opcoes=[op1,op2];if(op3)opcoes.push(op3);
+  g().votacaoAtiva={titulo,opcoes,votos:{},aberta:true,fimEm:Date.now()+(VOTACAO_DURACAO*1000),criadaEm:now()};
+  saveGS();closeModal('modal-nova-votacao');renderAll();startVotTimer();showToast('🗳️ Votação aberta!');
 }
-
-function renderVotacaoSection(){
+function encerrarVotAuto(){clearInterval(votTimer);const v=g().votacaoAtiva;if(!v||!v.aberta)return;v.aberta=false;v.encerradaEm=now();addHist({type:'votacao',icon:'🗳️',text:'Votação encerrada: "'+v.titulo+'"',date:now()});saveGS();renderAll();launchConfetti();showToast('⏱️ Votação encerrada!');}
+function encerrarVotacaoManual(){if(!confirm('Encerrar agora?'))return;g().votacaoAtiva.fimEm=Date.now();encerrarVotAuto();}
+function renderVotacao(){
   const content=document.getElementById('votacao-content');if(!content)return;
-  const adminBar=document.getElementById('votacao-admin-bar');
-  if(adminBar)adminBar.style.display=isAdmin?'block':'none';
-  const btnEnc=document.getElementById('btn-encerrar');
-  const btnNova=document.getElementById('btn-nova-votacao');
-  const v=state.votacaoAtiva;
-  if(!v){
-    if(btnNova)btnNova.style.display='';
-    if(btnEnc)btnEnc.style.display='none';
-    content.innerHTML='<div class="empty">Nenhuma votação ativa.<br>'+(isAdmin?'Clique em "+ Nova votação" para abrir quando houver empate.':'A admin abrirá uma votação quando houver empate!')+'</div>';
-    return;
-  }
-  if(btnNova)btnNova.style.display=v.aberta?'none':'';
-  if(btnEnc)btnEnc.style.display=isAdmin&&v.aberta?'':'none';
-  const contagem=getContagemVotos(v);
-  const totalV=Object.values(contagem).reduce((a,b)=>a+b,0);
+  const adminBar=document.getElementById('votacao-admin-bar');if(adminBar)adminBar.style.display=isAdmin?'block':'none';
+  const btnEnc=document.getElementById('btn-encerrar');const btnNova=document.getElementById('btn-nova-votacao');
+  const v=g().votacaoAtiva;
+  if(!v){if(btnNova)btnNova.style.display='';if(btnEnc)btnEnc.style.display='none';content.innerHTML='<div class="empty">Nenhuma votação ativa.<br>'+(isAdmin?'Clique em "+ Nova votação".':'A admin abrirá uma votação quando houver empate.')+'</div>';return;}
+  if(btnNova)btnNova.style.display=v.aberta?'none':'';if(btnEnc)btnEnc.style.display=isAdmin&&v.aberta?'':'none';
+  const c=getVotContagem(v);const totalV=Object.values(c).reduce((a,b)=>a+b,0);
   if(v.aberta){
-    const restante=Math.max(0,Math.ceil((v.fimEm-Date.now())/1000));
-    const m=Math.floor(restante/60),s=restante%60;
-    const danger=restante<=15;
-    const barrasHTML=v.opcoes.map((o,i)=>{
-      const n=contagem[o]||0;
-      const pct=totalV?Math.round((n/totalV)*100):0;
-      const bar=`<div style="height:6px;border-radius:999px;background:${i===0?'#5ce0c6':'#7c5cfc'};width:${pct}%;transition:width .4s"></div>`;
-      return`<div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;"><span style="color:var(--text)">${o}</span><span style="color:var(--muted);font-weight:500">${n} voto${n!==1?'s':''}</span></div><div style="background:rgba(255,255,255,.06);border-radius:999px;height:6px;overflow:hidden;">${bar}</div></div>`;
-    }).join('');
-    content.innerHTML=`<div class="vot-banner active" style="margin-bottom:1.5rem;"><div class="vot-titulo">${v.titulo}</div><div class="vot-sub" style="margin-bottom:1rem;">Tempo restante para votar</div><div class="vot-timer-big ${danger?'danger':'ok'}" id="vot-timer-display">${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}</div><div class="vot-sub" style="margin-top:.75rem;margin-bottom:1rem;"><strong style="color:var(--text)">${totalV}</strong> voto${totalV!==1?'s':''} registrado${totalV!==1?'s':''}</div><div style="background:rgba(255,255,255,.04);border-radius:var(--r2);padding:1rem;text-align:left;max-width:420px;margin:0 auto;" id="vot-contagem-live">${barrasHTML}</div></div><div class="vot-form"><p style="font-size:13px;color:var(--muted);margin-bottom:1.25rem;">Digite seu <strong style="color:var(--text)">primeiro nome</strong> exatamente como está no site, escolha seu candidato e vote. Cada pessoa vota uma única vez.</p><div class="field"><label>Seu primeiro nome</label><input type="text" id="voto-nome" placeholder="Ex: Eduarda" autocomplete="off" style="text-transform:capitalize"></div><div style="font-size:12px;color:var(--muted);margin-bottom:.75rem;">Escolha sua opção:</div><div class="vot-opcoes">${v.opcoes.map((o,i)=>`<button class="vot-opcao" id="vop-btn-${i}" onclick="selecionarOpcao(${i},'${o.replace(/'/g,"\'")}')">${o}</button>`).join('')}</div><div id="voto-sel-display" style="font-size:12px;color:var(--accent);margin-bottom:1rem;min-height:18px;"></div><button class="btn-accent" onclick="registrarVoto()" style="width:100%">Votar 🗳️</button><div id="voto-msg" style="font-size:13px;margin-top:.75rem;"></div></div>`;
-    selectedVotoOpcao=null;
-  }else{
-    const r=getResultado();
-    content.innerHTML=`<div style="margin-bottom:1rem;"><span style="font-size:12px;background:rgba(224,85,85,.12);color:#e07777;padding:4px 12px;border-radius:999px;border:0.5px solid rgba(224,85,85,.25);">🔴 Votação encerrada · ${v.encerradaEm||''}</span></div>${renderResultadoHTML(r)}`;
-  }
+    const rem=Math.max(0,Math.ceil((v.fimEm-Date.now())/1000));const m=Math.floor(rem/60),s=rem%60;const danger=rem<=15;
+    content.innerHTML=`<div class="vot-banner active"><div class="vot-titulo">${v.titulo}</div><div style="font-size:13px;color:var(--muted);margin-bottom:1rem">Tempo restante</div><div class="vot-timer-big ${danger?'danger':'ok'}" id="vot-timer-display">${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}</div><div style="font-size:13px;color:var(--muted);margin-top:.75rem;margin-bottom:1rem"><strong style="color:var(--text)">${totalV}</strong> voto${totalV!==1?'s':''}</div><div style="background:rgba(255,255,255,.04);border-radius:var(--r2);padding:1rem;text-align:left;max-width:420px;margin:0 auto" id="vot-live">${barrasHTML(v,c,totalV)}</div></div><div class="vot-form"><p style="font-size:13px;color:var(--muted);margin-bottom:1.25rem">Digite seu <strong style="color:var(--text)">primeiro nome</strong> exatamente como cadastrado e vote.</p><div class="field"><label>Primeiro nome</label><input type="text" id="voto-nome" placeholder="Ex: Eduarda" autocomplete="off"></div><div style="font-size:12px;color:var(--muted);margin-bottom:.75rem">Escolha:</div><div class="vot-opcoes">${v.opcoes.map((o,i)=>`<button class="vot-opcao" id="vopbtn${i}" onclick="selOpcao(${i},${JSON.stringify(o)})">${o}</button>`).join('')}</div><div id="voto-sel" style="font-size:12px;color:var(--accent);margin-bottom:1rem;min-height:18px"></div><button class="btn-accent" onclick="registrarVoto()" style="width:100%">Votar 🗳️</button><div id="voto-msg" style="font-size:13px;margin-top:.75rem"></div></div>`;
+    selVoto=null;
+  }else{content.innerHTML=`<div style="margin-bottom:1rem"><span style="font-size:12px;background:rgba(224,85,85,.12);color:#e07777;padding:4px 12px;border-radius:999px">🔴 Encerrada · ${v.encerradaEm||''}</span></div>${resultadoHTML()}`;}
 }
-
-function selecionarOpcao(idx,opcao){
-  selectedVotoOpcao=opcao;
-  document.querySelectorAll('.vot-opcao').forEach((b,i)=>b.classList.toggle('selected',i===idx));
-  const disp=document.getElementById('voto-sel-display');
-  if(disp)disp.textContent='✓ Selecionado: '+opcao;
-}
-
+function selOpcao(idx,opcao){selVoto=opcao;document.querySelectorAll('.vot-opcao').forEach((b,i)=>b.classList.toggle('selected',i===idx));const d=document.getElementById('voto-sel');if(d)d.textContent='✓ '+opcao;}
 function registrarVoto(){
-  const nomeEl=document.getElementById('voto-nome');
-  const msg=document.getElementById('voto-msg');
-  if(!nomeEl||!msg)return;
-  const nome=nomeEl.value.trim();
-  if(!nome){msg.textContent='Digite seu primeiro nome.';msg.style.color='var(--danger)';return;}
-  if(!selectedVotoOpcao){msg.textContent='Selecione uma opção antes de votar.';msg.style.color='var(--danger)';return;}
-  if(!state.votacaoAtiva||!state.votacaoAtiva.aberta){msg.textContent='Votação não está aberta.';msg.style.color='var(--danger)';return;}
+  const nEl=document.getElementById('voto-nome');const msg=document.getElementById('voto-msg');
+  const nome=(nEl?.value||'').trim();if(!nome){if(msg){msg.textContent='Digite seu primeiro nome.';msg.style.color='var(--danger)';}return;}
+  if(!selVoto){if(msg){msg.textContent='Selecione uma opção.';msg.style.color='var(--danger)';}return;}
+  const v=g().votacaoAtiva;if(!v||!v.aberta){if(msg){msg.textContent='Votação não está aberta.';msg.style.color='var(--danger)';}return;}
   const nomeNorm=nome.toLowerCase().trim();
-  const valido=state.players.some(p=>p.name.split(' ')[0].toLowerCase()===nomeNorm);
-  if(!valido){msg.textContent='Nome não encontrado. Digite seu primeiro nome exatamente como está no site.';msg.style.color='var(--danger)';return;}
-  if(state.votacaoAtiva.votos[nomeNorm]!==undefined){msg.textContent='Você já votou nesta rodada!';msg.style.color='var(--danger)';return;}
-  state.votacaoAtiva.votos[nomeNorm]=selectedVotoOpcao;
-  saveState();
-  msg.textContent='✅ Voto registrado!';msg.style.color='var(--success)';
-  nomeEl.value='';selectedVotoOpcao=null;
-  document.querySelectorAll('.vot-opcao').forEach(b=>b.classList.remove('selected'));
-  const disp=document.getElementById('voto-sel-display');if(disp)disp.textContent='';
-  const total=Object.keys(state.votacaoAtiva.votos).length;
-  const banner=document.querySelector('.vot-banner .vot-sub:last-child');
-  if(banner)banner.textContent=`${total} voto${total!==1?'s':''} registrado${total!==1?'s':''} · resultado só aparece ao encerrar`;
-  renderDashVotacaoBanner();
-  setTimeout(()=>{if(msg)msg.textContent='';},3000);
-}
-
-// ─── DUPLAS ───
-function openDuplaModal(){
-  if(!isAdmin)return;
-  const eq=state.players.filter(p=>p.points>=90&&!p.dupla);
-  const ea=state.players.filter(p=>p.points>=50&&!p.dupla);
-  if(!eq.length){showToast('Nenhum colaborador com 90+ pts disponível.');return;}
-  if(!ea.length){showToast('Nenhum colaborador com 50+ pts disponível.');return;}
-  document.getElementById('dupla-quem').innerHTML=eq.map(p=>`<option value="${p.id}">${p.name} (${p.points} pts)</option>`).join('');
-  document.getElementById('dupla-alvo').innerHTML=ea.map(p=>`<option value="${p.id}">${p.name} (${p.points} pts)</option>`).join('');
-  document.getElementById('dupla-resultado').value='aceito';
-  document.getElementById('modal-dupla').classList.add('open');
-}
-function saveDupla(){
-  if(!isAdmin)return;
-  const qId=document.getElementById('dupla-quem').value;
-  const aId=document.getElementById('dupla-alvo').value;
-  const res=document.getElementById('dupla-resultado').value;
-  if(qId===aId){showToast('Selecione pessoas diferentes!');return;}
-  const q=state.players.find(x=>x.id===qId),a=state.players.find(x=>x.id===aId);if(!q||!a)return;
-  if(!state.duplas)state.duplas=[];
-  const d={id:'d'+Date.now(),quem:q.name,alvo:a.name,quemId:qId,alvoId:aId,status:res,ptsCombinados:q.points+a.points,date:now()};
-  if(res==='aceito'){
-    q.dupla=a.id;a.dupla=q.id;
-    d.desc=`🤝 ${q.name} e ${a.name} formaram uma dupla! (${q.points}+${a.points}=${q.points+a.points} pts)`;
-    if(q.points+a.points>=100){d.pizzaGanha=true;d.desc+=' 🍕 Pizza conquistada!';launchConfetti();showToast('🎉 Dupla '+q.name+' + '+a.name+' conquistou a pizza!');}
-    else showToast('🤝 Dupla formada! '+(q.points+a.points)+' pts combinados.');
-  }else{
-    d.desc=`❌ ${a.name} recusou o convite de ${q.name}`;
-    showToast('Recusa registrada.');
-  }
-  state.duplas.push(d);
-  addHistory({type:'dupla',icon:'🤝',text:d.desc,date:now()});
-  saveState();closeModal('modal-dupla');renderAll();
+  if(!g().players.some(p=>p.name.split(' ')[0].toLowerCase()===nomeNorm)){if(msg){msg.textContent='Nome não encontrado.';msg.style.color='var(--danger)';}return;}
+  if(v.votos[nomeNorm]!==undefined){if(msg){msg.textContent='Você já votou!';msg.style.color='var(--danger)';}return;}
+  v.votos[nomeNorm]=selVoto;saveGS();if(msg){msg.textContent='✅ Voto registrado!';msg.style.color='var(--success)';setTimeout(()=>{if(msg)msg.textContent='';},3000);}
+  if(nEl)nEl.value='';selVoto=null;document.querySelectorAll('.vot-opcao').forEach(b=>b.classList.remove('selected'));const d=document.getElementById('voto-sel');if(d)d.textContent='';
 }
 
 // ─── PLAYER CRUD ───
-function openAddPlayer(){if(!isAdmin)return;editingPlayerId=null;document.getElementById('modal-player-title').textContent='Novo colaborador';document.getElementById('p-name').value='';document.getElementById('p-cat').value='ligacao';document.getElementById('p-color').value='#7c5cfc,#2a1f5c';document.getElementById('modal-player').classList.add('open');}
-function openEditPlayer(id){if(!isAdmin)return;editingPlayerId=id;const p=state.players.find(x=>x.id===id);if(!p)return;document.getElementById('modal-player-title').textContent='Editar colaborador';document.getElementById('p-name').value=p.name;document.getElementById('p-cat').value=p.category;document.getElementById('p-color').value=p.color||'#7c5cfc,#2a1f5c';document.getElementById('modal-player').classList.add('open');}
+function openAddPlayer(){if(!isAdmin)return;editPId=null;document.getElementById('modal-player-title').textContent='Novo colaborador';document.getElementById('p-name').value='';openModal('modal-player');}
+function openEdit(id){if(!isAdmin)return;editPId=id;const p=g().players.find(x=>x.id===id);if(!p)return;document.getElementById('modal-player-title').textContent='Editar';document.getElementById('p-name').value=p.name;document.getElementById('p-cat').value=p.category;document.getElementById('p-color').value=p.color||COLORS[0];openModal('modal-player');}
 function savePlayer(){
-  if(!isAdmin)return;
-  const name=document.getElementById('p-name').value.trim();if(!name){showToast('Digite o nome');return;}
-  const cat=document.getElementById('p-cat').value,color=document.getElementById('p-color').value;
-  if(editingPlayerId){const p=state.players.find(x=>x.id===editingPlayerId);p.name=name;p.category=cat;p.color=color;addHistory({type:'edit',icon:'✏️',text:`${name} editado`,date:now()});showToast('Atualizado!');}
-  else{const id='p'+state.nextId++;state.players.push({id,name,category:cat,color,points:0,awards:[],streak:0});addHistory({type:'new',icon:'👤',text:`${name} entrou no programa`,date:now()});showToast('Adicionado!');}
-  saveState();closeModal('modal-player');renderAll();
+  if(!isAdmin)return;const name=document.getElementById('p-name').value.trim();if(!name){showToast('Digite o nome');return;}
+  const cat=document.getElementById('p-cat').value;const color=document.getElementById('p-color').value;
+  if(editPId){const p=g().players.find(x=>x.id===editPId);p.name=name;p.category=cat;p.color=color;addHist({type:'edit',icon:'✏️',text:name+' editado',date:now()});showToast('Atualizado!');}
+  else{const id='p'+g().nextId++;g().players.push({id,name,category:cat,color,points:0,awards:[],streak:0});addHist({type:'new',icon:'👤',text:name+' entrou no programa',date:now()});showToast('Adicionado!');}
+  saveGS();closeModal('modal-player');renderAll();
 }
-function removePlayer(id){if(!isAdmin)return;const p=state.players.find(x=>x.id===id);if(!p||!confirm(`Remover ${p.name}?`))return;state.players=state.players.filter(x=>x.id!==id);addHistory({type:'edit',icon:'🗑️',text:`${p.name} removido`,date:now()});saveState();renderAll();}
+function removePlayer(id){if(!isAdmin)return;const p=g().players.find(x=>x.id===id);if(!p||!confirm('Remover '+p.name+'?'))return;g().players=g().players.filter(x=>x.id!==id);addHist({type:'edit',icon:'🗑️',text:p.name+' removido',date:now()});saveGS();renderAll();}
 
 // ─── POINTS ───
-function openAddPts(id){if(!isAdmin)return;addingPtsPlayerId=id;const p=state.players.find(x=>x.id===id);document.getElementById('modal-pts-name').textContent='👤 '+p.name;document.getElementById('pts-reason').value='top1,30';document.getElementById('custom-pts-field').style.display='none';document.getElementById('custom-desc-field').style.display='none';document.getElementById('modal-pts').classList.add('open');}
+function openPts(id){if(!isAdmin)return;ptsPId=id;const p=g().players.find(x=>x.id===id);document.getElementById('modal-pts-name').textContent='👤 '+p.name;document.getElementById('pts-reason').value='top1,30';document.getElementById('custom-pts-field').style.display='none';document.getElementById('custom-desc-field').style.display='none';openModal('modal-pts');}
 function toggleCustomPts(){const c=document.getElementById('pts-reason').value.startsWith('custom');document.getElementById('custom-pts-field').style.display=c?'block':'none';document.getElementById('custom-desc-field').style.display=c?'block':'none';}
 function savePoints(){
-  if(!isAdmin)return;
-  const p=state.players.find(x=>x.id===addingPtsPlayerId);if(!p)return;
+  if(!isAdmin)return;const p=g().players.find(x=>x.id===ptsPId);if(!p)return;
   const sel=document.getElementById('pts-reason').value;let pts,desc;
-  if(sel.startsWith('custom')){pts=parseInt(document.getElementById('pts-custom').value)||0;desc=document.getElementById('pts-desc').value.trim()||'Pontuação personalizada';if(pts===0){showToast('Digite um valor');return;}}
-  else{const parts=sel.split(',');pts=parseInt(parts[1]);const labels={top1:'🏅 TOP 1',top2:'🥈 TOP 2',top3:'🥉 TOP 3',choc_lig:'🍫 Chocolate Ligação',choc_chat:'🍫 Chocolate Chat',pont:'🕘 Pontualidade',pausa:'☕ Pausas',presenca:'✅ Presença',pont_neg:'🕘 Atraso',pausa_neg:'☕ Pausas desc.',falta:'❌ Falta',monitoria:'⚠️ Monitoria'};desc=labels[parts[0]]||sel;}
-  lastAction={type:'pts',playerId:p.id,pts,prevPts:p.points};
-  p.points=Math.max(0,p.points+pts);
-  const sign=pts>=0?'+':'';
-  addHistory({type:pts>=0?'pts':'danger',icon:pts>=0?'⭐':'⚠️',text:`${p.name} · ${desc}`,pts:sign+pts,date:now()});
-  if(pts<0)showToast(sign+pts+' pts para '+p.name);
-  else if(p.points>=100){launchConfetti();showToast('🎉 '+p.name+' conquistou a pizza!');}
-  else showToast('+'+pts+' pts para '+p.name+'!');
-  saveState();closeModal('modal-pts');renderAll();showUndo();
+  if(sel.startsWith('custom')){pts=parseInt(document.getElementById('pts-custom').value)||0;desc=document.getElementById('pts-desc').value.trim()||'Personalizado';if(pts===0){showToast('Digite um valor');return;}}
+  else{const parts=sel.split(',');pts=parseInt(parts[1]);const lbls={top1:'🏅 TOP 1',top2:'🥈 TOP 2',top3:'🥉 TOP 3',choc_lig:'🍫 Chocolate Lig.',choc_chat:'🍫 Chocolate Chat',pont:'🕘 Pontualidade',pausa:'☕ Pausas',presenca:'✅ Presença',pont_neg:'🕘 Atraso',pausa_neg:'☕ Pausas desc.',falta:'❌ Falta',monitoria:'⚠️ Monitoria'};desc=lbls[parts[0]]||sel;}
+  lastAction={type:'pts',playerId:p.id,pts,prevPts:p.points};p.points=Math.max(0,p.points+pts);const sign=pts>=0?'+':'';
+  addHist({type:pts>=0?'pts':'danger',icon:pts>=0?'⭐':'⚠️',text:p.name+' · '+desc,pts:sign+pts,date:now()});
+  if(p.points>=100){launchConfetti();showToast('🎉 '+p.name+' conquistou a pizza!');}else showToast((pts>=0?'+':'')+pts+' pts para '+p.name+'!');
+  saveGS();closeModal('modal-pts');renderAll();showUndo();
 }
 
 // ─── BULK ───
-function openBulkModal(){if(!isAdmin)return;document.getElementById('bulk-grid').innerHTML=state.players.map(p=>`<div class="bulk-item" onclick="this.classList.toggle('selected')"><span>${p.name}</span></div>`).join('');document.getElementById('bulk-reason').value='pont,5';document.getElementById('bulk-custom-field').style.display='none';document.getElementById('bulk-custom-desc-field').style.display='none';document.getElementById('modal-bulk').classList.add('open');}
+function openBulkModal(){if(!isAdmin)return;document.getElementById('bulk-grid').innerHTML=g().players.map(p=>`<div class="bulk-item" onclick="this.classList.toggle('selected')">${p.name}</div>`).join('');document.getElementById('bulk-reason').value='pont,5';['bulk-custom-field','bulk-custom-desc-field'].forEach(id=>document.getElementById(id).style.display='none');openModal('modal-bulk');}
 function toggleBulkCustom(){const c=document.getElementById('bulk-reason').value.startsWith('custom');document.getElementById('bulk-custom-field').style.display=c?'block':'none';document.getElementById('bulk-custom-desc-field').style.display=c?'block':'none';}
 function saveBulk(){
-  if(!isAdmin)return;
-  const sel=[...document.querySelectorAll('.bulk-item.selected')].map(el=>el.querySelector('span').textContent);
-  if(!sel.length){showToast('Selecione pelo menos um.');return;}
+  if(!isAdmin)return;const sel=[...document.querySelectorAll('.bulk-item.selected')].map(el=>el.textContent);if(!sel.length){showToast('Selecione pelo menos um.');return;}
   const r=document.getElementById('bulk-reason').value;let pts,desc;
   if(r.startsWith('custom')){pts=parseInt(document.getElementById('bulk-custom-pts').value)||0;desc=document.getElementById('bulk-custom-desc').value.trim()||'Grupo';if(pts===0){showToast('Digite um valor');return;}}
-  else{const parts=r.split(',');pts=parseInt(parts[1]);const labels={pont:'🕘 Pontualidade',pausa:'☕ Pausas',presenca:'✅ Presença',pont_neg:'🕘 Atraso',pausa_neg:'☕ Pausas desc.',falta:'❌ Falta',monitoria:'⚠️ Monitoria'};desc=labels[parts[0]]||r;}
-  const sign=pts>=0?'+':'';
-  sel.forEach(name=>{const p=state.players.find(x=>x.name===name);if(!p)return;p.points=Math.max(0,p.points+pts);addHistory({type:pts>=0?'pts':'danger',icon:pts>=0?'⭐':'⚠️',text:`${p.name} · ${desc} (grupo)`,pts:sign+pts,date:now()});});
-  saveState();closeModal('modal-bulk');renderAll();showToast(sign+pts+' pts para '+sel.length+' colaborador(es)!');
+  else{const parts=r.split(',');pts=parseInt(parts[1]);const lbls={pont:'🕘 Pontualidade',pausa:'☕ Pausas',presenca:'✅ Presença',pont_neg:'🕘 Atraso',pausa_neg:'☕ Pausas desc.',falta:'❌ Falta',monitoria:'⚠️ Monitoria'};desc=lbls[parts[0]]||r;}
+  const sign=pts>=0?'+':'';sel.forEach(name=>{const p=g().players.find(x=>x.name===name);if(!p)return;p.points=Math.max(0,p.points+pts);addHist({type:pts>=0?'pts':'danger',icon:pts>=0?'⭐':'⚠️',text:p.name+' · '+desc+' (grupo)',pts:sign+pts,date:now()});});
+  saveGS();closeModal('modal-bulk');renderAll();showToast(sign+pts+' pts para '+sel.length+' colaborador(es)!');
 }
 
 // ─── AWARD ───
-function openAward(id){if(!isAdmin)return;awardingPlayerId=id;const p=state.players.find(x=>x.id===id);document.getElementById('modal-award-name').textContent='👤 '+p.name;document.getElementById('modal-award').classList.add('open');}
+function openAward(id){if(!isAdmin)return;awardPId=id;const p=g().players.find(x=>x.id===id);document.getElementById('modal-award-name').textContent='👤 '+p.name;openModal('modal-award');}
 function saveAward(){
-  if(!isAdmin)return;const p=state.players.find(x=>x.id===awardingPlayerId);if(!p)return;
-  const award=document.getElementById('award-type').value;
-  if(!p.awards)p.awards=[];p.awards.push(award);
+  if(!isAdmin)return;const p=g().players.find(x=>x.id===awardPId);if(!p)return;
+  const award=document.getElementById('award-type').value;if(!p.awards)p.awards=[];p.awards.push(award);
   if(award.includes('Chocolate')||award.includes('TOP'))p.streak=(p.streak||0)+1;
-  addHistory({type:'award',icon:'🎁',text:`${p.name} recebeu: ${award}`,date:now()});
-  if(award.includes('Pizza'))launchConfetti();
-  showToast(award+' entregue para '+p.name+'!');
-  saveState();closeModal('modal-award');renderAll();
+  addHist({type:'award',icon:'🎁',text:p.name+' recebeu: '+award,date:now()});
+  if(award.includes('Pizza'))launchConfetti();showToast(award+' entregue!');saveGS();closeModal('modal-award');renderAll();
 }
 
 // ─── PODER ───
 function openPoderModal(){
-  if(!isAdmin)return;
-  const sel=document.getElementById('poder-dono'),alvo=document.getElementById('poder-alvo');
-  sel.innerHTML=state.players.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
-  alvo.innerHTML=state.players.map(p=>`<option value="${p.id}">${p.name}${p.shield?' 🛡️':''}</option>`).join('');
-  document.getElementById('poder-tipo').value='roubo';
-  document.getElementById('poder-alvo-field').style.display='block';
-  document.getElementById('poder-escudo-warn').style.display='none';
-  document.getElementById('modal-poder').classList.add('open');
+  if(!isAdmin)return;const sel=document.getElementById('poder-dono');const alvo=document.getElementById('poder-alvo');
+  sel.innerHTML=g().players.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
+  alvo.innerHTML=g().players.map(p=>`<option value="${p.id}">${p.name}${p.shield?' 🛡️':''}</option>`).join('');
+  document.getElementById('poder-tipo').value='roubo';document.getElementById('poder-alvo-field').style.display='block';document.getElementById('poder-escudo-warn').style.display='none';
+  openModal('modal-poder');
 }
 function togglePoderAlvo(){const t=document.getElementById('poder-tipo').value;document.getElementById('poder-alvo-field').style.display=t==='roubo'?'block':'none';document.getElementById('poder-escudo-warn').style.display=t==='escudo'?'block':'none';}
 function savePoder(){
-  if(!isAdmin)return;
-  const dId=document.getElementById('poder-dono').value,tipo=document.getElementById('poder-tipo').value;
-  const dono=state.players.find(x=>x.id===dId);if(!dono)return;
-  if(!state.poderes)state.poderes=[];
-  if(tipo==='escudo'){
-    dono.shield=true;
-    state.poderes.push({tipo:'escudo',dono:dono.name,date:now(),desc:`🛡️ ${dono.name} ativou o escudo`});
-    addHistory({type:'poder',icon:'🛡️',text:`${dono.name} ativou o escudo`,date:now()});
-    showToast('🛡️ Escudo ativado!');
-  }else{
-    const aId=document.getElementById('poder-alvo').value;
-    const alvo=state.players.find(x=>x.id===aId);if(!alvo)return;
-    if(aId===dId){showToast('Não pode roubar a si mesmo!');return;}
-    if(alvo.shield){
-      alvo.shield=false;
-      state.poderes.push({tipo:'bloqueio',dono:dono.name,alvo:alvo.name,date:now(),desc:`⚔️ ${alvo.name} bloqueou o roubo de ${dono.name}`});
-      addHistory({type:'poder',icon:'⚔️',text:`${alvo.name} bloqueou ${dono.name}`,date:now()});
-      showToast('⚔️ Escudo bloqueou o roubo!');
-    }else{
-      alvo.points=Math.max(0,alvo.points-10);dono.points+=10;
-      state.poderes.push({tipo:'roubo',dono:dono.name,alvo:alvo.name,date:now(),desc:`🦹 ${dono.name} roubou 10 pts de ${alvo.name}`});
-      addHistory({type:'poder',icon:'🦹',text:`${dono.name} roubou 10 pts de ${alvo.name}`,date:now()});
-      showToast('🦹 Roubo executado!');
-    }
-  }
-  saveState();closeModal('modal-poder');renderAll();
+  if(!isAdmin)return;const dId=document.getElementById('poder-dono').value;const tipo=document.getElementById('poder-tipo').value;const dono=g().players.find(x=>x.id===dId);if(!dono)return;if(!g().poderes)g().poderes=[];
+  if(tipo==='escudo'){dono.shield=true;g().poderes.push({tipo:'escudo',date:now(),desc:'🛡️ '+dono.name+' ativou o escudo'});addHist({type:'poder',icon:'🛡️',text:dono.name+' ativou o escudo',date:now()});showToast('🛡️ Escudo ativado!');}
+  else{const aId=document.getElementById('poder-alvo').value;const alvo=g().players.find(x=>x.id===aId);if(!alvo)return;if(aId===dId){showToast('Não pode roubar a si mesmo!');return;}
+  if(alvo.shield){alvo.shield=false;g().poderes.push({tipo:'bloqueio',date:now(),desc:'⚔️ '+alvo.name+' bloqueou o roubo de '+dono.name});addHist({type:'poder',icon:'⚔️',text:alvo.name+' bloqueou '+dono.name,date:now()});showToast('⚔️ Bloqueado!');}
+  else{alvo.points=Math.max(0,alvo.points-10);dono.points+=10;g().poderes.push({tipo:'roubo',date:now(),desc:'🦹 '+dono.name+' roubou 10 pts de '+alvo.name});addHist({type:'poder',icon:'🦹',text:dono.name+' roubou 10 pts de '+alvo.name,date:now()});showToast('🦹 Roubo executado!');}}
+  saveGS();closeModal('modal-poder');renderAll();
 }
 
-// ─── SETTINGS ───
+// ─── DUPLA ───
+function openDuplaModal(){
+  if(!isAdmin)return;const eq=g().players.filter(p=>p.points>=90&&!p.dupla);const ea=g().players.filter(p=>p.points>=50&&!p.dupla);
+  if(!eq.length){showToast('Nenhum com 90+ pts.');return;}if(!ea.length){showToast('Nenhum com 50+ pts.');return;}
+  document.getElementById('dupla-quem').innerHTML=eq.map(p=>`<option value="${p.id}">${p.name} (${p.points} pts)</option>`).join('');
+  document.getElementById('dupla-alvo').innerHTML=ea.map(p=>`<option value="${p.id}">${p.name} (${p.points} pts)</option>`).join('');
+  document.getElementById('dupla-resultado').value='aceito';openModal('modal-dupla');
+}
+function saveDupla(){
+  if(!isAdmin)return;const qId=document.getElementById('dupla-quem').value;const aId=document.getElementById('dupla-alvo').value;const res=document.getElementById('dupla-resultado').value;
+  if(qId===aId){showToast('Selecione pessoas diferentes!');return;}const q=g().players.find(x=>x.id===qId);const a=g().players.find(x=>x.id===aId);if(!q||!a)return;if(!g().duplas)g().duplas=[];
+  const d={id:'d'+Date.now(),quem:q.name,alvo:a.name,quemId:qId,alvoId:aId,status:res,ptsCombinados:q.points+a.points,date:now()};
+  if(res==='aceito'){q.dupla=a.id;a.dupla=q.id;d.desc='🤝 '+q.name+' e '+a.name+' formaram dupla! ('+q.points+'+'+a.points+'='+(q.points+a.points)+' pts)';if(q.points+a.points>=100){d.pizzaGanha=true;d.desc+=' 🍕 Pizza!';launchConfetti();showToast('🎉 Dupla conquistou a pizza!');}else showToast('🤝 Dupla formada!');}
+  else{d.desc='❌ '+a.name+' recusou o convite de '+q.name;showToast('Recusa registrada.');}
+  g().duplas.push(d);addHist({type:'dupla',icon:'🤝',text:d.desc,date:now()});saveGS();closeModal('modal-dupla');renderAll();
+}
+
+// ─── SUPER ADMIN ───
+function renderGroupVis(){
+  const list=document.getElementById('group-visibility-list');if(!list)return;
+  list.innerHTML=GROUPS.map(x=>`<div class="group-visibility-row"><div><div style="font-size:14px;font-weight:500">${x.icon} ${x.name}</div><div style="font-size:12px;color:var(--muted)">Gestão: ${x.manager}</div></div><div class="toggle ${GS.visibility[x.id]?'on':''}" onclick="toggleVis('${x.id}',this)"></div></div>`).join('');
+}
+function toggleVis(id,el){GS.visibility[id]=!GS.visibility[id];el.classList.toggle('on');saveGS();showToast(GROUPS.find(x=>x.id===id)?.name+' agora '+(GS.visibility[id]?'visível':'oculto')+'.');}
+function renderAdmins(){
+  const list=document.getElementById('admin-users-list');if(!list)return;
+  list.innerHTML=GS.admins.map((a,i)=>`<div class="admin-user-row"><div class="admin-user-info"><div class="admin-user-name">${a.name}</div><div class="admin-user-email">${a.email}</div></div><span class="admin-user-badge ${a.isSuper?'badge-super':'badge-admin'}">${a.isSuper?'Super Admin':'Admin'}</span>${!a.isSuper?`<button onclick="delAdmin(${i})" style="background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:2px 6px">🗑️</button>`:''}</div>`).join('');
+}
+function openAddAdminModal(){['new-admin-name','new-admin-email','new-admin-pass'].forEach(id=>document.getElementById(id).value='');document.getElementById('admin-add-msg').textContent='';openModal('modal-add-admin');}
+function saveNewAdmin(){
+  const name=document.getElementById('new-admin-name').value.trim();const email=document.getElementById('new-admin-email').value.trim().toLowerCase();const pass=document.getElementById('new-admin-pass').value;const msg=document.getElementById('admin-add-msg');
+  if(!name||!email||!pass){msg.textContent='❌ Preencha todos os campos.';msg.style.color='var(--danger)';return;}
+  if(GS.admins.find(a=>a.email.toLowerCase()===email)){msg.textContent='❌ E-mail já cadastrado.';msg.style.color='var(--danger)';return;}
+  if(pass.length<6){msg.textContent='❌ Senha mínima: 6 caracteres.';msg.style.color='var(--danger)';return;}
+  GS.admins.push({name,email,password:pass,isSuper:false});saveGS();renderAdmins();msg.textContent='✅ Admin criado!';msg.style.color='var(--success)';
+}
+function delAdmin(idx){const a=GS.admins[idx];if(!a||a.isSuper){showToast('Não é possível excluir este admin.');return;}if(!confirm('Excluir admin '+a.name+'?'))return;GS.admins.splice(idx,1);saveGS();renderAdmins();showToast('Admin removido.');}
 function changePassword(){
-  const old=document.getElementById('pw-old').value,nw=document.getElementById('pw-new').value,conf=document.getElementById('pw-confirm').value,msg=document.getElementById('pw-msg');
-  if(old!==state.password){msg.textContent='❌ Senha incorreta.';msg.style.color='var(--danger)';return;}
+  const old=document.getElementById('pw-old').value;const nw=document.getElementById('pw-new').value;const conf=document.getElementById('pw-confirm').value;const msg=document.getElementById('pw-msg');
+  const sup=GS.admins.find(a=>a.isSuper);if(old!==sup?.password){msg.textContent='❌ Senha incorreta.';msg.style.color='var(--danger)';return;}
   if(nw.length<6){msg.textContent='❌ Mínimo 6 caracteres.';msg.style.color='var(--danger)';return;}
-  if(nw!==conf){msg.textContent='❌ Confirmação não confere.';msg.style.color='var(--danger)';return;}
-  state.password=nw;saveState();msg.textContent='✅ Senha alterada!';msg.style.color='var(--success)';['pw-old','pw-new','pw-confirm'].forEach(id=>document.getElementById(id).value='');
+  if(nw!==conf){msg.textContent='❌ Não confere.';msg.style.color='var(--danger)';return;}
+  sup.password=nw;saveGS();msg.textContent='✅ Senha alterada!';msg.style.color='var(--success)';['pw-old','pw-new','pw-confirm'].forEach(id=>document.getElementById(id).value='');
 }
-function saveCycle(){const start=document.getElementById('cycle-start').value;const announce=document.getElementById('cycle-announce').value;if(!start){showToast('Defina a data de início.');return;}const sd=new Date(start);const ed=new Date(sd);ed.setDate(ed.getDate()+10);state.cycleStart=start;state.cycleEnd=ed.toISOString().split('T')[0];state.announceDate=announce||null;state.cycleActive=true;addHistory({type:'edit',icon:'📅',text:'Ciclo iniciado: '+start+' → '+state.cycleEnd+(announce?' · Anúncio: '+announce:''),date:now()});saveState();startCycleTimer();renderAll();showToast('▶ Ciclo iniciado!');}
-function pauseCycle(){if(!confirm('Pausar o ciclo?'))return;state.cycleActive=false;addHistory({type:'edit',icon:'⏸',text:'Ciclo pausado',date:now()});saveState();startCycleTimer();renderAll();showToast('⏸ Ciclo pausado.');}
-function confirmReset(){
-  if(!confirm('Resetar tudo? Pontos, escudos, duplas e votação serão zerados.'))return;
-  state.players.forEach(p=>{p.points=0;p.shield=false;p.streak=0;p.dupla=null;});
-  state.duplas=[];state.votacaoAtiva=null;state.cycleStart=null;state.cycleEnd=null;state.announceDate=null;state.cycleActive=false;
-  clearInterval(votacaoTimerInterval);
-  addHistory({type:'edit',icon:'🔄',text:'Ciclo resetado — novo ciclo iniciado',date:now()});
-  saveState();renderAll();startCycleTimer();showToast('Ciclo resetado!');
-}
-function exportCSV(){
-  const rows=[['Nome','Categoria','Pontos','Chocolates','Pizzas','Escudo','Streak']];
-  state.players.sort((a,b)=>b.points-a.points).forEach(p=>{rows.push([p.name,p.category,p.points,(p.awards||[]).filter(a=>a.includes('Chocolate')).length,(p.awards||[]).filter(a=>a.includes('Pizza')).length,p.shield?'Sim':'Não',p.streak||0]);});
-  const csv=rows.map(r=>r.join(',')).join('\n');
-  const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});
-  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='igreen_ciclo_'+new Date().toISOString().split('T')[0]+'.csv';a.click();
-  showToast('CSV exportado!');
+
+// ─── DELETE ───
+function delHist(ts,txt,tp){if(!isAdmin)return;const idx=g().history.findIndex(h=>h.date===ts&&h.text===txt&&h.type===tp);if(idx===-1){showToast('Não encontrado.');return;}g().history.splice(idx,1);saveGS();renderHistory();showToast('Excluído.');}
+function delPoder(idx){if(!isAdmin||!confirm('Excluir?'))return;g().poderes.splice(idx,1);saveGS();renderPoderes();showToast('Excluído.');}
+function delDupla(idx){if(!isAdmin||!confirm('Excluir?'))return;const d=g().duplas[idx];if(d&&d.status==='aceito'){const q=g().players.find(x=>x.id===d.quemId);const a=g().players.find(x=>x.id===d.alvoId);if(q)q.dupla=null;if(a)a.dupla=null;}g().duplas.splice(idx,1);saveGS();renderAll();showToast('Excluído.');}
+
+// ─── EXPORT ───
+function exportExcel(){if(typeof XLSX==='undefined'){const script=document.createElement('script');script.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';script.onload=_doExport;script.onerror=()=>showToast('Erro ao carregar biblioteca.');document.head.appendChild(script);}else _doExport();}
+function _doExport(){
+  const wb=XLSX.utils.book_new();const gr=g();const grInfo=GROUPS.find(x=>x.id===gid);const dateStr=new Date().toLocaleDateString('pt-BR');
+  const r1=[['iGreen Energy — Arena de Recompensas — '+grInfo?.name],['Ciclo: '+(gr.cycleStart?fmtDate(gr.cycleStart)+' → '+fmtDate(gr.cycleEnd):'Não iniciado')+(gr.announceDate?' | Anúncio: '+fmtDate(gr.announceDate):'')+' | Exportado: '+dateStr],[],['#','Nome','Categoria','Pontos','% Meta','Chocolates','Pizzas','Escudo','Streak']];
+  [...gr.players].sort((a,b)=>b.points-a.points).forEach((p,i)=>{const aw=p.awards||[];r1.push([i+1,p.name,{ligacao:'Ligações',chat:'Chat',ambos:'Ambos'}[p.category]||p.category,p.points,Math.min(100,Math.round((p.points/100)*100))+'%',aw.filter(a=>a.includes('Chocolate')).length,aw.filter(a=>a.includes('Pizza')).length,p.shield?'Sim':'Não',p.streak||0]);});
+  const ws1=XLSX.utils.aoa_to_sheet(r1);ws1['!cols']=[{wch:4},{wch:22},{wch:12},{wch:8},{wch:8},{wch:12},{wch:10},{wch:10},{wch:10}];ws1['!merges']=[{s:{r:0,c:0},e:{r:0,c:8}},{s:{r:1,c:0},e:{r:1,c:8}}];XLSX.utils.book_append_sheet(wb,ws1,'Ranking');
+  const r2=[['Data','Tipo','Evento','Pontos']];[...gr.history].reverse().forEach(h=>r2.push([h.date,h.type||'',h.text||'',h.pts||'']));const ws2=XLSX.utils.aoa_to_sheet(r2);ws2['!cols']=[{wch:18},{wch:12},{wch:55},{wch:8}];XLSX.utils.book_append_sheet(wb,ws2,'Histórico');
+  const r3=[['Data','Quem','Convidado','Status','Pts','Pizza']];(gr.duplas||[]).forEach(d=>r3.push([d.date,d.quem,d.alvo,d.status==='aceito'?'Aceito':'Recusado',d.ptsCombinados||'',d.pizzaGanha?'Sim':'Não']));const ws3=XLSX.utils.aoa_to_sheet(r3);ws3['!cols']=[{wch:18},{wch:20},{wch:20},{wch:10},{wch:10},{wch:8}];XLSX.utils.book_append_sheet(wb,ws3,'Duplas');
+  const r4=[['Data','Tipo','Descrição']];(gr.poderes||[]).forEach(p=>r4.push([p.date,{roubo:'Roubo',escudo:'Escudo',bloqueio:'Bloqueio'}[p.tipo]||p.tipo,p.desc]));const ws4=XLSX.utils.aoa_to_sheet(r4);ws4['!cols']=[{wch:18},{wch:12},{wch:55}];XLSX.utils.book_append_sheet(wb,ws4,'Poderes');
+  XLSX.writeFile(wb,'iGreen_'+grInfo?.name.replace(/\s/g,'_')+'_'+new Date().toISOString().split('T')[0]+'.xlsx');showToast('✅ Excel exportado!');
 }
 
 // ─── UTILS ───
+function addHist(item){const h=g().history;h.push(item);if(h.length>500)h.shift();}
 function showUndo(){const btn=document.getElementById('undo-btn');if(btn){btn.style.display='';clearTimeout(btn._t);btn._t=setTimeout(()=>{btn.style.display='none';lastAction=null;},8000);}}
-function undoLast(){if(!lastAction||!isAdmin)return;if(lastAction.type==='pts'){const p=state.players.find(x=>x.id===lastAction.playerId);if(p){p.points=lastAction.prevPts;state.history.pop();}}lastAction=null;document.getElementById('undo-btn').style.display='none';saveState();renderAll();showToast('Ação desfeita!');}
-function deleteHistory(ts,txt,tp){
-  if(!isAdmin)return;
-  const idx=state.history.findIndex(h=>h.date===ts&&h.text===txt&&h.type===tp);
-  if(idx===-1){showToast('Não encontrado.');return;}
-  state.history.splice(idx,1);saveState();renderHistory();showToast('Registro excluído.');
-}
-function deletePoder(idx){
-  if(!isAdmin||!confirm('Excluir este poder?'))return;
-  state.poderes.splice(idx,1);saveState();renderPoderes();showToast('Excluído.');
-}
-function deleteDupla(idx){
-  if(!isAdmin||!confirm('Excluir esta dupla?'))return;
-  const d=state.duplas[idx];
-  if(d&&d.status==='aceito'){const q=state.players.find(x=>x.id===d.quemId);const a=state.players.find(x=>x.id===d.alvoId);if(q)q.dupla=null;if(a)a.dupla=null;}
-  state.duplas.splice(idx,1);saveState();renderAll();showToast('Dupla excluída.');
-}
-function addHistory(item){state.history.push(item);if(state.history.length>300)state.history.shift();}
+function undoLast(){if(!lastAction||!isAdmin)return;if(lastAction.type==='pts'){const p=g().players.find(x=>x.id===lastAction.playerId);if(p){p.points=lastAction.prevPts;g().history.pop();}}lastAction=null;document.getElementById('undo-btn').style.display='none';saveGS();renderAll();showToast('Desfeito!');}
+function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
 function now(){return new Date().toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});}
-function launchConfetti(){const canvas=document.getElementById('confetti');const ctx=canvas.getContext('2d');canvas.width=window.innerWidth;canvas.height=window.innerHeight;const particles=Array.from({length:150},()=>({x:Math.random()*canvas.width,y:-10,r:Math.random()*6+3,dx:(Math.random()-.5)*3,dy:Math.random()*4+2,color:['#7c5cfc','#5ce0c6','#f5c842','#e05555','#e88c30','#4cbb8a'][Math.floor(Math.random()*6)],rot:Math.random()*360,drot:(Math.random()-.5)*5}));let frame=0;function draw(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);ctx.fillStyle=p.color;ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*1.5);ctx.restore();p.x+=p.dx;p.y+=p.dy;p.rot+=p.drot;});frame++;if(frame<140)requestAnimationFrame(draw);else ctx.clearRect(0,0,canvas.width,canvas.height);}draw();}
-</script>
-<script>
-(function(){
-  var k='igreen_arena_v5';
-  if(!localStorage.getItem(k)){
-    var d={"password":"igreen2024","players":[{"id":"p1","name":"Eduarda Sanqueta","category":"ambos","color":"#7c5cfc,#2a1f5c","points":0,"awards":[],"streak":0},{"id":"p2","name":"Heverton Tavares","category":"ambos","color":"#5ce0c6,#0f3d35","points":0,"awards":[],"streak":0},{"id":"p3","name":"Michelle Batista","category":"ambos","color":"#f5c842,#3d2e00","points":0,"awards":[],"streak":0},{"id":"p4","name":"Cau\u00e3 Alves","category":"ambos","color":"#e05555,#3d1010","points":0,"awards":[],"streak":0},{"id":"p5","name":"Lorenzzo Pereira","category":"ambos","color":"#e88c30,#3d2000","points":0,"awards":[],"streak":0},{"id":"p6","name":"Paulo Roberto","category":"ambos","color":"#4cbb8a,#0f3d25","points":0,"awards":[],"streak":0},{"id":"p7","name":"Camila Nara","category":"ambos","color":"#7c5cfc,#2a1f5c","points":0,"awards":[],"streak":0},{"id":"p8","name":"Diogo Oliveira","category":"ambos","color":"#5ce0c6,#0f3d35","points":0,"awards":[],"streak":0},{"id":"p9","name":"Jheniffer Santos","category":"ambos","color":"#f5c842,#3d2e00","points":0,"awards":[],"streak":0},{"id":"p10","name":"Grasielle Santos","category":"ambos","color":"#e05555,#3d1010","points":0,"awards":[],"streak":0},{"id":"p11","name":"Ketle Silva","category":"ambos","color":"#e88c30,#3d2000","points":0,"awards":[],"streak":0},{"id":"p12","name":"Junior Otaides","category":"ambos","color":"#4cbb8a,#0f3d25","points":0,"awards":[],"streak":0},{"id":"p13","name":"Victoria Silva","category":"ambos","color":"#7c5cfc,#2a1f5c","points":0,"awards":[],"streak":0},{"id":"p14","name":"Maria Clara","category":"ambos","color":"#5ce0c6,#0f3d35","points":0,"awards":[],"streak":0},{"id":"p15","name":"Marcos Martins","category":"ambos","color":"#f5c842,#3d2e00","points":0,"awards":[],"streak":0},{"id":"p16","name":"Emanuel Ferreira","category":"ambos","color":"#e88c30,#3d2000","points":0,"awards":[],"streak":0},{"id":"p17","name":"Gabrielle Martins","category":"ambos","color":"#e05555,#3d1010","points":0,"awards":[],"streak":0}],"history":[{"type":"new","icon":"\ud83d\udc64","text":"Time iGreen carregado","date":"06/06/2026"}],"poderes":[],"duplas":[],"votacaoAtiva":null,"cycleStart":null,"cycleEnd":null,"announceDate":null,"cycleActive":false,"nextId":18};
-    localStorage.setItem(k,JSON.stringify(d));
-  }
-})();
+function launchConfetti(){const canvas=document.getElementById('confetti');const ctx=canvas.getContext('2d');canvas.width=window.innerWidth;canvas.height=window.innerHeight;const p=Array.from({length:150},()=>({x:Math.random()*canvas.width,y:-10,r:Math.random()*6+3,dx:(Math.random()-.5)*3,dy:Math.random()*4+2,color:['#7c5cfc','#5ce0c6','#f5c842','#e05555','#e88c30','#4cbb8a'][Math.floor(Math.random()*6)],rot:Math.random()*360,drot:(Math.random()-.5)*5}));let frame=0;function draw(){ctx.clearRect(0,0,canvas.width,canvas.height);p.forEach(q=>{ctx.save();ctx.translate(q.x,q.y);ctx.rotate(q.rot*Math.PI/180);ctx.fillStyle=q.color;ctx.fillRect(-q.r/2,-q.r/2,q.r,q.r*1.5);ctx.restore();q.x+=q.dx;q.y+=q.dy;q.rot+=q.drot;});frame++;if(frame<140)requestAnimationFrame(draw);else ctx.clearRect(0,0,canvas.width,canvas.height);}draw();}
+
 </script>
 </body>
 </html>
