@@ -315,8 +315,15 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
       </div>
       <div class="stats-row" id="stats-row"></div>
       <div class="pizza-card">
-        <div class="pizza-info"><h3>🍕 Próxima pizza</h3><p>A cada 10 dias quem acumular 100 pontos escolhe o sabor!</p></div>
-        <div><div class="pizza-timer" id="pizza-timer"></div></div>
+        <div class="pizza-info">
+          <h3>🍕 Próxima pizza</h3>
+          <p>A cada 10 dias quem acumular 100 pontos escolhe o sabor!</p>
+          <div id="pizza-dates-display" style="margin-top:8px;font-size:12px;color:var(--muted);line-height:1.9;"></div>
+        </div>
+        <div>
+          <div class="pizza-timer" id="pizza-timer"></div>
+          <div id="pizza-not-started" style="display:none;text-align:center;"><div style="font-family:'Syne',sans-serif;font-size:13px;color:var(--muted)">Ciclo não iniciado</div><div style="font-size:11px;color:rgba(122,122,154,.5);margin-top:4px">Aguardando admin definir datas</div></div>
+        </div>
       </div>
       <div class="section-title" id="dash-players-title">
         Colaboradores <span class="badge" id="players-count-badge"></span>
@@ -409,7 +416,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
     <div class="section" id="section-settings">
       <div class="section-title">Configurações</div>
       <div class="settings-card"><h3>🔑 Alterar senha</h3><div class="field"><label>Senha atual</label><input type="password" id="pw-old"></div><div class="field"><label>Nova senha</label><input type="password" id="pw-new"></div><div class="field"><label>Confirmar</label><input type="password" id="pw-confirm"></div><button class="btn-accent" onclick="changePassword()">Salvar senha</button><div id="pw-msg" style="font-size:13px;margin-top:.75rem;"></div></div>
-      <div class="settings-card"><h3>📅 Ciclo de 10 dias</h3><div class="field"><label>Data de início</label><input type="date" id="cycle-start" onchange="saveCycle()"></div><p style="font-size:12px;color:var(--muted);margin-top:6px;">O ciclo dura 10 dias. 100 pts = pizza!</p></div>
+      <div class="settings-card"><h3>📅 Ciclo de 10 dias</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1rem;"><div class="field" style="margin-bottom:0"><label>Data de início</label><input type="date" id="cycle-start"></div><div class="field" style="margin-bottom:0"><label>Data de anúncio</label><input type="date" id="cycle-announce"></div></div><p style="font-size:12px;color:var(--muted);margin-bottom:1rem;">Encerramento = início + 10 dias (automático). A data de anúncio aparece para o time no dashboard.</p><div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn-accent" onclick="saveCycle()">▶ Iniciar ciclo</button><button class="btn-sm" onclick="pauseCycle()" id="btn-pause-cycle" style="display:none;border-color:rgba(245,200,66,.3);color:var(--gold)">⏸ Pausar ciclo</button></div><div id="cycle-status-display" style="margin-top:1rem;font-size:13px;color:var(--muted);"></div></div>
       <div class="settings-card"><h3>🗑️ Resetar ciclo</h3><p style="font-size:13px;color:var(--muted);margin-bottom:1rem;">Zera pontos, escudos, duplas e votação.</p><button class="btn-sm" style="color:var(--danger);border-color:rgba(224,85,85,.3);" onclick="confirmReset()">Resetar ciclo</button></div>
       <div class="settings-card"><h3>📊 Exportar CSV</h3><p style="font-size:13px;color:var(--muted);margin-bottom:1rem;">Baixe um resumo do ciclo atual.</p><button class="btn-sm" onclick="exportCSV()">⬇ Exportar CSV</button></div>
     </div>
@@ -461,7 +468,7 @@ let selectedVotoOpcao=null;
 const phraseIdx=Math.floor(Date.now()/86400000)%phrases.length;
 
 function defaultState(){
-  return{password:'igreen2024',players:[],history:[],poderes:[],duplas:[],votacaoAtiva:null,cycleStart:new Date().toISOString().split('T')[0],nextId:1};
+  return{password:'igreen2024',players:[],history:[],poderes:[],duplas:[],votacaoAtiva:null,cycleStart:null,cycleEnd:null,announceDate:null,cycleActive:false,nextId:1};
 }
 function loadState(){
   try{const r=localStorage.getItem(STORAGE_KEY);if(r)return JSON.parse(r);}catch(e){}
@@ -542,7 +549,7 @@ function doLogout(){
 function showSection(name){
   if(!isAdmin&&name==='settings')return;
   showSectionSilent(name);
-  if(name==='settings')document.getElementById('cycle-start').value=state.cycleStart||'';
+  if(name==='settings'){document.getElementById('cycle-start').value=state.cycleStart||'';document.getElementById('cycle-announce').value=state.announceDate||'';}
   if(name==='ranking')renderRanking();
   if(name==='historico')renderHistory();
   if(name==='poderes')renderPoderes();
@@ -563,13 +570,31 @@ function startCycleTimer(){
   updateCycleTimer();
   cycleTimerInterval=setInterval(updateCycleTimer,1000);
 }
+function fmt(dt){return dt?new Date(dt).toLocaleDateString('pt-BR'):'—';}
 function updateCycleTimer(){
-  const el=document.getElementById('pizza-timer');if(!el)return;
-  const start=state.cycleStart?new Date(state.cycleStart):new Date();
-  const end=new Date(start);end.setDate(end.getDate()+10);
+  const el=document.getElementById('pizza-timer');
+  const ns=document.getElementById('pizza-not-started');
+  const dd=document.getElementById('pizza-dates-display');
+  const bp=document.getElementById('btn-pause-cycle');
+  const cs=document.getElementById('cycle-status-display');
+  if(!state.cycleActive||!state.cycleStart){
+    if(el)el.style.display='none';
+    if(ns)ns.style.display='block';
+    if(dd)dd.innerHTML='';
+    if(bp)bp.style.display='none';
+    if(cs)cs.textContent='Nenhum ciclo ativo. Defina as datas e clique em "Iniciar ciclo".';
+    return;
+  }
+  if(el)el.style.display='flex';
+  if(ns)ns.style.display='none';
+  if(bp)bp.style.display='';
+  const end=new Date(state.cycleEnd);
   const diff=Math.max(0,end-new Date());
   const d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
-  el.innerHTML=`<div class="pizza-unit"><div class="pizza-num">${String(d).padStart(2,'0')}</div><div class="pizza-lbl">dias</div></div><div class="pizza-sep">:</div><div class="pizza-unit"><div class="pizza-num">${String(h).padStart(2,'0')}</div><div class="pizza-lbl">horas</div></div><div class="pizza-sep">:</div><div class="pizza-unit"><div class="pizza-num">${String(m).padStart(2,'0')}</div><div class="pizza-lbl">min</div></div><div class="pizza-sep">:</div><div class="pizza-unit"><div class="pizza-num">${String(s).padStart(2,'0')}</div><div class="pizza-lbl">seg</div></div>`;
+  if(el)el.innerHTML=`<div class="pizza-unit"><div class="pizza-num">${String(d).padStart(2,'0')}</div><div class="pizza-lbl">dias</div></div><div class="pizza-sep">:</div><div class="pizza-unit"><div class="pizza-num">${String(h).padStart(2,'0')}</div><div class="pizza-lbl">horas</div></div><div class="pizza-sep">:</div><div class="pizza-unit"><div class="pizza-num">${String(m).padStart(2,'0')}</div><div class="pizza-lbl">min</div></div><div class="pizza-sep">:</div><div class="pizza-unit"><div class="pizza-num">${String(s).padStart(2,'0')}</div><div class="pizza-lbl">seg</div></div>`;
+  const ann=state.announceDate?` &nbsp;·&nbsp; 📢 Anúncio: <strong style="color:var(--gold)">${fmt(state.announceDate)}</strong>`:'';
+  if(dd)dd.innerHTML=`📅 Início: <strong style="color:var(--text)">${fmt(state.cycleStart)}</strong> &nbsp;·&nbsp; ⏱️ Encerramento: <strong style="color:var(--text)">${fmt(state.cycleEnd)}</strong>${ann}`;
+  if(cs)cs.innerHTML=`✅ Ciclo ativo · Início: <strong>${fmt(state.cycleStart)}</strong> · Encerramento: <strong>${fmt(state.cycleEnd)}</strong>${state.announceDate?' · Anúncio: <strong style="color:var(--gold)">'+fmt(state.announceDate)+'</strong>':''}`;
 }
 
 function renderAll(){
@@ -638,7 +663,8 @@ function renderHistory(){
   if(pf!=='all')items=items.filter(h=>h.text&&h.text.includes(pf));
   if(badge)badge.textContent=state.history.length+' registros';
   if(!items.length){list.innerHTML='<div class="empty">Nenhuma atualização.</div>';return;}
-  list.innerHTML=items.map(h=>{
+  list.innerHTML=items.map((h,_i)=>{
+    const hidx=state.history.findIndex(x=>x.date===h.date&&x.text===h.text&&x.type===h.type);
     const bg=h.type==='pts'?'rgba(124,92,252,.15)':h.type==='award'?'rgba(232,140,48,.15)':h.type==='danger'?'rgba(224,85,85,.15)':h.type==='poder'?'rgba(245,200,66,.15)':h.type==='dupla'?'rgba(92,224,198,.15)':h.type==='votacao'?'rgba(245,200,66,.12)':'rgba(92,224,198,.15)';
     const ptsStr=h.pts!=null?String(h.pts):'';
     return`<div class="feed-item"><div class="feed-icon" style="background:${bg}">${h.icon}</div><div class="feed-body"><div class="feed-title">${h.text}</div><div class="feed-time">${h.date}</div></div>${ptsStr?`<div class="feed-pts" style="color:${ptsStr.startsWith('-')?'var(--danger)':'var(--accent)'}">${ptsStr} pts</div>`:''}</div>`;
@@ -654,7 +680,7 @@ function renderPoderes(){
     const bg=e.tipo==='roubo'?'rgba(224,85,85,.12)':e.tipo==='escudo'?'rgba(92,224,198,.12)':'rgba(245,200,66,.12)';
     const col=e.tipo==='roubo'?'#e07777':e.tipo==='escudo'?'#5ce0c6':'#f5c842';
     const icons={roubo:'🦹',escudo:'🛡️',bloqueio:'⚔️'};const labels={roubo:'Roubo',escudo:'Escudo',bloqueio:'Bloqueado'};
-    return`<div class="feed-item" style="border-color:${bg}"><div class="feed-icon" style="background:${bg}">${icons[e.tipo]||'⚡'}</div><div class="feed-body"><div class="feed-title">${e.desc}</div><div style="display:flex;gap:8px;margin-top:4px;"><span style="font-size:11px;background:${bg};color:${col};padding:2px 8px;border-radius:999px;">${labels[e.tipo]||e.tipo}</span><span class="feed-time">${e.date}</span></div></div></div>`;
+    const pIdx=([...p].reverse()).indexOf(e);const realPIdx=p.length-1-pIdx;const pDelBtn=isAdmin?`<button onclick="deletePoder(${realPIdx})" style="background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:2px 6px;" title="Excluir">🗑️</button>`:'';return`<div class="feed-item" style="border-color:${bg}"><div class="feed-icon" style="background:${bg}">${icons[e.tipo]||'⚡'}</div><div class="feed-body"><div class="feed-title">${e.desc}</div><div style="display:flex;gap:8px;margin-top:4px;"><span style="font-size:11px;background:${bg};color:${col};padding:2px 8px;border-radius:999px;">${labels[e.tipo]||e.tipo}</span><span class="feed-time">${e.date}</span></div></div>${pDelBtn}</div>`;
   }).join('');
 }
 
@@ -667,7 +693,7 @@ function renderDuplas(){
     const ok=dp.status==='aceito';const pizza=dp.pizzaGanha;
     const bg=pizza?'rgba(232,140,48,.12)':ok?'rgba(92,224,198,.1)':'rgba(122,122,154,.1)';
     const border=pizza?'rgba(232,140,48,.3)':ok?'rgba(92,224,198,.25)':'rgba(122,122,154,.2)';
-    return`<div style="background:${bg};border:0.5px solid ${border};border-radius:var(--r);padding:1.25rem;margin-bottom:10px;"><div style="display:flex;align-items:center;gap:10px;"><span style="font-size:22px">${pizza?'🍕':ok?'🤝':'❌'}</span><div style="flex:1"><div style="font-size:14px;font-weight:500;color:var(--text)">${dp.desc}</div><div style="font-size:11px;color:var(--muted);margin-top:3px">${dp.date}</div></div>${ok&&!pizza?`<span style="font-size:11px;background:rgba(92,224,198,.12);color:#5ce0c6;padding:3px 10px;border-radius:999px;">${dp.ptsCombinados} pts</span>`:''}</div></div>`;
+    const dIdx2=state.duplas.indexOf(dp);const dDelBtn=isAdmin?`<button onclick="deleteDupla(${dIdx2})" style="background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:2px 6px;" title="Excluir">🗑️</button>`:'';return`<div style="background:${bg};border:0.5px solid ${border};border-radius:var(--r);padding:1.25rem;margin-bottom:10px;"><div style="display:flex;align-items:center;gap:10px;"><span style="font-size:22px">${pizza?'🍕':ok?'🤝':'❌'}</span><div style="flex:1"><div style="font-size:14px;font-weight:500;color:var(--text)">${dp.desc}</div><div style="font-size:11px;color:var(--muted);margin-top:3px">${dp.date}</div></div>${ok&&!pizza?`<span style="font-size:11px;background:rgba(92,224,198,.12);color:#5ce0c6;padding:3px 10px;border-radius:999px;">${dp.ptsCombinados} pts</span>`:''} ${dDelBtn}</div></div>`;
   }).join('');
 }
 
@@ -998,11 +1024,12 @@ function changePassword(){
   if(nw!==conf){msg.textContent='❌ Confirmação não confere.';msg.style.color='var(--danger)';return;}
   state.password=nw;saveState();msg.textContent='✅ Senha alterada!';msg.style.color='var(--success)';['pw-old','pw-new','pw-confirm'].forEach(id=>document.getElementById(id).value='');
 }
-function saveCycle(){state.cycleStart=document.getElementById('cycle-start').value;saveState();startCycleTimer();showToast('Ciclo atualizado!');}
+function saveCycle(){const start=document.getElementById('cycle-start').value;const announce=document.getElementById('cycle-announce').value;if(!start){showToast('Defina a data de início.');return;}const sd=new Date(start);const ed=new Date(sd);ed.setDate(ed.getDate()+10);state.cycleStart=start;state.cycleEnd=ed.toISOString().split('T')[0];state.announceDate=announce||null;state.cycleActive=true;addHistory({type:'edit',icon:'📅',text:'Ciclo iniciado: '+start+' → '+state.cycleEnd+(announce?' · Anúncio: '+announce:''),date:now()});saveState();startCycleTimer();renderAll();showToast('▶ Ciclo iniciado!');}
+function pauseCycle(){if(!confirm('Pausar o ciclo?'))return;state.cycleActive=false;addHistory({type:'edit',icon:'⏸',text:'Ciclo pausado',date:now()});saveState();startCycleTimer();renderAll();showToast('⏸ Ciclo pausado.');}
 function confirmReset(){
   if(!confirm('Resetar tudo? Pontos, escudos, duplas e votação serão zerados.'))return;
   state.players.forEach(p=>{p.points=0;p.shield=false;p.streak=0;p.dupla=null;});
-  state.duplas=[];state.votacaoAtiva=null;state.cycleStart=new Date().toISOString().split('T')[0];
+  state.duplas=[];state.votacaoAtiva=null;state.cycleStart=null;state.cycleEnd=null;state.announceDate=null;state.cycleActive=false;
   clearInterval(votacaoTimerInterval);
   addHistory({type:'edit',icon:'🔄',text:'Ciclo resetado — novo ciclo iniciado',date:now()});
   saveState();renderAll();startCycleTimer();showToast('Ciclo resetado!');
@@ -1019,6 +1046,22 @@ function exportCSV(){
 // ─── UTILS ───
 function showUndo(){const btn=document.getElementById('undo-btn');if(btn){btn.style.display='';clearTimeout(btn._t);btn._t=setTimeout(()=>{btn.style.display='none';lastAction=null;},8000);}}
 function undoLast(){if(!lastAction||!isAdmin)return;if(lastAction.type==='pts'){const p=state.players.find(x=>x.id===lastAction.playerId);if(p){p.points=lastAction.prevPts;state.history.pop();}}lastAction=null;document.getElementById('undo-btn').style.display='none';saveState();renderAll();showToast('Ação desfeita!');}
+function deleteHistory(ts,txt,tp){
+  if(!isAdmin)return;
+  const idx=state.history.findIndex(h=>h.date===ts&&h.text===txt&&h.type===tp);
+  if(idx===-1){showToast('Não encontrado.');return;}
+  state.history.splice(idx,1);saveState();renderHistory();showToast('Registro excluído.');
+}
+function deletePoder(idx){
+  if(!isAdmin||!confirm('Excluir este poder?'))return;
+  state.poderes.splice(idx,1);saveState();renderPoderes();showToast('Excluído.');
+}
+function deleteDupla(idx){
+  if(!isAdmin||!confirm('Excluir esta dupla?'))return;
+  const d=state.duplas[idx];
+  if(d&&d.status==='aceito'){const q=state.players.find(x=>x.id===d.quemId);const a=state.players.find(x=>x.id===d.alvoId);if(q)q.dupla=null;if(a)a.dupla=null;}
+  state.duplas.splice(idx,1);saveState();renderAll();showToast('Dupla excluída.');
+}
 function addHistory(item){state.history.push(item);if(state.history.length>300)state.history.shift();}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
@@ -1029,7 +1072,7 @@ function launchConfetti(){const canvas=document.getElementById('confetti');const
 (function(){
   var k='igreen_arena_v5';
   if(!localStorage.getItem(k)){
-    var d={"password":"igreen2024","players":[{"id":"p1","name":"Eduarda Sanqueta","category":"ambos","color":"#7c5cfc,#2a1f5c","points":0,"awards":[],"streak":0},{"id":"p2","name":"Heverton Tavares","category":"ambos","color":"#5ce0c6,#0f3d35","points":0,"awards":[],"streak":0},{"id":"p3","name":"Michelle Batista","category":"ambos","color":"#f5c842,#3d2e00","points":0,"awards":[],"streak":0},{"id":"p4","name":"Cau\u00e3 Alves","category":"ambos","color":"#e05555,#3d1010","points":0,"awards":[],"streak":0},{"id":"p5","name":"Lorenzzo Pereira","category":"ambos","color":"#e88c30,#3d2000","points":0,"awards":[],"streak":0},{"id":"p6","name":"Paulo Roberto","category":"ambos","color":"#4cbb8a,#0f3d25","points":0,"awards":[],"streak":0},{"id":"p7","name":"Camila Nara","category":"ambos","color":"#7c5cfc,#2a1f5c","points":0,"awards":[],"streak":0},{"id":"p8","name":"Diogo Oliveira","category":"ambos","color":"#5ce0c6,#0f3d35","points":0,"awards":[],"streak":0},{"id":"p9","name":"Jheniffer Santos","category":"ambos","color":"#f5c842,#3d2e00","points":0,"awards":[],"streak":0},{"id":"p10","name":"Grasielle Santos","category":"ambos","color":"#e05555,#3d1010","points":0,"awards":[],"streak":0},{"id":"p11","name":"Ketle Silva","category":"ambos","color":"#e88c30,#3d2000","points":0,"awards":[],"streak":0},{"id":"p12","name":"Junior Otaides","category":"ambos","color":"#4cbb8a,#0f3d25","points":0,"awards":[],"streak":0},{"id":"p13","name":"Victoria Silva","category":"ambos","color":"#7c5cfc,#2a1f5c","points":0,"awards":[],"streak":0},{"id":"p14","name":"Maria Clara","category":"ambos","color":"#5ce0c6,#0f3d35","points":0,"awards":[],"streak":0},{"id":"p15","name":"Marcos Martins","category":"ambos","color":"#f5c842,#3d2e00","points":0,"awards":[],"streak":0},{"id":"p16","name":"Emanuel Ferreira","category":"ambos","color":"#e88c30,#3d2000","points":0,"awards":[],"streak":0},{"id":"p17","name":"Gabrielle Martins","category":"ambos","color":"#e05555,#3d1010","points":0,"awards":[],"streak":0}],"history":[{"type":"new","icon":"\ud83d\udc64","text":"Time iGreen carregado","date":"06/06/2026"}],"poderes":[],"duplas":[],"votacaoAtiva":null,"cycleStart":"2026-06-06","nextId":18};
+    var d={"password":"igreen2024","players":[{"id":"p1","name":"Eduarda Sanqueta","category":"ambos","color":"#7c5cfc,#2a1f5c","points":0,"awards":[],"streak":0},{"id":"p2","name":"Heverton Tavares","category":"ambos","color":"#5ce0c6,#0f3d35","points":0,"awards":[],"streak":0},{"id":"p3","name":"Michelle Batista","category":"ambos","color":"#f5c842,#3d2e00","points":0,"awards":[],"streak":0},{"id":"p4","name":"Cau\u00e3 Alves","category":"ambos","color":"#e05555,#3d1010","points":0,"awards":[],"streak":0},{"id":"p5","name":"Lorenzzo Pereira","category":"ambos","color":"#e88c30,#3d2000","points":0,"awards":[],"streak":0},{"id":"p6","name":"Paulo Roberto","category":"ambos","color":"#4cbb8a,#0f3d25","points":0,"awards":[],"streak":0},{"id":"p7","name":"Camila Nara","category":"ambos","color":"#7c5cfc,#2a1f5c","points":0,"awards":[],"streak":0},{"id":"p8","name":"Diogo Oliveira","category":"ambos","color":"#5ce0c6,#0f3d35","points":0,"awards":[],"streak":0},{"id":"p9","name":"Jheniffer Santos","category":"ambos","color":"#f5c842,#3d2e00","points":0,"awards":[],"streak":0},{"id":"p10","name":"Grasielle Santos","category":"ambos","color":"#e05555,#3d1010","points":0,"awards":[],"streak":0},{"id":"p11","name":"Ketle Silva","category":"ambos","color":"#e88c30,#3d2000","points":0,"awards":[],"streak":0},{"id":"p12","name":"Junior Otaides","category":"ambos","color":"#4cbb8a,#0f3d25","points":0,"awards":[],"streak":0},{"id":"p13","name":"Victoria Silva","category":"ambos","color":"#7c5cfc,#2a1f5c","points":0,"awards":[],"streak":0},{"id":"p14","name":"Maria Clara","category":"ambos","color":"#5ce0c6,#0f3d35","points":0,"awards":[],"streak":0},{"id":"p15","name":"Marcos Martins","category":"ambos","color":"#f5c842,#3d2e00","points":0,"awards":[],"streak":0},{"id":"p16","name":"Emanuel Ferreira","category":"ambos","color":"#e88c30,#3d2000","points":0,"awards":[],"streak":0},{"id":"p17","name":"Gabrielle Martins","category":"ambos","color":"#e05555,#3d1010","points":0,"awards":[],"streak":0}],"history":[{"type":"new","icon":"\ud83d\udc64","text":"Time iGreen carregado","date":"06/06/2026"}],"poderes":[],"duplas":[],"votacaoAtiva":null,"cycleStart":null,"cycleEnd":null,"announceDate":null,"cycleActive":false,"nextId":18};
     localStorage.setItem(k,JSON.stringify(d));
   }
 })();
