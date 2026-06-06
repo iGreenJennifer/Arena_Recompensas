@@ -366,7 +366,7 @@ body::before{content:"";position:fixed;inset:0;background-image:url("data:image/
       <div id="super-admin-section" style="display:none">
         <div class="settings-card"><h3>👁️ Visibilidade dos grupos</h3><p style="font-size:13px;color:var(--muted);margin-bottom:1rem;">Grupos visíveis aparecem na tela de seleção pública.</p><div id="group-visibility-list"></div></div>
         <div class="settings-card"><h3>👤 Gerenciar admins</h3><p style="font-size:13px;color:var(--muted);margin-bottom:1rem;">Somente Jennifer pode excluir admins.</p><div id="admin-users-list"></div><button class="btn-sm" onclick="openAddAdminModal()" style="margin-top:1rem">+ Novo admin</button></div>
-        <div class="settings-card"><h3>🔑 Alterar senha (Jennifer)</h3><div class="field"><label>Senha atual</label><input type="password" id="pw-old"></div><div class="field"><label>Nova senha</label><input type="password" id="pw-new"></div><div class="field"><label>Confirmar</label><input type="password" id="pw-confirm"></div><button class="btn-accent" onclick="changePassword()">Salvar</button><div id="pw-msg" style="font-size:13px;margin-top:.75rem;"></div></div>
+        <div class="settings-card"><h3>🔑 Alterar senha (Jennifer)</h3><p style="font-size:12px;color:var(--muted);margin-bottom:1rem;">Mínimo 6 caracteres. A senha é criptografada com SHA-256 antes de salvar.</p><div class="field"><label>Senha atual</label><input type="password" id="pw-old" placeholder="Senha atual"></div><div class="field"><label>Nova senha</label><input type="password" id="pw-new" placeholder="Mínimo 6 caracteres"></div><div class="field"><label>Confirmar nova senha</label><input type="password" id="pw-confirm" placeholder="Repita a nova senha"></div><button class="btn-accent" onclick="changePassword()">🔑 Salvar nova senha</button><div id="pw-msg" style="font-size:13px;margin-top:.75rem;padding:8px 12px;border-radius:var(--r2);display:none;"></div></div>
       </div>
     </div>
   </div>
@@ -394,6 +394,25 @@ body::before{content:"";position:fixed;inset:0;background-image:url("data:image/
 <div id="toast"></div>
 
 <script>
+
+// ─── CRYPTO ───
+async function hashPass(pass){
+  const enc=new TextEncoder();
+  const buf=await crypto.subtle.digest('SHA-256',enc.encode(pass));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+async function migratePasswords(){
+  // On first load, if any password is not a 64-char hex hash, hash it
+  let changed=false;
+  for(const adm of GS.admins){
+    if(adm.password&&adm.password.length!==64){
+      adm.password=await hashPass(adm.password);
+      changed=true;
+    }
+  }
+  if(changed)saveGS();
+}
+
 // ─── CONSTANTS ───
 const SUPER_EMAIL='jennifer.silveira@igreenenergy.com.br';
 const STORAGE_KEY='igreen_arena_v7';
@@ -411,6 +430,7 @@ const COLORS=['#7c5cfc,#2a1f5c','#5ce0c6,#0f3d35','#f5c842,#3d2e00','#e05555,#3d
 
 // ─── STATE ───
 let GS=loadGS();
+migratePasswords(); // hash any plain-text passwords from old localStorage
 let gid=null,isAdmin=false,isSuperAdmin=false,adminUser=null;
 let editPId=null,ptsPId=null,awardPId=null;
 let lastAction=null,feedFilter='all';
@@ -420,7 +440,7 @@ const phraseIdx=Math.floor(Date.now()/86400000)%PHRASES.length;
 function defGroup(){return{players:[],history:[],poderes:[],duplas:[],votacaoAtiva:null,cycleStart:null,cycleEnd:null,announceDate:null,cycleActive:false,nextId:1};}
 function defGS(){
   return{
-    admins:[{name:'Jennifer Silveira',email:SUPER_EMAIL,password:'igreen2024',isSuper:true}],
+    admins:[{name:'Jennifer Silveira',email:SUPER_EMAIL,password:'f82cbde8a20dc4178f0d09bc4d59fde9906edaa43f7a01cd1bd3dcabcc90c48b',isSuper:true}],
     visibility:{eng1:true,eng2:false,ivolt:false,aza:false},
     groups:{
       eng1:Object.assign(defGroup(),{nextId:18,players:[
@@ -469,10 +489,11 @@ function renderAdmGroups(){
   list.innerHTML=GROUPS.map(x=>`<button class="group-btn" onclick="enterAdm('${x.id}')"><span class="gb-icon">${x.icon}</span><div><div class="gb-name">${x.name}</div><div class="gb-manager">Gestão: ${x.manager}</div></div><span style="font-size:11px;color:${GS.visibility[x.id]?'#5ce0c6':'var(--muted)'};margin-left:auto">${GS.visibility[x.id]?'👁️':'🔒'}</span></button>`).join('');
 }
 function enterPub(id){isAdmin=false;isSuperAdmin=false;gid=id;sessionStorage.setItem(SESSION_KEY,JSON.stringify({isAdmin:false,isSuperAdmin:false,gid,email:null}));launch();}
-function doLogin(){
+async function doLogin(){
   const email=document.getElementById('login-email').value.trim().toLowerCase();
   const pass=document.getElementById('login-pass').value;
-  const adm=GS.admins.find(a=>a.email.toLowerCase()===email&&a.password===pass);
+  const hashed=await hashPass(pass);
+  const adm=GS.admins.find(a=>a.email.toLowerCase()===email&&a.password===hashed);
   if(adm){isAdmin=true;isSuperAdmin=!!adm.isSuper;adminUser=adm;document.getElementById('login-error').style.display='none';goStep('step-adm-group');}
   else{document.getElementById('login-error').style.display='block';}
 }
@@ -754,7 +775,7 @@ function saveAward(){
 function openPoderModal(){
   if(!isAdmin)return;const sel=document.getElementById('poder-dono');const alvo=document.getElementById('poder-alvo');
   sel.innerHTML=g().players.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
-  alvo.innerHTML=g().players.map(p=>`<option value="${p.id}">${p.name}${p.shield?' 🛡️':''}</option>`).join('');
+  alvo.innerHTML=g().players.map(p=>`<option value="${p.id}">${p.name} (${p.points} pts)${p.shield?' 🛡️':''}</option>`).join('');
   document.getElementById('poder-tipo').value='roubo';document.getElementById('poder-alvo-field').style.display='block';document.getElementById('poder-escudo-warn').style.display='none';
   openModal('modal-poder');
 }
@@ -764,7 +785,15 @@ function savePoder(){
   if(tipo==='escudo'){dono.shield=true;g().poderes.push({tipo:'escudo',date:now(),desc:'🛡️ '+dono.name+' ativou o escudo'});addHist({type:'poder',icon:'🛡️',text:dono.name+' ativou o escudo',date:now()});showToast('🛡️ Escudo ativado!');}
   else{const aId=document.getElementById('poder-alvo').value;const alvo=g().players.find(x=>x.id===aId);if(!alvo)return;if(aId===dId){showToast('Não pode roubar a si mesmo!');return;}
   if(alvo.shield){alvo.shield=false;g().poderes.push({tipo:'bloqueio',date:now(),desc:'⚔️ '+alvo.name+' bloqueou o roubo de '+dono.name});addHist({type:'poder',icon:'⚔️',text:alvo.name+' bloqueou '+dono.name,date:now()});showToast('⚔️ Bloqueado!');}
-  else{alvo.points=Math.max(0,alvo.points-10);dono.points+=10;g().poderes.push({tipo:'roubo',date:now(),desc:'🦹 '+dono.name+' roubou 10 pts de '+alvo.name});addHist({type:'poder',icon:'🦹',text:dono.name+' roubou 10 pts de '+alvo.name,date:now()});showToast('🦹 Roubo executado!');}}
+  else{
+    if(alvo.points<10){showToast('❌ '+alvo.name+' tem menos de 10 pts — roubo impossível!');return;}
+    const pontosRoubados=Math.min(10,alvo.points);
+    alvo.points=Math.max(0,alvo.points-pontosRoubados);
+    dono.points+=pontosRoubados;
+    g().poderes.push({tipo:'roubo',date:now(),desc:'🦹 '+dono.name+' roubou '+pontosRoubados+' pts de '+alvo.name});
+    addHist({type:'poder',icon:'🦹',text:dono.name+' roubou '+pontosRoubados+' pts de '+alvo.name,date:now()});
+    showToast('🦹 Roubo executado! '+pontosRoubados+' pts transferidos.');
+  }}
   saveGS();closeModal('modal-poder');renderAll();
 }
 
@@ -801,15 +830,20 @@ function saveNewAdmin(){
   if(!name||!email||!pass){msg.textContent='❌ Preencha todos os campos.';msg.style.color='var(--danger)';return;}
   if(GS.admins.find(a=>a.email.toLowerCase()===email)){msg.textContent='❌ E-mail já cadastrado.';msg.style.color='var(--danger)';return;}
   if(pass.length<6){msg.textContent='❌ Senha mínima: 6 caracteres.';msg.style.color='var(--danger)';return;}
-  GS.admins.push({name,email,password:pass,isSuper:false});saveGS();renderAdmins();msg.textContent='✅ Admin criado!';msg.style.color='var(--success)';
+  hashPass(pass).then(h=>{GS.admins.push({name,email,password:h,isSuper:false});saveGS();renderAdmins();msg.textContent='✅ Admin criado!';msg.style.color='var(--success)';});
 }
 function delAdmin(idx){const a=GS.admins[idx];if(!a||a.isSuper){showToast('Não é possível excluir este admin.');return;}if(!confirm('Excluir admin '+a.name+'?'))return;GS.admins.splice(idx,1);saveGS();renderAdmins();showToast('Admin removido.');}
-function changePassword(){
+async function changePassword(){
   const old=document.getElementById('pw-old').value;const nw=document.getElementById('pw-new').value;const conf=document.getElementById('pw-confirm').value;const msg=document.getElementById('pw-msg');
-  const sup=GS.admins.find(a=>a.isSuper);if(old!==sup?.password){msg.textContent='❌ Senha incorreta.';msg.style.color='var(--danger)';return;}
-  if(nw.length<6){msg.textContent='❌ Mínimo 6 caracteres.';msg.style.color='var(--danger)';return;}
-  if(nw!==conf){msg.textContent='❌ Não confere.';msg.style.color='var(--danger)';return;}
-  sup.password=nw;saveGS();msg.textContent='✅ Senha alterada!';msg.style.color='var(--success)';['pw-old','pw-new','pw-confirm'].forEach(id=>document.getElementById(id).value='');
+  const sup=GS.admins.find(a=>a.isSuper);
+  function pwMsg(text,ok){msg.textContent=text;msg.style.display='block';msg.style.background=ok?'rgba(76,187,138,.12)':'rgba(224,85,85,.12)';msg.style.color=ok?'var(--success)':'var(--danger)';msg.style.border='0.5px solid '+(ok?'rgba(76,187,138,.3)':'rgba(224,85,85,.3)');}
+  if(!old){pwMsg('❌ Digite a senha atual.', false);return;}
+  const oldHashed=await hashPass(old);
+  if(oldHashed!==sup?.password){pwMsg('❌ Senha atual incorreta.', false);return;}
+  if(nw.length<6){pwMsg('❌ Nova senha precisa ter no mínimo 6 caracteres.', false);return;}
+  if(nw!==conf){pwMsg('❌ As senhas não conferem.', false);return;}
+  sup.password=await hashPass(nw);saveGS();pwMsg('✅ Senha alterada com sucesso!', true);['pw-old','pw-new','pw-confirm'].forEach(id=>document.getElementById(id).value='');
+  setTimeout(()=>{msg.style.display='none';},4000);
 }
 
 // ─── DELETE ───
@@ -820,13 +854,69 @@ function delDupla(idx){if(!isAdmin||!confirm('Excluir?'))return;const d=g().dupl
 // ─── EXPORT ───
 function exportExcel(){if(typeof XLSX==='undefined'){const script=document.createElement('script');script.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';script.onload=_doExport;script.onerror=()=>showToast('Erro ao carregar biblioteca.');document.head.appendChild(script);}else _doExport();}
 function _doExport(){
+  // Helper: create styled cell
+  function sc(v, bold, color, bg, align, border){
+    return {v, t:'s', s:{
+      font:{name:'Calibri',bold:!!bold,color:color?{rgb:color}:undefined,sz:bold?12:11},
+      fill:bg?{fgColor:{rgb:bg}}:undefined,
+      alignment:{horizontal:align||'left',vertical:'center',wrapText:true},
+      border:border?{top:{style:'thin',color:{rgb:'D0D0D0'}},bottom:{style:'thin',color:{rgb:'D0D0D0'}},left:{style:'thin',color:{rgb:'D0D0D0'}},right:{style:'thin',color:{rgb:'D0D0D0'}}}:undefined
+    }};
+  }
+  function sn(v, bold, color, bg, align){
+    return {v, t:'n', s:{
+      font:{name:'Calibri',bold:!!bold,color:color?{rgb:color}:undefined,sz:bold?12:11},
+      fill:bg?{fgColor:{rgb:bg}}:undefined,
+      alignment:{horizontal:align||'right',vertical:'center'},
+      border:{top:{style:'thin',color:{rgb:'D0D0D0'}},bottom:{style:'thin',color:{rgb:'D0D0D0'}},left:{style:'thin',color:{rgb:'D0D0D0'}},right:{style:'thin',color:{rgb:'D0D0D0'}}}
+    }};
+  }
+
   const wb=XLSX.utils.book_new();const gr=g();const grInfo=GROUPS.find(x=>x.id===gid);const dateStr=new Date().toLocaleDateString('pt-BR');
-  const r1=[['iGreen Energy — Arena de Recompensas — '+grInfo?.name],['Ciclo: '+(gr.cycleStart?fmtDate(gr.cycleStart)+' → '+fmtDate(gr.cycleEnd):'Não iniciado')+(gr.announceDate?' | Anúncio: '+fmtDate(gr.announceDate):'')+' | Exportado: '+dateStr],[],['#','Nome','Categoria','Pontos','% Meta','Chocolates','Pizzas','Escudo','Streak']];
-  [...gr.players].sort((a,b)=>b.points-a.points).forEach((p,i)=>{const aw=p.awards||[];r1.push([i+1,p.name,{ligacao:'Ligações',chat:'Chat',ambos:'Ambos'}[p.category]||p.category,p.points,Math.min(100,Math.round((p.points/100)*100))+'%',aw.filter(a=>a.includes('Chocolate')).length,aw.filter(a=>a.includes('Pizza')).length,p.shield?'Sim':'Não',p.streak||0]);});
-  const ws1=XLSX.utils.aoa_to_sheet(r1);ws1['!cols']=[{wch:4},{wch:22},{wch:12},{wch:8},{wch:8},{wch:12},{wch:10},{wch:10},{wch:10}];ws1['!merges']=[{s:{r:0,c:0},e:{r:0,c:8}},{s:{r:1,c:0},e:{r:1,c:8}}];XLSX.utils.book_append_sheet(wb,ws1,'Ranking');
-  const r2=[['Data','Tipo','Evento','Pontos']];[...gr.history].reverse().forEach(h=>r2.push([h.date,h.type||'',h.text||'',h.pts||'']));const ws2=XLSX.utils.aoa_to_sheet(r2);ws2['!cols']=[{wch:18},{wch:12},{wch:55},{wch:8}];XLSX.utils.book_append_sheet(wb,ws2,'Histórico');
-  const r3=[['Data','Quem','Convidado','Status','Pts','Pizza']];(gr.duplas||[]).forEach(d=>r3.push([d.date,d.quem,d.alvo,d.status==='aceito'?'Aceito':'Recusado',d.ptsCombinados||'',d.pizzaGanha?'Sim':'Não']));const ws3=XLSX.utils.aoa_to_sheet(r3);ws3['!cols']=[{wch:18},{wch:20},{wch:20},{wch:10},{wch:10},{wch:8}];XLSX.utils.book_append_sheet(wb,ws3,'Duplas');
-  const r4=[['Data','Tipo','Descrição']];(gr.poderes||[]).forEach(p=>r4.push([p.date,{roubo:'Roubo',escudo:'Escudo',bloqueio:'Bloqueio'}[p.tipo]||p.tipo,p.desc]));const ws4=XLSX.utils.aoa_to_sheet(r4);ws4['!cols']=[{wch:18},{wch:12},{wch:55}];XLSX.utils.book_append_sheet(wb,ws4,'Poderes');
+  // ── ABA 1: RANKING (styled) ──
+  const sortedP=[...gr.players].sort((a,b)=>b.points-a.points);
+  const ws1={};
+  // Título
+  ws1['A1']={v:'🏆 iGreen Energy — Arena de Recompensas — '+grInfo?.name,t:'s',s:{font:{name:'Calibri',bold:true,sz:16,color:{rgb:'7C5CFC'}},fill:{fgColor:{rgb:'1A1330'}},alignment:{horizontal:'center',vertical:'center'}}};
+  ws1['A2']={v:'Ciclo: '+(gr.cycleStart?fmtDate(gr.cycleStart)+' → '+fmtDate(gr.cycleEnd):'Não iniciado')+(gr.announceDate?' | Anúncio: '+fmtDate(gr.announceDate):'')+' | Exportado: '+dateStr,t:'s',s:{font:{name:'Calibri',sz:11,color:{rgb:'999999'}},fill:{fgColor:{rgb:'0F0F1A'}},alignment:{horizontal:'center',vertical:'center'}}};
+  // Cabeçalho
+  const hdr1=['#','Nome','Categoria','Pontos','% da Meta','🍫 Chocolates','🍕 Pizzas','🛡️ Escudo','🔥 Streak'];
+  hdr1.forEach((h,i)=>{const addr=XLSX.utils.encode_cell({r:3,c:i});ws1[addr]=sc(h,true,'FFFFFF','4C3A8A','center',true);});
+  // Dados
+  sortedP.forEach((p,i)=>{const aw=p.awards||[];const medal=i===0?'🥇 ':i===1?'🥈 ':i===2?'🥉 ':'';const rowBg=i%2===0?'13131A':'1C1C28';const pizzaRow=p.points>=100;const bg=pizzaRow?'2A1F00':rowBg;
+    const row=[i+1,medal+p.name,{ligacao:'📞 Ligações',chat:'💬 Chat',ambos:'📞💬 Ambos'}[p.category]||p.category,p.points,Math.min(100,Math.round((p.points/100)*100))+'%',aw.filter(a=>a.includes('Chocolate')).length,aw.filter(a=>a.includes('Pizza')).length,p.shield?'✅ Sim':'Não',p.streak||0];
+    const colors=[pizzaRow?'F5C842':i===0?'F5C842':i===1?'B0BEC5':i===2?'CD7C3A':'CCCCCC','FFFFFF','AAAAAA',pizzaRow?'F5C842':'5CE0C6',pizzaRow?'F5C842':'AAAAAA','D4956E','E8A060','5CE0C6','F5C842'];
+    row.forEach((v,j)=>{const addr=XLSX.utils.encode_cell({r:4+i,c:j});if(j===3||j===5||j===6||j===8)ws1[addr]=sn(typeof v==='number'?v:parseInt(v)||0,j===3,colors[j],bg,'center');else ws1[addr]=sc(String(v),j===0||j===1,colors[j],bg,j===0?'center':'left',true);});
+  });
+  ws1['!ref']=XLSX.utils.encode_range({s:{r:0,c:0},e:{r:4+sortedP.length,c:8}});
+  ws1['!cols']=[{wch:4},{wch:24},{wch:14},{wch:9},{wch:10},{wch:13},{wch:10},{wch:10},{wch:10}];
+  ws1['!rows']=[{hpt:28},{hpt:20},{hpt:8},{hpt:22}];
+  ws1['!merges']=[{s:{r:0,c:0},e:{r:0,c:8}},{s:{r:1,c:0},e:{r:1,c:8}}];
+  XLSX.utils.book_append_sheet(wb,ws1,'🏆 Ranking');
+  // ── ABA 2: HISTÓRICO ──
+  const ws2={};const histHdr=['Data','Tipo','Evento','Pts'];
+  histHdr.forEach((h,i)=>{ws2[XLSX.utils.encode_cell({r:0,c:i})]=sc(h,true,'FFFFFF','4C3A8A','center',true);});
+  const typeColors={pts:'1A3A2A',danger:'3A1A1A',award:'3A2A0A',poder:'2A2A10',dupla:'0A2A2A',edit:'1A1A2A'};
+  const typeLabels={pts:'⭐ Pontos',danger:'⚠️ Penalidade',award:'🎁 Recompensa',poder:'⚡ Poder',dupla:'🤝 Dupla',edit:'✏️ Edição',votacao:'🗳️ Votação',new:'👤 Novo'};
+  [...gr.history].reverse().forEach((h,i)=>{const bg=typeColors[h.type]||'13131A';const pts=h.pts?String(h.pts):'';[h.date,typeLabels[h.type]||h.type||'',h.text||'',pts].forEach((v,j)=>{ws2[XLSX.utils.encode_cell({r:1+i,c:j})]=sc(v,false,j===3?(pts.startsWith('-')?'E05555':'5CE0C6'):'CCCCCC',bg,j===3?'center':'left',true);});});
+  ws2['!ref']=XLSX.utils.encode_range({s:{r:0,c:0},e:{r:1+gr.history.length,c:3}});
+  ws2['!cols']=[{wch:20},{wch:16},{wch:55},{wch:8}];ws2['!rows']=[{hpt:22}];
+  XLSX.utils.book_append_sheet(wb,ws2,'📋 Histórico');
+  // ── ABA 3: DUPLAS ──
+  const ws3={};const dupHdr=['Data','Quem convidou','Convidado','Status','Pts combinados','🍕 Pizza'];
+  dupHdr.forEach((h,i)=>{ws3[XLSX.utils.encode_cell({r:0,c:i})]=sc(h,true,'FFFFFF','4C3A8A','center',true);});
+  (gr.duplas||[]).forEach((d,i)=>{const ok=d.status==='aceito';const bg=d.pizzaGanha?'2A1A00':ok?'0A2A1A':'1A1A1A';[d.date,d.quem,d.alvo,ok?'✅ Aceito':'❌ Recusado',d.ptsCombinados||0,d.pizzaGanha?'✅ Sim':'Não'].forEach((v,j)=>{ws3[XLSX.utils.encode_cell({r:1+i,c:j})]=j===4?sn(typeof v==='number'?v:0,false,'5CE0C6',bg,'center'):sc(String(v),false,j===3?(ok?'5CE0C6':'E05555'):d.pizzaGanha?'F5C842':'CCCCCC',bg,'left',true);});});
+  ws3['!ref']=XLSX.utils.encode_range({s:{r:0,c:0},e:{r:1+(gr.duplas||[]).length,c:5}});
+  ws3['!cols']=[{wch:20},{wch:22},{wch:22},{wch:12},{wch:14},{wch:10}];ws3['!rows']=[{hpt:22}];
+  XLSX.utils.book_append_sheet(wb,ws3,'🤝 Duplas');
+  // ── ABA 4: PODERES ──
+  const ws4={};const podHdr=['Data','Tipo','Descrição'];
+  podHdr.forEach((h,i)=>{ws4[XLSX.utils.encode_cell({r:0,c:i})]=sc(h,true,'FFFFFF','4C3A8A','center',true);});
+  const podColors={roubo:'3A1A1A',escudo:'0A2A2A',bloqueio:'2A2A0A'};const podLabels={roubo:'🦹 Roubo',escudo:'🛡️ Escudo',bloqueio:'⚔️ Bloqueio'};
+  (gr.poderes||[]).forEach((p,i)=>{const bg=podColors[p.tipo]||'13131A';[p.date,podLabels[p.tipo]||p.tipo,p.desc].forEach((v,j)=>{ws4[XLSX.utils.encode_cell({r:1+i,c:j})]=sc(v||'',false,j===1?(p.tipo==='roubo'?'E07777':p.tipo==='escudo'?'5CE0C6':'F5C842'):'CCCCCC',bg,'left',true);});});
+  ws4['!ref']=XLSX.utils.encode_range({s:{r:0,c:0},e:{r:1+(gr.poderes||[]).length,c:2}});
+  ws4['!cols']=[{wch:20},{wch:14},{wch:55}];ws4['!rows']=[{hpt:22}];
+  XLSX.utils.book_append_sheet(wb,ws4,'⚡ Poderes');
   XLSX.writeFile(wb,'iGreen_'+grInfo?.name.replace(/\s/g,'_')+'_'+new Date().toISOString().split('T')[0]+'.xlsx');showToast('✅ Excel exportado!');
 }
 
